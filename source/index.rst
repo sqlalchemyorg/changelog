@@ -11,8 +11,15 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-   changelog_07
    changelog_08
+   changelog_07
+   changelog_06
+   changelog_05
+   changelog_04
+   changelog_03
+   changelog_02
+   changelog_01
+
    migration_08
 
 

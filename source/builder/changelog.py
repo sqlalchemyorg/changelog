@@ -8,7 +8,6 @@ import itertools
 def _comma_list(text):
     return re.split(r"\s*,\s*", text.strip())
 
-
 def _parse_content(content):
     d = {}
     d['text'] = []
@@ -24,24 +23,28 @@ def _parse_content(content):
     d["text"] = content[idx:]
     return d
 
-
 def _ticketurl(ticket):
     return "http://www.sqlalchemy.org/trac/ticket/%s" % ticket
 
-class ChangeLogDirective(Directive):
+class EnvDirective(object):
+    @property
+    def env(self):
+        return self.state.document.settings.env
+
+class ChangeLogDirective(EnvDirective, Directive):
     has_content = True
 
     type_ = "change"
 
     sections = _comma_list("general, orm, orm declarative, orm querying, \
                 orm configuration, engine, sql, \
-                postgresql, mysql, sqlite")
+                postgresql, mysql, sqlite, mssql, oracle, firebird")
 
     subsections = ["feature", "bug", "removed"]
 
-    def run(self):
-        ChangeLogDirective._changes = []
 
+    def run(self):
+        self.env.temp_data['ChangeLogDirective_changes'] = changes = []
         content = _parse_content(self.content)
         version = content.get('version', '')
 
@@ -50,30 +53,35 @@ class ChangeLogDirective(Directive):
 
         output = []
 
+        id_prefix = "%s-%s" % (self.type_, version)
         topsection = nodes.section('',
                 nodes.title(version, version),
-                ids=["changelog-%s" % version]
+                ids=[id_prefix]
             )
         if "released" in content:
             topsection.append(nodes.Text("Released: %s" % content['released']))
         else:
             topsection.append(nodes.Text("no release date"))
         output.append(topsection)
-        all_section_tags = set(itertools.chain(*[sec.split()
-                                    for sec in self.sections]))
 
-        for section in self.sections:
+        all_section_tags = set()
+        for rec in changes:
+            all_section_tags.update(rec['tags'])
+
+        counter = itertools.count()
+
+        for section in list(self.sections) + list(all_section_tags.difference(self.sections)):
             sec_tags = set(section.split(" "))
             bullets = nodes.bullet_list()
             sec = nodes.section('',
                     nodes.title(section, section),
                     bullets,
-                    ids=["%s-%s" % (self.type_, section.replace(" ", "-"))]
+                    ids=["%s-%s" % (id_prefix, section.replace(" ", "-"))]
             )
 
             for cat in self.subsections + [""]:
-                for rec in self._changes:
-                    if rec['type'] == self.type_ and \
+                for rec in changes:
+                    if not rec.get("emitted") and rec['type'] == self.type_ and \
                         (
                             rec['tags'].intersection(all_section_tags) == sec_tags
                         ) and \
@@ -82,6 +90,8 @@ class ChangeLogDirective(Directive):
                             not cat and not rec['tags'].intersection(self.subsections)
                         ):
 
+                        rec["emitted"] = True
+                        rec["id"] = "%s-%s" % (id_prefix, next(counter))
                         para = rec['node'].deepcopy()
 
                         insert_ticket = nodes.paragraph('')
@@ -99,10 +109,14 @@ class ChangeLogDirective(Directive):
                                 )
                             )
 
-                        tag_node = nodes.strong('',
-                                    "[" + cat + "] "
-                                )
-                        para.children[0].insert(0, tag_node)
+                        if cat or rec['tags']:
+                            #tag_node = nodes.strong('',
+                            #            "[" + cat + "] "
+                            #        )
+                            tag_node = nodes.strong('',
+                                        "[" + ", ".join(rec['tags']) + "] "
+                                    )
+                            para.children[0].insert(0, tag_node)
 
                         bullets.append(
                             nodes.list_item('',
@@ -115,30 +129,6 @@ class ChangeLogDirective(Directive):
 
         return output
 
-class ChangeDirective(Directive):
-    has_content = True
-
-    def _process_body(self, body):
-        return body
-
-    type_ = "change"
-
-    def run(self):
-        env = self.state.document.settings.env
-        content = _parse_content(self.content)
-        p = nodes.paragraph('', '',)
-        rec = {
-            'tags': set(_comma_list(content.get('tags', ''))).difference(['']),
-            'tickets': set(_comma_list(content.get('tickets', ''))).difference(['']),
-            'node': p,
-            'id': "changelog-%d" % env.new_serialno('changelog'),
-            'type': self.type_,
-            "title": content.get("title", None)
-        }
-
-        self.state.nested_parse(content['text'], 0, p)
-        ChangeLogDirective._changes.append(rec)
-        return []
 
 class MigrationLogDirective(ChangeLogDirective):
     type_ = "migration"
@@ -150,7 +140,7 @@ class MigrationLogDirective(ChangeLogDirective):
                 postgresql, mysql, sqlite")
 
     def run(self):
-        ChangeLogDirective._changes = []
+        self.env.temp_data['ChangeLogDirective_changes'] = changes = []
 
         content = _parse_content(self.content)
         version = content.get('version', '')
@@ -160,25 +150,29 @@ class MigrationLogDirective(ChangeLogDirective):
 
         output = []
 
+        id_prefix = "%s-%s" % (self.type_, version)
+
         title = "What's new in %s?" % version
         topsection = nodes.section('',
                 nodes.title(title, title),
-                ids=["%s-%s" % (self.type_, version)]
+                ids=[id_prefix]
             )
         if "released" in content:
             topsection.append(nodes.Text("Released: %s" % content['released']))
 
         output.append(topsection)
 
+        counter = itertools.count()
+
         for section in self.sections:
             sec = nodes.section('',
                     nodes.title(section, section),
-                    ids=["%s-%s" % (self.type_, section.replace(" ", "-"))]
+                    ids=["%s-%s" % (id_prefix, section.replace(" ", "-"))]
             )
 
             for cat in self.subsections + [""]:
-                for rec in self._changes:
-                    if rec['type'] == self.type_ and \
+                for rec in changes:
+                    if not rec.get("emitted") and rec['type'] == self.type_ and \
                         (
                             section in rec['tags']
                         ) and \
@@ -188,6 +182,8 @@ class MigrationLogDirective(ChangeLogDirective):
                         ):
 
                         para = rec['node'].deepcopy()
+                        rec["emitted"] = True
+                        rec["id"] = "%s-%s" % (id_prefix, next(counter))
 
                         insert_ticket = nodes.paragraph('')
                         para.append(insert_ticket)
@@ -217,8 +213,34 @@ class MigrationLogDirective(ChangeLogDirective):
 
         return output
 
+class ChangeDirective(EnvDirective, Directive):
+    has_content = True
+
+    type_ = "change"
+    parent_cls = ChangeLogDirective
+
+    def run(self):
+        content = _parse_content(self.content)
+        p = nodes.paragraph('', '',)
+        rec = {
+            'tags': set(_comma_list(content.get('tags', ''))).difference(['']),
+            'tickets': set(_comma_list(content.get('tickets', ''))).difference(['']),
+            'node': p,
+            'type': self.type_,
+            "title": content.get("title", None)
+        }
+
+        if "declarative" in rec['tags']:
+            rec['tags'].add("orm")
+
+        self.state.nested_parse(content['text'], 0, p)
+        self.env.temp_data['ChangeLogDirective_changes'].append(rec)
+
+        return []
+
 class MigrationDirective(ChangeDirective):
     type_ = "migration"
+    parent_cls = MigrationLogDirective
 
 
 def _rst2sphinx(text):

@@ -1,0 +1,622 @@
+changeset:   8828:c542fd1e600f
+tag:         tip
+user:        Mike Bayer <mike_mp@zzzcomputing.com>
+date:        Fri Oct 19 19:37:48 2012 -0400
+summary:     - clarify what the link is
+
+changeset:   8777:b42f6393dff2
+branch:      rel_0_7
+tag:         rel_0_7_9
+user:        Mike Bayer <mike_mp@zzzcomputing.com>
+date:        Mon Oct 01 18:36:12 2012 -0400
+summary:     add .txt here
+
+changeset:   8382:78b2833fb74f
+branch:      rel_0_7
+tag:         rel_0_7_8
+user:        Mike Bayer <mike_mp@zzzcomputing.com>
+date:        Sat Jun 16 20:58:00 2012 -0400
+summary:     0.7.8 prep
+
+changeset:   8296:67b5d1994fd7
+branch:      rel_0_6
+tag:         rel_0_6_9
+parent:      8292:977cbaac8520
+user:        Mike Bayer <mike_mp@zzzcomputing.com>
+date:        Sat May 05 18:48:15 2012 -0400
+summary:     0.6.9 release prep
+
+changeset:   8294:faa9d921eb84
+branch:      rel_0_7
+tag:         rel_0_7_7
+user:        Mike Bayer <mike_mp@zzzcomputing.com>
+date:        Sat May 05 18:48:03 2012 -0400
+summary:     0.7.7 release prep
+
+changeset:   8163:d55728743198
+tag:         rel_0_7_6
+user:        Mike Bayer <mike_mp@zzzcomputing.com>
+date:        Wed Mar 14 21:23:09 2012 -0700
+summary:     0.7.6 release
+
+changeset:   8072:ebe9514a69a4
+tag:         rel_0_7_5
+user:        Mike Bayer <mike_mp@zzzcomputing.com>
+date:        Sat Jan 28 17:43:13 2012 -0500
+summary:     get ready for release 0.7.5
+
+changeset:   7985:23f8241d4d32
+branch:      rel_0_6
+tag:         06
+user:        Mike Bayer <mike_mp@zzzcomputing.com>
+date:        Sun Dec 25 17:28:32 2011 -0500
+summary:     fix one more
+
+changeset:   7976:19a7e3a60588
+tag:         rel_0_7_4
+user:        zzzeek
+date:        Fri Dec 09 17:15:02 2011 -0500
+summary:     make the comparable_property() example somewhat meaningful
+
+changeset:   7884:74c4ef8e0d24
+tag:         rel_0_7_3
+user:        zzzeek
+date:        Sun Oct 16 14:24:29 2011 -0400
+summary:     link to declarative concrete helper doc
+
+changeset:   7767:3e75f284f253
+tag:         rel_0_7_2
+user:        zzzeek
+date:        Sun Jul 31 19:12:31 2011 -0400
+summary:     0.7.2 + release date
+
+changeset:   7667:6bf675d91a56
+branch:      rel_0_6
+tag:         rel_0_6_8
+user:        zzzeek
+date:        Sun Jun 05 12:49:44 2011 -0400
+summary:     style for latest sphinx css
+
+changeset:   7665:145c143cef74
+tag:         rel_0_7_1
+parent:      7663:0a61ed36c3fa
+user:        zzzeek
+date:        Sun Jun 05 12:32:04 2011 -0400
+summary:     add test for [ticket:2159]
+
+changeset:   7623:9fedd4baa590
+tag:         rel_0_7_0
+user:        zzzeek
+date:        Fri May 20 17:53:13 2011 -0400
+summary:     - Fixed bug affecting PG 9 whereby index reflection
+
+changeset:   7550:3f4f05942eb7
+tag:         rel_0_7b4
+user:        zzzeek
+date:        Sun Apr 17 16:51:04 2011 -0400
+summary:     - remove obsolete test regarding PG server side cursors + ORM query, was failing + hanging jenkins
+
+changeset:   7527:f01a42b4a5aa
+branch:      rel_0_6
+tag:         rel_0_6_7
+user:        zzzeek
+date:        Wed Apr 13 20:02:15 2011 -0400
+summary:     0.6.7
+
+changeset:   7457:e92d07007ae1
+tag:         rel_0_7b3
+user:        zzzeek
+date:        Sun Mar 20 14:54:35 2011 -0400
+summary:     - remove all the fanfare from dynamic_loader() and de-emphasize it in
+
+changeset:   7379:e08d40f2b46c
+tag:         rel_0_7b2
+user:        zzzeek
+date:        Sat Feb 19 13:11:34 2011 -0500
+summary:     0.7b2
+
+changeset:   7358:92a08c9934aa
+tag:         rel_0_7b1
+parent:      7356:11e40e2bb6fd
+user:        zzzeek
+date:        Sat Feb 12 18:00:45 2011 -0500
+summary:     - remove some remaining sys.modules shenanigans
+
+changeset:   7253:3ef75b251d06
+branch:      rel_0_6
+tag:         rel_0_6_6
+parent:      7251:2bf8f0f5aaa0
+user:        zzzeek
+date:        Sat Jan 08 17:19:19 2011 -0500
+summary:     crappy docs, lets try that again
+
+changeset:   6894:ff12fe7cac94
+tag:         rel_0_6_5
+user:        zzzeek
+date:        Sun Oct 24 13:26:34 2010 -0400
+summary:     cleanup most egregiously long lines
+
+changeset:   6793:2db46b7f51c1
+tag:         rel_0_6_4
+user:        zzzeek
+date:        Tue Sep 07 12:37:43 2010 -0400
+summary:     - Applied patches from [ticket:1904] to get
+
+changeset:   6699:1db7766705b7
+tag:         rel_0_6_3
+user:        zzzeek
+date:        Thu Jul 15 09:59:17 2010 -0400
+summary:     - Column-entities (i.e. query(Foo.id)) copy their
+
+changeset:   6671:30b7ef7a9a9c
+tag:         rel_0_6_2
+user:        zzzeek
+date:        Tue Jul 06 17:39:20 2010 -0400
+summary:     - updated obsolete docs regarding sequences, RETURNING for pg
+
+changeset:   6615:bb99158e5821
+tag:         rel_0_6_1
+user:        zzzeek
+date:        Mon May 31 14:47:07 2010 -0400
+summary:     0.6.1
+
+changeset:   6561:a147e7959727
+tag:         rel_0_6_0
+user:        zzzeek
+date:        Sun Apr 18 19:13:47 2010 -0400
+summary:     fix verbiage
+
+changeset:   6399:6e862c4332dd
+tag:         rel_0_6beta3
+user:        zzzeek
+date:        Sun Mar 28 13:17:26 2010 -0400
+summary:     add doc for shard
+
+changeset:   6334:610e98d5c6da
+tag:         rel_0_6beta2
+parent:      6333:131e8d9d8692
+parent:      6332:5bcd8a3f1acb
+user:        zzzeek
+date:        Sat Mar 20 14:42:27 2010 -0400
+summary:     merge
+
+changeset:   5972:dddab33e513c
+tag:         rel_0_6beta1
+user:        zzzeek
+date:        Wed Feb 03 16:59:10 2010 +0000
+summary:     - official name
+
+changeset:   5896:b52f509f2454
+branch:      rel_0_5
+tag:         rel_0_5_8
+parent:      5878:bd8ae86f3c0c
+user:        zzzeek
+date:        Sat Jan 16 20:28:26 2010 +0000
+summary:     0.5.8
+
+changeset:   5835:d2be9d4453cf
+branch:      rel_0_5
+tag:         rel_0_5_7
+user:        zzzeek
+date:        Sat Dec 26 23:01:43 2009 +0000
+summary:     - only on oracle for that test
+
+changeset:   5618:63f33c55bf4c
+branch:      rel_0_5
+tag:         rel_0_5_6
+user:        zzzeek
+date:        Sat Sep 12 23:53:03 2009 +0000
+summary:     - some ordering fixes on DISTINCT for PG 8.4, mysql
+
+changeset:   5394:941a296371d0
+tag:         rel_0_5_5
+parent:      5391:db386f0e87f7
+user:        zzzeek
+date:        Mon Jul 13 02:04:54 2009 +0000
+summary:     changed reference to PostgreSQL in docs.
+
+changeset:   5266:ab553478a17a
+tag:         rel_0_5_4p2
+parent:      5264:2c7cf223c3ef
+user:        zzzeek
+date:        Tue May 26 17:03:03 2009 +0000
+summary:     more fixes to bound parameter exception reporting
+
+changeset:   5260:672f03f74345
+tag:         rel_0_5_4p1
+user:        zzzeek
+date:        Mon May 18 16:21:42 2009 +0000
+summary:     - Fixed an attribute error introduced in 0.5.4 which would
+
+changeset:   5259:ea8e5a8951dc
+tag:         rel_0_5_4
+user:        zzzeek
+date:        Sun May 17 22:58:21 2009 +0000
+summary:     - Back-ported the "compiler" extension from SQLA 0.6.  This
+
+changeset:   5152:4f9a7ab31c42
+tag:         rel_0_5_3
+user:        zzzeek
+date:        Tue Mar 24 01:22:38 2009 +0000
+summary:     more tests
+
+changeset:   5022:36d817dff60f
+tag:         rel_0_5_2
+user:        zzzeek
+date:        Sat Jan 24 17:29:56 2009 +0000
+summary:     - refined and clarified query.__join() for readability
+
+changeset:   4998:5d6b493c3b4b
+tag:         rel_0_5_1
+user:        zzzeek
+date:        Sat Jan 17 21:43:19 2009 +0000
+summary:     dont need pre-0.5 note
+
+changeset:   4926:79569ac85647
+tag:         rel_0_5_0
+user:        zzzeek
+date:        Tue Jan 06 18:30:38 2009 +0000
+summary:     move memusage to the isolation chamber
+
+changeset:   4666:3d5b975cae49
+tag:         rel_0_5rc4
+user:        zzzeek
+date:        Fri Nov 14 21:36:15 2008 +0000
+summary:     notes on tuning
+
+changeset:   4630:63b9201273d0
+tag:         rel_0_5rc3
+user:        zzzeek
+date:        Fri Nov 07 18:43:39 2008 +0000
+summary:     - added serializer docs to plugins.txt
+
+changeset:   4550:301a11f84651
+tag:         rel_0_5rc2
+parent:      4548:7c6c2fd73627
+user:        zzzeek
+date:        Sun Oct 12 14:39:20 2008 +0000
+summary:     - String's (and Unicode's, UnicodeText's, etc.) convert_unicode
+
+changeset:   4549:76604709d2ff
+branch:      rel_0_4
+tag:         rel_0_4_8
+parent:      4517:2b9f17dd0546
+user:        zzzeek
+date:        Sun Oct 12 14:39:11 2008 +0000
+summary:     - String's (and Unicode's, UnicodeText's, etc.) convert_unicode
+
+changeset:   4496:e4e14453bd73
+tag:         rel_0_5rc1
+user:        zzzeek
+date:        Thu Sep 11 20:48:39 2008 +0000
+summary:     - 0.5.0rc1
+
+changeset:   4400:8de9028d090e
+tag:         rel_0_5beta3
+user:        Michael Trier <mtrier@gmail.com>
+date:        Mon Aug 04 19:53:04 2008 +0000
+summary:     Corrected problem in docstring.
+
+changeset:   4381:7a818e8dec4c
+branch:      rel_0_4
+tag:         rel_0_4_7p1
+parent:      4373:c860be00a257
+user:        zzzeek
+date:        Thu Jul 31 15:02:40 2008 +0000
+summary:     - added an extremely rudimental set of python 2.3 compatible tests.  these
+
+changeset:   4371:feb03a8ae223
+branch:      rel_0_4
+tag:         rel_0_4_7
+user:        zzzeek
+date:        Sat Jul 26 16:30:59 2008 +0000
+summary:     - added add() and add_all() methods to Session,
+
+changeset:   4330:c71c8705ba64
+tag:         rel_0_5beta2
+parent:      4328:a5f964d2ee52
+user:        zzzeek
+date:        Mon Jul 14 20:04:35 2008 +0000
+summary:     - The "allow_column_override" flag from mapper() has
+
+changeset:   4257:7393c16f290b
+tag:         rel_0_5beta1
+user:        zzzeek
+date:        Thu Jun 12 20:29:13 2008 +0000
+summary:     updated verbiage for 0.5beta1 release
+
+changeset:   4135:7bda4498581b
+branch:      rel_0_4
+tag:         rel_0_4_6
+parent:      4126:3769b2417476
+user:        zzzeek
+date:        Sat May 10 17:31:07 2008 +0000
+summary:     - repaired single table inheritance such that you
+
+changeset:   3868:7fdc26728711
+tag:         rel_0_4_5
+user:        jason kirtland <jek@discorporate.us>
+date:        Fri Apr 04 00:58:11 2008 +0000
+summary:     Yep.
+
+changeset:   3692:f7138694305e
+tag:         rel_0_4_4
+user:        zzzeek
+date:        Wed Mar 12 00:02:41 2008 +0000
+summary:     more edits
+
+changeset:   3612:f8e1d5a09249
+tag:         rel_0_4_3
+user:        zzzeek
+date:        Thu Feb 14 23:41:17 2008 +0000
+summary:     fixing recent schema.py changes to work with oracle 'owner' attribute
+
+changeset:   3484:c1c78d3123de
+tag:         rel_0_4_2p3
+user:        zzzeek
+date:        Wed Jan 09 21:37:42 2008 +0000
+summary:     formatting, added UnicodeText
+
+changeset:   3473:34b2e112791b
+tag:         rel_0_4_2b
+user:        zzzeek
+date:        Mon Jan 07 19:59:23 2008 +0000
+summary:     logged [ticket:923] fix
+
+changeset:   3461:1d5f9c86b9e1
+tag:         rel_0_4_2a
+user:        zzzeek
+date:        Sat Jan 05 18:27:12 2008 +0000
+summary:     calling this 0.4.2a
+
+changeset:   3449:2e958f4713de
+tag:         rel_0_4_2
+user:        zzzeek
+date:        Wed Jan 02 01:34:25 2008 +0000
+summary:     fix weakref issue seen on one buildbot test
+
+changeset:   3268:01192810bdcf
+tag:         rel_0_4_1
+user:        zzzeek
+date:        Sun Nov 18 22:47:55 2007 +0000
+summary:     doctest fixups
+
+changeset:   3135:35360175e77e
+tag:         rel_0_4_0
+user:        zzzeek
+date:        Wed Oct 17 17:53:12 2007 +0000
+summary:     put a little note at the top directing users to the more *exciting* changes
+
+changeset:   3118:3f6d4f831509
+branch:      rel_0_3
+tag:         rel_0_3_11
+parent:      3114:d620e4d29a65
+user:        zzzeek
+date:        Sun Oct 14 19:15:11 2007 +0000
+summary:     removed default schema test; this is supported in 0.4
+
+changeset:   3032:05fa82b53058
+tag:         rel_0_4beta6
+user:        zzzeek
+date:        Thu Sep 27 00:28:58 2007 +0000
+summary:     zoomark adjustment for the pybot...
+
+changeset:   2943:06d333229917
+tag:         rel_0_4beta4
+user:        zzzeek
+date:        Wed Aug 22 19:36:54 2007 +0000
+summary:     changeset about connection pool
+
+changeset:   2866:bd50ff1b053a
+tag:         rel_0_4beta3
+user:        zzzeek
+date:        Thu Aug 16 15:12:57 2007 +0000
+summary:     bump
+
+changeset:   2843:d25671d8a1b1
+tag:         rel_0_4beta2
+user:        zzzeek
+date:        Tue Aug 14 14:32:50 2007 +0000
+summary:     removed assertion for "no tables in db"
+
+changeset:   2817:fa0ca1ddb96d
+tag:         rel_0_4beta1
+user:        zzzeek
+date:        Sun Aug 12 16:19:52 2007 +0000
+summary:     added a brief migration guide
+
+changeset:   2628:89768e0a6acb
+branch:      rel_0_4
+tag:         rel_0_4_before_release
+parent:      2626:99846f3a31c1
+user:        Ants Aasma <ants.aasma@gmail.com>
+date:        Fri Jul 27 03:30:49 2007 +0000
+summary:     added an example on how to share code between sql predicate construction and instance methods.
+
+changeset:   2567:a8bd000e3f80
+tag:         rel_0_3_10
+parent:      2565:e7982c372757
+user:        zzzeek
+date:        Fri Jul 20 21:01:51 2007 +0000
+summary:     postgres cant do this particular test b.c. the default "public" schema is taken
+
+changeset:   2498:8adf05c550cf
+tag:         rel_0_3_9
+user:        zzzeek
+date:        Sun Jul 15 16:27:42 2007 +0000
+summary:     fixes
+
+changeset:   2286:691280ab6c3c
+tag:         rel_0_3_8
+user:        zzzeek
+date:        Sat Jun 02 20:33:15 2007 +0000
+summary:     pg test wasnt really working with that particular default..its a TODO
+
+changeset:   2194:b426a155b2c8
+tag:         rel_0_3_7
+user:        zzzeek
+date:        Sun Apr 29 23:47:10 2007 +0000
+summary:     0.3.7...
+
+changeset:   2084:e2bd8c7a3e48
+tag:         rel_0_3_6
+user:        zzzeek
+date:        Fri Mar 23 21:38:12 2007 +0000
+summary:     cleanup continued
+
+changeset:   2025:94d9a66ea97a
+tag:         rel_0_3_5
+user:        zzzeek
+date:        Thu Feb 22 03:51:21 2007 +0000
+summary:     restored sequence back, needed by PG for the unit test
+
+changeset:   1923:43acd2497396
+tag:         rel_0_3_4
+user:        zzzeek
+date:        Tue Jan 23 20:25:48 2007 +0000
+summary:     - *slight* support for binary, but still need to figure out how to insert reasonably large
+
+changeset:   1847:eb00664eefa4
+tag:         rel_0_3_3
+user:        zzzeek
+date:        Fri Dec 15 07:43:42 2006 +0000
+summary:     fixed the raise for mysql to re-raise the error
+
+changeset:   1838:f7dc5c00726e
+tag:         rel_0_3_2
+user:        zzzeek
+date:        Sun Dec 10 18:05:10 2006 +0000
+summary:     added style for page control
+
+changeset:   1788:b1c24c4b1008
+tag:         rel_0_3_1
+user:        zzzeek
+date:        Mon Nov 13 00:42:54 2006 +0000
+summary:     its that time
+
+changeset:   1740:3076551e854c
+tag:         rel_0_3_0
+user:        zzzeek
+date:        Sun Oct 22 19:10:44 2006 +0000
+summary:     fixed some imports, transaction hanging open
+
+changeset:   1571:99824eae86e6
+tag:         rel_0_2_8
+user:        zzzeek
+date:        Tue Sep 05 17:19:26 2006 +0000
+summary:     0.2.8..
+
+changeset:   1518:0791f0364507
+tag:         rel_0_2_7
+user:        zzzeek
+date:        Sat Aug 12 22:58:49 2006 +0000
+summary:     modifcation to unitofwork to not maintain ordering within the
+
+changeset:   1450:1a13280f925a
+tag:         rel_0_2_6
+user:        zzzeek
+date:        Thu Jul 20 01:00:30 2006 +0000
+summary:     fixed [ticket:245]
+
+changeset:   1411:2557d80fe7d9
+tag:         rel_0_2_5
+user:        zzzeek
+date:        Sat Jul 08 17:11:58 2006 +0000
+summary:     0.2.5
+
+changeset:   1393:776c9cbb6ba9
+tag:         rel_0_2_4
+user:        zzzeek
+date:        Tue Jun 27 23:56:14 2006 +0000
+summary:     fixes to pool_invalidate [ticket:224]
+
+changeset:   1360:c6057b2b0314
+tag:         rel_0_2_3
+user:        zzzeek
+date:        Sat Jun 17 00:53:33 2006 +0000
+summary:     cast converted into its own ClauseElement so that it can have an explicit compilation
+
+changeset:   1350:b3708ba03af6
+tag:         pre_attribute_rewrite
+user:        zzzeek
+date:        Thu Jun 15 15:27:39 2006 +0000
+summary:     if an item attached to a parent is found to be already in the session, then the "save-update" cascade operation doesnt take place.  currently this prevents unncessessary cascading due to backref events, which was a massive speed hit.
+
+changeset:   1329:8abe3efd5308
+tag:         rel_0_2_2
+user:        zzzeek
+date:        Mon Jun 05 19:27:47 2006 +0000
+summary:     tweaks
+
+changeset:   1293:d718e8811626
+tag:         rel_0_2_1
+user:        zzzeek
+date:        Mon May 29 03:14:11 2006 +0000
+summary:     0.2.1 prep
+
+changeset:   1275:2aa1b38ae1ba
+tag:         rel_0_2_0
+user:        zzzeek
+date:        Sat May 27 20:33:41 2006 +0000
+summary:     take two
+
+changeset:   1239:1493f6fb829e
+tag:         rel_0_1_7
+user:        zzzeek
+date:        Fri May 05 17:45:06 2006 +0000
+summary:     added __mod__ type
+
+changeset:   1206:70897d54fa95
+tag:         rel_0_1_6
+user:        zzzeek
+date:        Wed Apr 12 19:40:43 2006 +0000
+summary:     0.1.6...
+
+changeset:   1153:4f6b5217dccd
+tag:         rel_0_1_5
+user:        zzzeek
+date:        Mon Mar 27 03:12:27 2006 +0000
+summary:     d
+
+changeset:   1072:1f8ec0cae945
+tag:         rel_0_1_4
+user:        zzzeek
+date:        Mon Mar 13 17:32:13 2006 +0000
+summary:     more notes, docs
+
+changeset:   1016:afac457165a1
+tag:         rel_0_1_3
+user:        zzzeek
+date:        Thu Mar 02 01:48:58 2006 +0000
+summary:     its release time
+
+changeset:   973:b6144e764caf
+tag:         rel_0_1_2
+user:        zzzeek
+date:        Fri Feb 24 00:28:10 2006 +0000
+summary:     fix to silent "recursive" bug in schema getattr that was somehow running only 994 times
+
+changeset:   972:baf5ce08ae9b
+tag:         rel_0_1_1
+user:        zzzeek
+date:        Thu Feb 23 02:47:07 2006 +0000
+summary:     release time
+
+changeset:   929:692a619e467d
+tag:         rel_0_1_0
+user:        zzzeek
+date:        Tue Feb 14 02:40:07 2006 +0000
+summary:     comment
+
+changeset:   892:c0f2a687524b
+tag:         pre_uow_scoping
+user:        zzzeek
+date:        Thu Feb 09 00:50:22 2006 +0000
+summary:     commented out print statement
+
+changeset:   888:b7246d91cf2a
+tag:         pre_hashkey_removal
+user:        zzzeek
+date:        Tue Feb 07 04:55:12 2006 +0000
+summary:     took out print statement
+
