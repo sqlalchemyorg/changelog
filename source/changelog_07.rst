@@ -1039,6 +1039,10 @@
       to get everything including subqueries in the
       columns clause, etc.
 
+.. changelog::
+    :version: 0.7.5
+    :released: Sat Jan 28 2012
+
     .. change::
         :tags: orm, bug
         :tickets: 2389
@@ -1375,6 +1379,10 @@
 
       Fixed large_collection.py to close the
       session before dropping tables.
+
+.. changelog::
+    :version: 0.7.4
+    :released: Fri Dec 09 2011
 
     .. change::
         :tags: orm, bug

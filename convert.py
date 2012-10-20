@@ -38,7 +38,7 @@ def raw_blocks(fname):
                             (?:beta\d|rc\d|[a-z]\d?)?
                         )
 
-                        (\(.*\))?$''', re.X)
+                        \s*(\(.*\))?$''', re.X)
 
     bullet_re = re.compile(r'''
           (\s{0,5})-\s(.*)
