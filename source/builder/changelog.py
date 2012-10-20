@@ -15,10 +15,10 @@ def _parse_content(content):
     idx = 0
     for line in content:
         idx += 1
-        m = re.match(r' *\:(.+?)\: +(.+)', line)
+        m = re.match(r' *\:(.+?)\:(?: +(.+))?', line)
         if m:
             attrname, value = m.group(1, 2)
-            d[attrname] = value
+            d[attrname] = value or ''
         else:
             break
     d["text"] = content[idx:]

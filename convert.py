@@ -93,10 +93,11 @@ def tagged(elements):
     current_tags = set()
     for type_, content in elements:
         if type_ == 'version':
+            current_tags = set()
             current_version = content
         elif type_ == 'bullet':
             if len(content.split(' ')) < 3 and "ticket" not in content:
-                current_tags = set([re.sub(r'[\s\:]', '', c) for c in content.split(' ')])
+                current_tags = set([re.sub(r'[\s\:]', '', c.lower()) for c in content.split(' ')])
             else:
                 in_content_tags = set()
                 tickets = set()

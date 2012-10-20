@@ -2308,21 +2308,21 @@
        - Schema-qualified tables / autoload
 
     .. change::
-        :tags: Firebird, backend
+        :tags: firebird, backend
         :tickets: 410
 
       does properly reflect domains (partially fixing) and
       PassiveDefaults
 
     .. change::
-        :tags: 3562, Firebird, backend
+        :tags: 3562, firebird, backend
         :tickets: 
 
       reverted to use default poolclass (was set to SingletonThreadPool in
       0.4.0 for test purposes)
 
     .. change::
-        :tags: Firebird, backend
+        :tags: firebird, backend
         :tickets: 
 
       map func.length() to 'char_length' (easily overridable with the UDF
@@ -2749,41 +2749,41 @@
     :released: Wed Oct 17 2007
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 
 
       (see 0.4.0beta1 for the start of major changes against 0.3,
       as well as http://www.sqlalchemy.org/trac/wiki/WhatsNewIn04 )
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 785
 
       Added initial Sybase support (mxODBC so far)
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 
 
       Added partial index support for PostgreSQL. Use the postgres_where keyword
       on the Index.
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 817
 
       string-based query param parsing/config file parser understands
       wider range of string values for booleans
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 813
 
       backref remove object operation doesn't fail if the other-side
       collection doesn't contain the item, supports noload collections
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 818
 
       removed __len__ from "dynamic" collection as it would require issuing
@@ -2791,14 +2791,14 @@
       redundant SQL
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 816
 
       inline optimizations added to locate_dirty() which can greatly speed up
       repeated calls to flush(), as occurs with autoflush=True
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 
 
       The IdentifierPreprarer's _requires_quotes test is now regex based.  Any
@@ -2807,14 +2807,14 @@
       _requires_quotes.
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 
 
       Firebird has supports_sane_rowcount and supports_sane_multi_rowcount set
       to False due to ticket #370 (right way).
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 
 
       Improvements and fixes on Firebird reflection:
@@ -2824,7 +2824,7 @@
       . FB now reflects Column's nullable property correctly.
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 
 
       Fixed SQL compiler's awareness of top-level column labels as used
@@ -2832,7 +2832,7 @@
       names don't affect the result or conflict with result-column metadata.
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 
 
       query.get() and related functions (like many-to-one lazyloading)
@@ -2841,34 +2841,34 @@
       mapped selectable.
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 795
 
       Fixed three- and multi-level select and deferred inheritance loading
       (i.e. abc inheritance with no select_table).
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 
 
       Ident passed to id_chooser in shard.py always a list.
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 
 
       The no-arg ResultProxy._row_processor() is now the class attribute
       `_process_row`.
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 797
 
       Added support for returning values from inserts and updates for
       PostgreSQL 8.2+.
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 
 
       PG reflection, upon seeing the default schema name being used explicitly
@@ -2880,25 +2880,25 @@
       In other words, SA assumes the user is being consistent in this usage.
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 808
 
       fixed sqlite reflection of BOOL/BOOLEAN
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 
 
       Added support for UPDATE with LIMIT on mysql.
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 803
 
       null foreign key on a m2o doesn't trigger a lazyload
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 800
 
       oracle does not implicitly convert to unicode for non-typed result
@@ -2907,25 +2907,25 @@
       should fix
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 806
 
       fix to anonymous label generation of long table/column names
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 
 
       Firebird dialect now uses SingletonThreadPool as poolclass.
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 
 
       Firebird now uses dialect.preparer to format sequences names
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 810
 
       Fixed breakage with postgres and multiple two-phase transactions. Two-phase
@@ -2933,34 +2933,34 @@
       as the usual dbapi commits/rollbacks do.
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 
 
       Added an option to the _ScopedExt mapper extension to not automatically
       save new objects to session on object initialization.
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 
 
       fixed Oracle non-ansi join syntax
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 
 
       PickleType and Interval types (on db not supporting it natively) are now
       slightly faster.
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 
 
       Added Float and Time types to Firebird (FBFloat and FBTime). Fixed
       BLOB SUB_TYPE for TEXT and Binary types.
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 
 
       Changed the API for the in_ operator. in_() now accepts a single argument
@@ -2972,7 +2972,7 @@
     :released: Thu Sep 27 2007
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 
 
       The Session identity map is now *weak referencing* by default, use
@@ -2981,7 +2981,7 @@
       temporary strong reference to those instances until changes are flushed.
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 758
 
       Mapper compilation has been reorganized such that most compilation occurs
@@ -2993,21 +2993,21 @@
       (which should be the normal case anyway).
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 
 
       added "FETCH" to the keywords detected by Postgres to indicate a
       result-row holding statement (i.e. in addition to "SELECT").
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 
 
       Added full list of SQLite reserved keywords so that they get escaped
       properly.
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 
 
       Tightened up the relationship between the Query's generation of "eager
@@ -3021,7 +3021,7 @@
       simple integer counts now to generate labels.
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 
 
       Removed "parameters" argument from clauseelement.compile(), replaced with
@@ -3031,7 +3031,7 @@
       execute/executemany behavior, simplifies things a bit internally.
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 560
 
       Added 'comparator' keyword argument to PickleType.  By default, "mutable"
@@ -3041,7 +3041,7 @@
       "PickleType(comparator=operator.eq)"
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 
 
       Added session.is_modified(obj) method; performs the same "history"
@@ -3050,27 +3050,27 @@
       determines whether or not to issue an UPDATE for the instance's row.
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 584, 761
 
       Added "schema" argument to Sequence; use this with Postgres /Oracle when
       the sequence is located in an alternate schema.  Implements part of, should fix.
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 
 
       Fixed reflection of the empty string for mysql enums.
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 794
 
       Changed MySQL dialect to use the older LIMIT <offset>, <limit> syntax
       instead of LIMIT <l> OFFSET <o> for folks using 3.23.
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 
 
       Added 'passive_deletes="all"' flag to relation(), disables all nulling-out
@@ -3078,14 +3078,14 @@
       deleted.
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 
 
       Column defaults and onupdates, executing inline, will add parenthesis for
       subqueries and other parenthesis-requiring expressions
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 793
 
       The behavior of String/Unicode types regarding that they auto-convert to
@@ -3097,13 +3097,13 @@
       string-based bind parameters as VARCHARs and not CLOBs.
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 771
 
       Fixes to ShardedSession to work with deferred columns.
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 
 
       User-defined shard_chooser() function must accept "clause=None" argument;
@@ -3112,7 +3112,7 @@
       instance.)
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 764
 
       Adjusted operator precedence of NOT to match '==' and others, so that
@@ -3122,7 +3122,7 @@
       to operators like BETWEEN.
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 757, 768, 779, 728
 
       Other tickets:,,.
@@ -3132,51 +3132,51 @@
     :released: 
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 754
 
       Connection pool fixes; the better performance of beta4 remains but fixes
       "connection overflow" and other bugs which were present (like).
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 769
 
       Fixed bugs in determining proper sync clauses from custom inherit
       conditions.
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 763
 
       Extended 'engine_from_config' coercion for QueuePool size / overflow.
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 748
 
       mysql views can be reflected again.
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 
 
       AssociationProxy can now take custom getters and setters.
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 
 
       Fixed malfunctioning BETWEEN in orm queries.
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 762
 
       Fixed OrderedProperties pickling
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 
 
       SQL-expression defaults and sequences now execute "inline" for all
@@ -3187,20 +3187,20 @@
       single insert or update statement contained a SQL-side default expression.
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 759
 
       Fixed PG executemany() behavior.
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 
 
       postgres reflects tables with autoincrement=False for primary key columns
       which have no defaults.
 
     .. change::
-        :tags: misc
+        :tags: 
         :tickets: 
 
       postgres no longer wraps executemany() with individual execute() calls,
@@ -3209,31 +3209,31 @@
       does not report proper rowcount for executemany().
 
     .. change::
-        :tags: Tickets, fixed
+        :tags: tickets, fixed
         :tickets: 742
 
       
 
     .. change::
-        :tags: Tickets, fixed
+        :tags: tickets, fixed
         :tickets: 748
 
       
 
     .. change::
-        :tags: Tickets, fixed
+        :tags: tickets, fixed
         :tickets: 760
 
       
 
     .. change::
-        :tags: Tickets, fixed
+        :tags: tickets, fixed
         :tickets: 762
 
       
 
     .. change::
-        :tags: Tickets, fixed
+        :tags: tickets, fixed
         :tickets: 763
 
       
@@ -3243,13 +3243,13 @@
     :released: Wed Aug 22 2007
 
     .. change::
-        :tags: Tickets, fixed
+        :tags: 
         :tickets: 
 
       Tidied up what ends up in your namespace when you 'from sqlalchemy import *':
 
     .. change::
-        :tags: Tickets, fixed
+        :tags: 
         :tickets: 
 
       'table' and 'column' are no longer imported.  They remain available by
@@ -3259,14 +3259,14 @@
       with SQLAlchemy, likewise column.
 
     .. change::
-        :tags: Tickets, fixed
+        :tags: 
         :tickets: 
 
       Internal-ish classes like ClauseElement, FromClause, NullTypeEngine,
       etc., are also no longer imported into your namespace
 
     .. change::
-        :tags: Tickets, fixed
+        :tags: 
         :tickets: 
 
       The 'Smallinteger' compatiblity name (small i!) is no longer imported,
@@ -3274,7 +3274,7 @@
       imported.
 
     .. change::
-        :tags: Tickets, fixed
+        :tags: 
         :tickets: 
 
       The connection pool uses a "threadlocal" strategy internally to return
@@ -3287,14 +3287,14 @@
       we'll roll it right back.
 
     .. change::
-        :tags: Tickets, fixed
+        :tags: 
         :tickets: 
 
       Fix to bind param processing such that "False" values (like blank strings)
       still get processed/encoded.
 
     .. change::
-        :tags: Tickets, fixed
+        :tags: 
         :tickets: 752
 
       Fix to select() "generative" behavior, such that calling column(),
@@ -3302,7 +3302,7 @@
       original select object
 
     .. change::
-        :tags: Tickets, fixed
+        :tags: 
         :tickets: 
 
       Added a "legacy" adapter to types, such that user-defined TypeEngine
@@ -3311,7 +3311,7 @@
       calling the super() version of those methods.
 
     .. change::
-        :tags: Tickets, fixed
+        :tags: 
         :tickets: 
 
       Added session.prune(), trims away instances cached in a session that
@@ -3319,7 +3319,7 @@
       identity maps).
 
     .. change::
-        :tags: Tickets, fixed
+        :tags: 
         :tickets: 
 
       Added close() method to Transaction.  Closes out a transaction using
@@ -3327,7 +3327,7 @@
       without affecting the outer transaction.
 
     .. change::
-        :tags: Tickets, fixed
+        :tags: 
         :tickets: 
 
       Transactional and non-transactional Session integrates better with
@@ -3336,46 +3336,46 @@
       being bound to the Session.
 
     .. change::
-        :tags: Tickets, fixed
+        :tags: 
         :tickets: 735
 
       Modified SQL operator functions to be module-level operators,
       allowing SQL expressions to be pickleable.
 
     .. change::
-        :tags: Tickets, fixed
+        :tags: 
         :tickets: 
 
       Small adjustment to mapper class.__init__ to allow for Py2.6
       object.__init__() behavior.
 
     .. change::
-        :tags: Tickets, fixed
+        :tags: 
         :tickets: 
 
       Fixed 'prefix' argument for select()
 
     .. change::
-        :tags: Tickets, fixed
+        :tags: 
         :tickets: 
 
       Connection.begin() no longer accepts nested=True, this logic is now
       all in begin_nested().
 
     .. change::
-        :tags: Tickets, fixed
+        :tags: 
         :tickets: 
 
       Fixes to new "dynamic" relation loader involving cascades
 
     .. change::
-        :tags: Tickets, fixed
+        :tags: tickets, fixed
         :tickets: 735
 
       
 
     .. change::
-        :tags: Tickets, fixed
+        :tags: tickets, fixed
         :tickets: 752
 
       
@@ -3385,26 +3385,26 @@
     :released: Thu Aug 16 2007
 
     .. change::
-        :tags: Tickets, fixed
+        :tags: 
         :tickets: 
 
       SQL types optimization:
 
     .. change::
-        :tags: Tickets, fixed
+        :tags: 
         :tickets: 
 
       New performance tests show a combined mass-insert/mass-select test as
       having 68% fewer function calls than the same test run against 0.3.
 
     .. change::
-        :tags: Tickets, fixed
+        :tags: 
         :tickets: 
 
       General performance improvement of result set iteration is around 10-20%.
 
     .. change::
-        :tags: Tickets, fixed
+        :tags: 
         :tickets: 
 
       In types.AbstractType, convert_bind_param() and convert_result_value()
@@ -3413,51 +3413,51 @@
       processing function is called.
 
     .. change::
-        :tags: Tickets, fixed
+        :tags: 
         :tickets: 
 
       Hooks added throughout base/sql/defaults to optimize the calling of bind
       aram/result processors so that method call overhead is minimized.
 
     .. change::
-        :tags: Tickets, fixed
+        :tags: 
         :tickets: 
 
       Support added for executemany() scenarios such that unneeded "last row id"
       logic doesn't kick in, parameters aren't excessively traversed.
 
     .. change::
-        :tags: Tickets, fixed
+        :tags: 
         :tickets: 
 
       Added 'inherit_foreign_keys' arg to mapper().
 
     .. change::
-        :tags: Tickets, fixed
+        :tags: 
         :tickets: 
 
       Added support for string date passthrough in sqlite.
 
     .. change::
-        :tags: Tickets, fixed
+        :tags: tickets, fixed
         :tickets: 738
 
       
 
     .. change::
-        :tags: Tickets, fixed
+        :tags: tickets, fixed
         :tickets: 739
 
       
 
     .. change::
-        :tags: Tickets, fixed
+        :tags: tickets, fixed
         :tickets: 743
 
       
 
     .. change::
-        :tags: Tickets, fixed
+        :tags: tickets, fixed
         :tickets: 744
 
       
@@ -3513,25 +3513,25 @@
       Moved ClauseVisitor traversal back to inlined non-recursive.
 
     .. change::
-        :tags: Tickets, fixed
+        :tags: tickets, fixed
         :tickets: 730
 
       
 
     .. change::
-        :tags: Tickets, fixed
+        :tags: tickets, fixed
         :tickets: 732
 
       
 
     .. change::
-        :tags: Tickets, fixed
+        :tags: tickets, fixed
         :tickets: 733
 
       
 
     .. change::
-        :tags: Tickets, fixed
+        :tags: tickets, fixed
         :tickets: 734
 
       
@@ -3926,31 +3926,31 @@
       Oracle's UPPERCASE style too).
 
     .. change::
-        :tags: Transactions
+        :tags: transactions
         :tickets: 
 
       Added context manager (with statement) support for transactions.
 
     .. change::
-        :tags: Transactions
+        :tags: transactions
         :tickets: 
 
       Added support for two phase commit, works with mysql and postgres so far.
 
     .. change::
-        :tags: Transactions
+        :tags: transactions
         :tickets: 
 
       Added a subtransaction implementation that uses savepoints.
 
     .. change::
-        :tags: Transactions
+        :tags: transactions
         :tickets: 
 
       Added support for savepoints.
 
     .. change::
-        :tags: MetaData
+        :tags: metadata
         :tickets: 
 
       Tables can be reflected from the database en-masse without declaring
@@ -3958,25 +3958,25 @@
       present in the database, or use metadata.reflect() for finer control.
 
     .. change::
-        :tags: MetaData
+        :tags: metadata
         :tickets: 
 
       DynamicMetaData has been renamed to ThreadLocalMetaData
 
     .. change::
-        :tags: MetaData
+        :tags: metadata
         :tickets: 
 
       The ThreadLocalMetaData constructor now takes no arguments.
 
     .. change::
-        :tags: MetaData
+        :tags: metadata
         :tickets: 
 
       BoundMetaData has been removed- regular MetaData is equivalent
 
     .. change::
-        :tags: MetaData
+        :tags: metadata
         :tickets: 646
 
       Numeric and Float types now have an "asdecimal" flag; defaults to True for
@@ -3986,7 +3986,7 @@
       modules.
 
     .. change::
-        :tags: MetaData
+        :tags: metadata
         :tickets: 475
 
       New SQL operator implementation which removes all hardcoded operators from
@@ -3996,14 +3996,14 @@
       numeric context it compiles to "+".  Fixes.
 
     .. change::
-        :tags: MetaData
+        :tags: metadata
         :tickets: 
 
       "Anonymous" alias and label names are now generated at SQL compilation
       time in a completely deterministic fashion... no more random hex IDs
 
     .. change::
-        :tags: MetaData
+        :tags: metadata
         :tickets: 
 
       Significant architectural overhaul to SQL elements (ClauseElement).  All
@@ -4013,7 +4013,7 @@
       mutations to SQL expressions.
 
     .. change::
-        :tags: MetaData
+        :tags: metadata
         :tickets: 
 
       select() and union()'s now have "generative" behavior.  Methods like
@@ -4021,7 +4021,7 @@
       is left unchanged.  Non-generative methods remain as well.
 
     .. change::
-        :tags: MetaData
+        :tags: metadata
         :tickets: 569, 52
 
       The internals of select/union vastly simplified- all decision making
@@ -4030,7 +4030,7 @@
       by any dialect's compilation process
 
     .. change::
-        :tags: MetaData
+        :tags: metadata
         :tickets: 
 
       select(scalar=True) argument is deprecated; use select(..).as_scalar().
@@ -4038,20 +4038,20 @@
       within expressions.
 
     .. change::
-        :tags: MetaData
+        :tags: metadata
         :tickets: 504
 
       Added select().with_prefix('foo') allowing any set of keywords to be
       placed before the columns clause of the SELECT
 
     .. change::
-        :tags: MetaData
+        :tags: metadata
         :tickets: 686
 
       Added array slice support to row[<index>]
 
     .. change::
-        :tags: MetaData
+        :tags: metadata
         :tickets: 
 
       Result sets make a better attempt at matching the DBAPI types present in
@@ -4060,7 +4060,7 @@
       textual SQL; constructed SQL statements always have an explicit type map.
 
     .. change::
-        :tags: MetaData
+        :tags: metadata
         :tickets: 
 
       Result sets from CRUD operations close their underlying cursor immediately
@@ -4069,7 +4069,7 @@
       with less chance of "dangling connections".
 
     .. change::
-        :tags: MetaData
+        :tags: metadata
         :tickets: 559
 
       Column defaults and onupdate Python functions (i.e. passed to
@@ -4079,27 +4079,27 @@
       so that you can pre-execute statements.
 
     .. change::
-        :tags: MetaData
+        :tags: metadata
         :tickets: 
 
       Added "explcit" create/drop/execute support for sequences (i.e. you can
       pass a "connectable" to each of those methods on Sequence).
 
     .. change::
-        :tags: MetaData
+        :tags: metadata
         :tickets: 
 
       Better quoting of identifiers when manipulating schemas.
 
     .. change::
-        :tags: MetaData
+        :tags: metadata
         :tickets: 
 
       Standardized the behavior for table reflection where types can't be
       located; NullType is substituted instead, warning is raised.
 
     .. change::
-        :tags: MetaData
+        :tags: metadata
         :tickets: 606
 
       ColumnCollection (i.e. the 'c' attribute on tables) follows dictionary

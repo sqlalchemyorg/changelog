@@ -5409,7 +5409,7 @@ fixes [ticket:388]
 - added keywords for EXCEPT, INTERSECT, EXCEPT ALL, INTERSECT ALL
 [ticket:247]
 - assign_mapper in assignmapper extension returns the created mapper
-[changeset:2110]
+[ticket:2110]
 - added label() function to Select class, when scalar=True is used
 to create a scalar subquery
 i.e. "select x, y, (select max(foo) from table) AS foomax from table"
@@ -5767,7 +5767,7 @@ for sqlite applications that dispose of threads en masse)
 - fixed small pickle bug(s) with lazy loaders [ticket:265] [ticket:267]
 - fixed possible error in mysql reflection where certain versions
 return an array instead of string for SHOW CREATE TABLE call
-- fix to lazy loads when mapping to joins [changeset:1770]
+- fix to lazy loads when mapping to joins [ticket:1770]
 - all create()/drop() calls have a keyword argument of "connectable".
 "engine" is deprecated.
 - fixed ms-sql connect() to work with adodbapi

@@ -3558,7 +3558,7 @@
     :released: Thu Jun 12 2008
 
     .. change::
-        :tags: extensions
+        :tags: 
         :tickets: 
 
       The "__init__" trigger/decorator added by mapper now attempts
@@ -3568,20 +3568,20 @@
       constructor.
 
     .. change::
-        :tags: extensions
+        :tags: 
         :tickets: 
 
       ClassState is renamed to ClassManager.
 
     .. change::
-        :tags: extensions
+        :tags: 
         :tickets: 
 
       Classes may supply their own InstrumentationManager by
       providing a __sa_instrumentation_manager__ property.
 
     .. change::
-        :tags: extensions
+        :tags: 
         :tickets: 
 
       Custom instrumentation may use any mechanism to associate a
@@ -3591,7 +3591,7 @@
       instrumentation.
 
     .. change::
-        :tags: extensions
+        :tags: 
         :tickets: 
 
       Moved entity_name, _sa_session_id, and _instance_key from the
@@ -3601,21 +3601,21 @@
       be issued when accessed.
 
     .. change::
-        :tags: extensions
+        :tags: 
         :tickets: 
 
       The _prepare_instrumentation alias for prepare_instrumentation
       has been removed.
 
     .. change::
-        :tags: extensions
+        :tags: 
         :tickets: 
 
       sqlalchemy.exceptions has been renamed to sqlalchemy.exc.  The
       module may be imported under either name.
 
     .. change::
-        :tags: extensions
+        :tags: 
         :tickets: 
 
       ORM-related exceptions are now defined in sqlalchemy.orm.exc.
@@ -3624,27 +3624,27 @@
       sqlalchemy.exc during the import of sqlalchemy.orm.
 
     .. change::
-        :tags: extensions
+        :tags: 
         :tickets: 
 
       sqlalchemy.logging has been renamed to sqlalchemy.log.
 
     .. change::
-        :tags: extensions
+        :tags: 
         :tickets: 
 
       The transitional sqlalchemy.log.SADeprecationWarning alias for
       the warning's definition in sqlalchemy.exc has been removed.
 
     .. change::
-        :tags: extensions
+        :tags: 
         :tickets: 
 
       exc.AssertionError has been removed and usage replaced with
       Python's built-in AssertionError.
 
     .. change::
-        :tags: extensions
+        :tags: 
         :tickets: 
 
       The behavior of MapperExtensions attached to multiple,
