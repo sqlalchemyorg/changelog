@@ -1860,10 +1860,10 @@ CHANGES PRE-0.6
       account [ticket:1155]
     - added BFILE to reflected type names [ticket:1121]
 
-0.5beta3
-========
+0.5.0beta3
+==========
 
-0.5beta3 includes all bugfixes listed under release "0.4.7".
+0.5.0beta3 includes all bugfixes listed under release "0.4.7".
 
 - orm
     - The "entity_name" feature of SQLAlchemy mappers has been
@@ -1957,10 +1957,10 @@ CHANGES PRE-0.6
       optional & will be quoted on demand as required.  (Quoting was
       always optional for use with existing tables.) [ticket:1110]
 
-0.5beta2
-========
+0.5.0beta2
+==========
 
-0.5beta2 includes some of the bugfixes listed under release "0.4.7".
+0.5.0beta2 includes some of the bugfixes listed under release "0.4.7".
 
 - orm
     - In addition to expired attributes, deferred attributes also
@@ -2052,8 +2052,8 @@ CHANGES PRE-0.6
       {kwarg1:value, ...}) which contains positional + kw arguments
       to be passed to the Table constructor. [ticket:1096]
 
-0.5beta1
-========
+0.5.0beta1
+==========
 
 An ongoing document describing the changes from 0.4 to 0.5 is at:
 http://www.sqlalchemy.org/trac/wiki/05Migration
