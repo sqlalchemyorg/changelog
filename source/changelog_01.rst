@@ -9,148 +9,148 @@
     :released: Fri May 05 2006
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       some fixes to topological sort algorithm
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       added DISTINCT ON support to Postgres (just supply distinct=[col1,col2..])
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       added __mod__ (% operator) to sql expressions
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       "order_by" mapper property inherited from inheriting mapper
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       fix to column type used when mapper UPDATES/DELETEs
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       with convert_unicode=True, reflection was failing, has been fixed
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       types types types!  still werent working....have to use TypeDecorator again :(
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       mysql binary type converts array output to buffer, fixes PickleType
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       fixed the attributes.py memory leak once and for all
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       unittests are qualified based on the databases that support each one
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       fixed bug where column defaults would clobber VALUES clause of insert objects
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       fixed bug where table def w/ schema name would force engine connection
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       fix for parenthesis to work correctly with subqueries in INSERT/UPDATE
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       HistoryArraySet gets extend() method
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       fixed lazyload support for other comparison operators besides =
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       lazyload fix where two comparisons in the join condition point to the
       samem column
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       added "construct_new" flag to mapper, will use __new__ to create instances
       instead of __init__ (standard in 0.2)
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       added selectresults.py to SVN, missed it last time
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       tweak to allow a many-to-many relationship from a table to itself via
       an association table
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       small fix to "translate_row" function used by polymorphic example
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       create_engine uses cgi.parse_qsl to read query string (out the window in 0.2)
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       tweaks to CAST operator
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       fixed function names LOCAL_TIME/LOCAL_TIMESTAMP -> LOCALTIME/LOCALTIMESTAMP
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       fixed order of ORDER BY/HAVING in compile
@@ -160,32 +160,32 @@
     :released: Wed Apr 12 2006
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       support for MS-SQL added courtesy Rick Morrison, Runar Petursson
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       the latest SQLSoup from J. Ellis
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       ActiveMapper has preliminary support for inheritance (Jeff Watkins)
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       added a "mods" system which allows pluggable modules that modify/augment
       core functionality, using the function "install_mods(*modnames)".
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       added the first "mod", SelectResults, which modifies mapper selects to
@@ -193,7 +193,7 @@
       (Jonas Borgstr?
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       factored out querying capabilities of Mapper into a separate Query object
@@ -201,7 +201,7 @@
       and makes other things possible.
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       objectstore/Session refactored, the official way to save objects is now
@@ -210,14 +210,14 @@
       the 0.2 series.
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       types system is bound to an engine at query compile time, not schema
       construction time.  this simplifies the types system as well as the ProxyEngine.
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       added 'version_id' keyword argument to mapper. this keyword should reference a
@@ -228,7 +228,7 @@
       value received is not the expected count.
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       added 'entity_name' keyword argument to mapper. a mapper is now associated
@@ -240,32 +240,32 @@
       map for an otherwise equilvalent object.
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       overhaul to the attributes system. code has been clarified, and also fixed to
       support proper polymorphic behavior on object attributes.
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       added "for_update" flag to Select objects
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       some fixes for backrefs
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       fix for postgres1 DateTime type
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       documentation pages mostly switched over to Markdown syntax
@@ -275,7 +275,7 @@
     :released: Mon Mar 27 2006
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       added SQLSession concept to SQLEngine. this object keeps track of retrieving a
@@ -286,7 +286,7 @@
       come later regarding SQLSession.
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       added nest_on argument to objectstore.Session. This is a single SQLEngine or
@@ -297,14 +297,14 @@
       engine.
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       factored apart objectstore/unitofwork to separate "Session scoping" from
       "uow commit heavy lifting"
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       added populate_instance() method to MapperExtension. allows an extension to
@@ -314,33 +314,33 @@
       with this.
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       fixed Oracle8-compatibility "use_ansi" flag which converts JOINs to
       comparisons with the = and (+) operators, passes basic unittests
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       tweaks to Oracle LIMIT/OFFSET support
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       Oracle reflection uses ALL_** views instead of USER_** to get larger
       list of stuff to reflect from
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 105
 
       fixes to Oracle foreign key reflection
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       objectstore.commit(obj1, obj2,...) adds an extra step to seek out private
@@ -348,7 +348,7 @@
       commit
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       lots and lots of fixes to mappers which use inheritance, strengthened the
@@ -357,46 +357,46 @@
       to work with lazy/eager loading.
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       added support for mappers to inherit from others based on the same table,
       just specify the same table as that of both parent/child mapper.
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       some minor speed improvements to the attributes system with regards to
       instantiating and populating new objects.
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       fixed MySQL binary unit test
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       INSERTs can receive clause elements as VALUES arguments, not just literal
       values
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       support for calling multi-tokened functions, i.e. schema.mypkg.func()
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       added J. Ellis' SQLSoup module to extensions package
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       added "polymorphic" examples illustrating methods to load multiple object types
@@ -404,61 +404,61 @@
       small improvements to mapper, UNION construct to help the examples along
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       improvements/fixes to session.refresh()/session.expire() (which may have
       been called "invalidate" earlier..)
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       added session.expunge() which totally removes an object from the current
       session
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       added *args, **kwargs pass-thru to engine.transaction(func) allowing easier
       creation of transactionalizing decorator functions
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       added iterator interface to ResultProxy:  "for row in result:..."
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       added assertion to tx = session.begin(); tx.rollback(); tx.begin(), i.e. cant
       use it after a rollback()
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       added date conversion on bind parameter fix to SQLite enabling dates to
       work with pysqlite1
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 116
 
       improvements to subqueries to more intelligently construct their FROM
       clauses
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       added PickleType to types.
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       fixed two bugs with column labels with regards to bind parameters: bind param
@@ -467,20 +467,20 @@
       against a column named the same as "tablename_colname" added
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       major overhaul to unit of work documentation, other documentation sections.
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       fixed attributes bug where if an object is committed, its lazy-loaded list got
       blown away if it hadnt been loaded
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       added unique_connection() method to engine, connection pool to return a
@@ -488,7 +488,7 @@
       transaction
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       added invalidate() function to pooled connection.  will remove the connection
@@ -496,14 +496,14 @@
       though.
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       added distinct() function to column elements so you can do
       func.count(mycol.distinct())
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       added "always_refresh" flag to Mapper, creates a mapper that will always
@@ -515,7 +515,7 @@
     :released: Mon Mar 13 2006
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       create_engine() now uses genericized parameters; host/hostname,
@@ -523,14 +523,14 @@
        engine URIs much more "universal"
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       added support for SELECT statements embedded into a column clause, using the
       flag "scalar=True"
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       another overhaul to EagerLoading when used in conjunction with mappers that
@@ -541,7 +541,7 @@
       this can be overridden by using custom primary/secondary joins.
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       added J.Ellis patch to mapper.py so that selectone() throws an exception
@@ -549,27 +549,27 @@
       exception. also adds selectfirst_by (synonymous with get_by) and selectone_by
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       added onupdate parameter to Column, will exec SQL/python upon an update
       statement.Also adds "for_update=True" to all DefaultGenerator subclasses
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       added support for Oracle table reflection contributed by Andrija Zaric;
       still some bugs to work out regarding composite primary keys/dictionary selection
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       checked in an initial Firebird module, awaiting testing.
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       added sql.ClauseParameters dictionary object as the result for
@@ -577,13 +577,13 @@
       that the original values are easier to access
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       more docs for indexes, column defaults, connection pooling, engine construction
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       overhaul to the construction of the types system. uses a simpler inheritance
@@ -591,14 +591,14 @@
       for TypeDecorator.
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       added "convert_unicode=False" parameter to SQLEngine, will cause all String
       types to perform unicode encoding/decoding (makes Strings act like Unicodes)
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       added 'encoding="utf8"' parameter to engine.  the given encoding will be
@@ -606,52 +606,52 @@
       when convert_unicode=True.
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       improved support for mapping against UNIONs, added polymorph.py example
       to illustrate multi-class mapping against a UNION
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       fix to SQLite LIMIT/OFFSET syntax
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       fix to Oracle LIMIT syntax
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       added backref() function, allows backreferences to have keyword arguments
       that will be passed to the backref.
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       Sequences and ColumnDefault objects can do execute()/scalar() standalone
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       SQL functions (i.e. func.foo()) can do execute()/scalar() standalone
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       fix to SQL functions so that the ANSI-standard functions, i.e. current_timestamp
       etc., do not specify parenthesis.  all other functions do.
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       added settattr_clean and append_clean to SmartProperty, which set
@@ -659,7 +659,7 @@
       myclass.prop1.setattr_clean(myobject, 'hi')
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       improved support to column defaults when used by mappers; mappers will pull
@@ -669,14 +669,14 @@
       populate the object.
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       added 'get_session().invalidate(*obj)' method to objectstore, instances will
       refresh() themselves upon the next attribute access.
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       improvements to SQL func calls including an "engine" keyword argument so
@@ -684,27 +684,27 @@
       SQLEngine
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       fix to MySQL4 custom table engines, i.e. TYPE instead of ENGINE
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       slightly enhanced logging, includes timestamps and a somewhat configurable
       formatting system, in lieu of a full-blown logging system
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       improvements to the ActiveMapper class from the TG gang, including
       many-to-many relationships
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       added Double and TinyInt support to mysql
@@ -714,7 +714,7 @@
     :released: Thu Mar 02 2006
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       completed "post_update" feature, will add a second update statement before
@@ -723,7 +723,7 @@
       on each other
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       completed mapper.using(session) function, localized per-object Session
@@ -731,20 +731,20 @@
       user-defined Session
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       fix to Oracle "row_number over" clause with multiple tables
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       mapper.get() was not selecting multiple-keyed objects if the mapper's table was a join,
       such as in an inheritance relationship, this is fixed.
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       overhaul to sql/schema packages so that the sql package can run all on its own,
@@ -755,7 +755,7 @@
       removes the entire getattr() behavior that plagued 0.1.1.
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       refactoring of how the mapper "synchronizes" data between two objects into a
@@ -765,21 +765,21 @@
       synchronize between inherited and inheriting mappers.
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       made objectstore "check for out-of-identitymap" more aggressive, will perform the
       check when object attributes are modified or the object is deleted
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       Index object fully implemented, can be constructed standalone, or via
       "index" and "unique" arguments on Columns.
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       added "convert_unicode" flag to SQLEngine, will treat all String/CHAR types
@@ -787,14 +787,14 @@
       result set side.
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       postgres maintains a list of ANSI functions that must have no parenthesis so
       function calls with no arguments work consistently
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       tables can be created with no engine specified.  this will default their engine
@@ -802,7 +802,7 @@
       be connected via the function "global_connect".
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       added "refresh(*obj)" method to objectstore / Session to reload the attributes of
@@ -813,7 +813,7 @@
     :released: Fri Feb 24 2006
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       fixed a recursive call in schema that was somehow running 994 times then returning
@@ -824,7 +824,7 @@
     :released: Thu Feb 23 2006
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       small fix to Function class so that expressions with a func.foo() use the type of the
@@ -832,26 +832,26 @@
       other side which is more of a moving target (changeset 1020).
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       creating self-referring mappers with backrefs slightly easier (but still not that easy -
       changeset 1019)
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       fixes to one-to-one mappings (changeset 1015)
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       psycopg1 date/time issue with None fixed (changeset 1005)
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       two issues related to postgres, which doesnt want to give you the "lastrowid"
@@ -866,14 +866,14 @@
       also will not happen unless someone (usually the ORM) explicitly asks for it.
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       fixed a glitch with engine.execute_compiled where it was making a second
       ResultProxy that just got thrown away.
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       began to implement newer logic in object properities.  you can now say
@@ -881,7 +881,7 @@
       attribute, i.e. myclass.mapper.props['attr']
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       eager loading has been internally overhauled to use aliases at all times.  more
@@ -889,7 +889,7 @@
       "use aliases"-type instructions.  EagerLoader code is also much simpler now.
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       a new somewhat experimental flag "use_update" added to relations, indicates that
@@ -897,33 +897,33 @@
       primary INSERT or before a primary DELETE.  handles circular row dependencies.
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       added exceptions module, all raised exceptions (except for some
       KeyError/AttributeError exceptions) descend from these classes.
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       fix to date types with MySQL, returned timedelta converted to datetime.time
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       two-phase objectstore.commit operations (i.e. begin/commit) now return a
       transactional object (SessionTrans), to more clearly indicate transaction boundaries.
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       Index object with create/drop support added to schema
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       fix to postgres, where it will explicitly pre-execute a PassiveDefault on a table
@@ -931,45 +931,45 @@
       back from postgres" issue
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       change to information_schema query that gets back postgres table defs, now
       uses explicit JOIN keyword, since one user had faster performance with 8.1
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       fix to engine.process_defaults so it works correctly with a table that has
       different column name/column keys (changset 982)
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       a column can only be attached to one table - this is now asserted
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       postgres time types descend from Time type
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       fix to alltests so that it runs types test (now named testtypes)
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       fix to Join object so that it correctly exports its foreign keys (cs 973)
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       creating relationships against mappers that use inheritance fixed (cs 973)

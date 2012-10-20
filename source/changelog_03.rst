@@ -865,7 +865,7 @@
       used by create_engine().
 
     .. change::
-        :tags: sql:
+        :tags: sql
         :tickets: 
 
       keys() of result set columns are not lowercased, come back
@@ -873,7 +873,7 @@
       causes colnames to be all caps in oracle.
 
     .. change::
-        :tags: sql:
+        :tags: sql
         :tickets: 
 
       preliminary support for unicode table names, column names and
@@ -883,7 +883,7 @@
       works too.
 
     .. change::
-        :tags: sql:
+        :tags: sql
         :tickets: 522
 
       the Unicode type is now a direct subclass of String, which now
@@ -892,21 +892,21 @@
       better handled and allows subclassing of the Unicode datatype.
 
     .. change::
-        :tags: sql:
+        :tags: sql
         :tickets: 
 
       ClauseElements can be used in in_() clauses now, such as bind
       parameters, etc. #476
 
     .. change::
-        :tags: sql:
+        :tags: sql
         :tickets: 
 
       reverse operators implemented for `CompareMixin` elements,
       allows expressions like "5 + somecolumn" etc. #474
 
     .. change::
-        :tags: sql:
+        :tags: sql
         :tickets: 
 
       the "where" criterion of an update() and delete() now correlates
@@ -916,7 +916,7 @@
       the embedded select().
 
     .. change::
-        :tags: sql:
+        :tags: sql
         :tickets: 512
 
       column labels are now generated in the compilation phase, which
@@ -927,7 +927,7 @@
       of the "truncated" label names.
 
     .. change::
-        :tags: sql:
+        :tags: sql
         :tickets: 
 
       column label and bind param "truncation" also generate
@@ -937,7 +937,7 @@
       allowing DB query plan caching to work better.
 
     .. change::
-        :tags: sql:
+        :tags: sql
         :tickets: 513
 
       the "mini" column labels generated when using subqueries, which
@@ -946,7 +946,7 @@
       that those named columns are selected from (part of)
 
     .. change::
-        :tags: sql:
+        :tags: sql
         :tickets: 
 
       the label() method on ColumnElement will properly propagate the
@@ -954,49 +954,49 @@
       created from a scalar=True select() statement.
 
     .. change::
-        :tags: sql:
+        :tags: sql
         :tickets: 513
 
       MS-SQL better detects when a query is a subquery and knows not to
       generate ORDER BY phrases for those
 
     .. change::
-        :tags: sql:
+        :tags: sql
         :tickets: 505
 
       fix for fetchmany() "size" argument being positional in most
       dbapis
 
     .. change::
-        :tags: sql:
+        :tags: sql
         :tickets: 
 
       sending None as an argument to func.<something> will produce
       an argument of NULL
 
     .. change::
-        :tags: sql:
+        :tags: sql
         :tickets: 
 
       query strings in unicode URLs get keys encoded to ascii
       for **kwargs compat
 
     .. change::
-        :tags: sql:
+        :tags: sql
         :tickets: 523
 
       slight tweak to raw execute() change to also support tuples
       for positional parameters, not just lists
 
     .. change::
-        :tags: sql:
+        :tags: sql
         :tickets: 
 
       fix to case() construct to propagate the type of the first
       WHEN condition as the return type of the case statement
 
     .. change::
-        :tags: orm:
+        :tags: orm
         :tickets: 
 
       fixed critical issue when, after options(eagerload()) is used,
@@ -1005,7 +1005,7 @@
       eager loading was applied on those subsequent queries.
 
     .. change::
-        :tags: orm:
+        :tags: orm
         :tickets: 541
 
       added query.with_parent(someinstance) method.  searches for
@@ -1015,7 +1015,7 @@
       version.
 
     .. change::
-        :tags: orm:
+        :tags: orm
         :tickets: 554
 
       improved query.XXX_by(someprop=someinstance) querying to use
@@ -1024,7 +1024,7 @@
       thereby making more complex conditions possible
 
     .. change::
-        :tags: orm:
+        :tags: orm
         :tickets: 
 
       added generative versions of aggregates, i.e. sum(), avg(), etc.
@@ -1032,14 +1032,14 @@
       #552
 
     .. change::
-        :tags: orm:
+        :tags: orm
         :tickets: 
 
       fix to using distinct() or distinct=True in combination with
       join() and similar
 
     .. change::
-        :tags: orm:
+        :tags: orm
         :tickets: 
 
       corresponding to label/bindparam name generation, eager loaders
@@ -1047,7 +1047,7 @@
       md5 hashes.
 
     .. change::
-        :tags: orm:
+        :tags: orm
         :tickets: 
 
       improved/fixed custom collection classes when giving it "set"/
@@ -1055,7 +1055,7 @@
       methods on them during lazy loads)
 
     .. change::
-        :tags: orm:
+        :tags: orm
         :tickets: 
 
       restored old "column_property()" ORM function (used to be called
@@ -1065,20 +1065,20 @@
       added as relations (though they have issues with eager loads).
 
     .. change::
-        :tags: orm:
+        :tags: orm
         :tickets: 533
 
       fix to many-to-many relationships targeting polymorphic mappers
 
     .. change::
-        :tags: orm:
+        :tags: orm
         :tickets: 543
 
       making progress with session.merge() as well as combining its
       usage with entity_name
 
     .. change::
-        :tags: orm:
+        :tags: orm
         :tickets: 
 
       the usual adjustments to relationships between inheriting mappers,
@@ -1086,21 +1086,21 @@
       the join conditions come from the superclass' table
 
     .. change::
-        :tags: informix:
+        :tags: informix
         :tickets: 
 
       informix support added !  courtesy James Zhang, who put a ton
       of effort in.
 
     .. change::
-        :tags: sqlite:
+        :tags: sqlite
         :tickets: 
 
       removed silly behavior where sqlite would reflect UNIQUE indexes
       as part of the primary key (?!)
 
     .. change::
-        :tags: oracle:
+        :tags: oracle
         :tickets: 
 
       small fix to allow successive compiles of the same SELECT object
@@ -1159,7 +1159,7 @@
     :released: Fri Mar 23 2007
 
     .. change::
-        :tags: sql:
+        :tags: sql
         :tickets: 
 
       bindparam() names are now repeatable!  specify two
@@ -1171,14 +1171,14 @@
       bind parameters.
 
     .. change::
-        :tags: sql:
+        :tags: sql
         :tickets: 
 
       slightly better support for bind params as column clauses, either
       via bindparam() or via literal(), i.e. select([literal('foo')])
 
     .. change::
-        :tags: sql:
+        :tags: sql
         :tickets: 
 
       MetaData can bind to an engine either via "url" or "engine" kwargs
@@ -1188,27 +1188,27 @@
       default.
 
     .. change::
-        :tags: sql:
+        :tags: sql
         :tickets: 
 
       exists() becomes useable as a standalone selectable, not just in a
       WHERE clause, i.e. exists([columns], criterion).select()
 
     .. change::
-        :tags: sql:
+        :tags: sql
         :tickets: 
 
       correlated subqueries work inside of ORDER BY, GROUP BY
 
     .. change::
-        :tags: sql:
+        :tags: sql
         :tickets: 
 
       fixed function execution with explicit connections, i.e.
       conn.execute(func.dosomething())
 
     .. change::
-        :tags: sql:
+        :tags: sql
         :tickets: 
 
       use_labels flag on select() wont auto-create labels for literal text
@@ -1217,7 +1217,7 @@
       somelabel", or use literal_column("somecol").label("somelabel")
 
     .. change::
-        :tags: sql:
+        :tags: sql
         :tickets: 
 
       quoting wont occur for literal columns when they are "proxied" into
@@ -1226,7 +1226,7 @@
       literal_column("somestring").
 
     .. change::
-        :tags: sql:
+        :tags: sql
         :tickets: 
 
       added "fold_equivalents" boolean argument to Join.select(), which
@@ -1236,19 +1236,19 @@
       complains about if duplicate column names are present.
 
     .. change::
-        :tags: sql:
+        :tags: sql
         :tickets: 503
 
       fixed use_alter flag on ForeignKeyConstraint
 
     .. change::
-        :tags: sql:
+        :tags: sql
         :tickets: 506
 
       fixed usage of 2.4-only "reversed" in topological.py
 
     .. change::
-        :tags: sql:
+        :tags: sql
         :tickets: 501
 
       for hackers, refactored the "visitor" system of ClauseElement and
@@ -1263,14 +1263,14 @@
       picked up by appropriate get_children() methods).
 
     .. change::
-        :tags: sql:
+        :tags: sql
         :tickets: 
 
       the "else_" parameter to the case statement now properly works when
       set to zero.
 
     .. change::
-        :tags: orm:
+        :tags: orm
         :tickets: 
 
       the full featureset of the SelectResults extension has been merged
@@ -1297,7 +1297,7 @@
       the generative join()/outerjoin() methods are easier to use.
 
     .. change::
-        :tags: orm:
+        :tags: orm
         :tickets: 
 
       the return value for multiple mappers used with instances() now
@@ -1307,7 +1307,7 @@
       disabled when this feature is used.
 
     .. change::
-        :tags: orm:
+        :tags: orm
         :tickets: 
 
       Query has add_entity() and add_column() generative methods. these
@@ -1318,14 +1318,14 @@
       tuples, non-uniqued.
 
     .. change::
-        :tags: orm:
+        :tags: orm
         :tickets: 
 
       strings and columns can also be sent to the *args of instances()
       where those exact result columns will be part of the result tuples.
 
     .. change::
-        :tags: orm:
+        :tags: orm
         :tickets: 
 
       a full select() construct can be passed to query.select() (which
@@ -1334,7 +1334,7 @@
       similarly to sending the results to instances().
 
     .. change::
-        :tags: orm:
+        :tags: orm
         :tickets: 495
 
       eager loading will not "aliasize" "order by" clauses that were
@@ -1345,7 +1345,7 @@
       the eager loader adding them in for you)
 
     .. change::
-        :tags: orm:
+        :tags: orm
         :tickets: 
 
       added a handy multi-use "identity_key()" method to Session, allowing
@@ -1353,21 +1353,21 @@
       and rows, courtesy Daniel Miller
 
     .. change::
-        :tags: orm:
+        :tags: orm
         :tickets: 249
 
       many-to-many table will be properly handled even for operations that
       occur on the "backref" side of the operation
 
     .. change::
-        :tags: orm:
+        :tags: orm
         :tickets: 492
 
       added "refresh-expire" cascade.  allows refresh() and
       expire() calls to propagate along relationships.
 
     .. change::
-        :tags: orm:
+        :tags: orm
         :tickets: 493
 
       more fixes to polymorphic relations, involving proper lazy-clause
@@ -1376,7 +1376,7 @@
       that dont.
 
     .. change::
-        :tags: orm:
+        :tags: orm
         :tickets: 
 
       some fixes to relationship calcs when using "viewonly=True" to pull
@@ -1384,7 +1384,7 @@
       relationship's parent/child mappings
 
     .. change::
-        :tags: orm:
+        :tags: orm
         :tickets: 
 
       flush fixes on cyclical-referential relationships that contain
@@ -1392,7 +1392,7 @@
       some of the objects in the cycle are not actually part of the flush
 
     .. change::
-        :tags: orm:
+        :tags: orm
         :tickets: 500
 
       put an aggressive check for "flushing object A with a collection of
@@ -1408,7 +1408,7 @@
       particular become fragile without this check.
 
     .. change::
-        :tags: extensions:
+        :tags: extensions
         :tickets: 472
 
       options() method on SelectResults now implemented "generatively"
@@ -1416,33 +1416,33 @@
       you're going to just use Query now anyway.
 
     .. change::
-        :tags: extensions:
+        :tags: extensions
         :tickets: 
 
       query() method is added by assignmapper.  this helps with
       navigating to all the new generative methods on Query.
 
     .. change::
-        :tags: ms-sql:
+        :tags: ms-sql
         :tickets: 
 
       removed seconds input on DATE column types (probably
         should remove the time altogether)
 
     .. change::
-        :tags: ms-sql:
+        :tags: ms-sql
         :tickets: 
 
       null values in float fields no longer raise errors
 
     .. change::
-        :tags: ms-sql:
+        :tags: ms-sql
         :tickets: 
 
       LIMIT with OFFSET now raises an error (MS-SQL has no OFFSET support)
 
     .. change::
-        :tags: ms-sql:
+        :tags: ms-sql
         :tickets: 509
 
       added an facility to use the MSSQL type VARCHAR(max) instead of TEXT
@@ -1450,21 +1450,21 @@
       turn it on.
 
     .. change::
-        :tags: ms-sql:
+        :tags: ms-sql
         :tickets: 
 
       ORDER BY clauses without a LIMIT are now stripped in subqueries, as
       MS-SQL forbids this usage
 
     .. change::
-        :tags: ms-sql:
+        :tags: ms-sql
         :tickets: 480
 
       cleanup of module importing code; specifiable DB-API module; more
       explicit ordering of module preferences.
 
     .. change::
-        :tags: oracle:
+        :tags: oracle
         :tickets: 
 
       got binary working for any size input !  cx_oracle works fine,
@@ -1472,27 +1472,27 @@
       setinputsizes (also unit tests werent even setting input sizes).
 
     .. change::
-        :tags: oracle:
+        :tags: oracle
         :tickets: 
 
       also fixed CLOB read/write on a separate changeset.
 
     .. change::
-        :tags: oracle:
+        :tags: oracle
         :tickets: 
 
       auto_setinputsizes defaults to True for Oracle, fixed cases where
       it improperly propagated bad types.
 
     .. change::
-        :tags: mysql:
+        :tags: mysql
         :tickets: 
 
       added a catchall **kwargs to MSString, to help reflection of
       obscure types (like "varchar() binary" in MS 4.0)
 
     .. change::
-        :tags: mysql:
+        :tags: mysql
         :tickets: 
 
       added explicit MSTimeStamp type which takes effect when using
@@ -1503,7 +1503,7 @@
     :released: Thu Feb 22 2007
 
     .. change::
-        :tags: sql:
+        :tags: sql
         :tickets: 
 
       the value of "case_sensitive" defaults to True now, regardless of the
@@ -1513,7 +1513,7 @@
       Other fixes to quoting when using labels and "fake" column objects
 
     .. change::
-        :tags: sql:
+        :tags: sql
         :tickets: 
 
       added a "supports_execution()" method to ClauseElement, so that
@@ -1522,7 +1522,7 @@
       "Join".
 
     .. change::
-        :tags: sql:
+        :tags: sql
         :tickets: 
 
       fixed argument passing to straight textual execute() on engine,
@@ -1531,33 +1531,33 @@
       executemany()
 
     .. change::
-        :tags: sql:
+        :tags: sql
         :tickets: 
 
       small fix to BoundMetaData to accept unicode or string URLs
 
     .. change::
-        :tags: sql:
+        :tags: sql
         :tickets: 466
 
       fixed named PrimaryKeyConstraint generation courtesy
       andrija at gmail
 
     .. change::
-        :tags: sql:
+        :tags: sql
         :tickets: 464
 
       fixed generation of CHECK constraints on columns
 
     .. change::
-        :tags: sql:
+        :tags: sql
         :tickets: 
 
       fixes to tometadata() operation to propagate Constraints at column and
       table level
 
     .. change::
-        :tags: oracle:
+        :tags: oracle
         :tickets: 436
 
       when returning "rowid" as the ORDER BY column or in use with ROW_NUMBER
@@ -1567,144 +1567,144 @@
       allows polymorphic mappings to function.
 
     .. change::
-        :tags: oracle:
+        :tags: oracle
         :tickets: 
 
       sequences on a non-pk column will properly fire off on INSERT
 
     .. change::
-        :tags: oracle:
+        :tags: oracle
         :tickets: 435
 
       added PrefetchingResultProxy support to pre-fetch LOB columns when they
       are known to be present, fixes
 
     .. change::
-        :tags: oracle:
+        :tags: oracle
         :tickets: 379
 
       implemented reflection of tables based on synonyms, including across
       dblinks
 
     .. change::
-        :tags: oracle:
+        :tags: oracle
         :tickets: 363
 
       issues a log warning when a related table cant be reflected due to
       certain permission errors
 
     .. change::
-        :tags: mysql:
+        :tags: mysql
         :tickets: 
 
       fix to reflection on older DB's that might return array() type for
       "show variables like" statements
 
     .. change::
-        :tags: postgres:
+        :tags: postgres
         :tickets: 442
 
       better reflection of sequences for alternate-schema Tables
 
     .. change::
-        :tags: postgres:
+        :tags: postgres
         :tickets: 
 
       sequences on a non-pk column will properly fire off on INSERT
 
     .. change::
-        :tags: postgres:
+        :tags: postgres
         :tickets: 460, 444
 
       added PGInterval type, PGInet type
 
     .. change::
-        :tags: mssql:
+        :tags: mssql
         :tickets: 419
 
       preliminary support for pyodbc (Yay!)
 
     .. change::
-        :tags: mssql:
+        :tags: mssql
         :tickets: 298
 
       better support for NVARCHAR types added
 
     .. change::
-        :tags: mssql:
+        :tags: mssql
         :tickets: 
 
       fix for commit logic on pymssql
 
     .. change::
-        :tags: mssql:
+        :tags: mssql
         :tickets: 456
 
       fix for query.get() with schema
 
     .. change::
-        :tags: mssql:
+        :tags: mssql
         :tickets: 473
 
       fix for non-integer relationships
 
     .. change::
-        :tags: mssql:
+        :tags: mssql
         :tickets: 419
 
       DB-API module now selectable at run-time
 
     .. change::
-        :tags: tickets:422, 481, 415, mssql:
+        :tags: tickets:422, 481, 415, mssql
         :tickets: 
 
       now passes many more unit tests
 
     .. change::
-        :tags: mssql:
+        :tags: mssql
         :tickets: 479
 
       better unittest compatibility with ANSI functions
 
     .. change::
-        :tags: mssql:
+        :tags: mssql
         :tickets: 415
 
       improved support for implicit sequence PK columns with auto-insert
 
     .. change::
-        :tags: mssql:
+        :tags: mssql
         :tickets: 371
 
       fix for blank password in adodbapi
 
     .. change::
-        :tags: mssql:
+        :tags: mssql
         :tickets: 481
 
       fixes to get unit tests working with pyodbc
 
     .. change::
-        :tags: mssql:
+        :tags: mssql
         :tickets: 
 
       fix to auto_identity_insert on db-url query
 
     .. change::
-        :tags: mssql:
+        :tags: mssql
         :tickets: 
 
       added query_timeout to db-url query parms. currently works only for
       pymssql
 
     .. change::
-        :tags: mssql:
+        :tags: mssql
         :tickets: 
 
       tested with pymssql 0.8.0 (which is now LGPL)
 
     .. change::
-        :tags: orm, bugs:
+        :tags: orm, bugs
         :tickets: 441, 448, 439
 
       another refactoring to relationship calculation. Allows more accurate
@@ -1713,7 +1713,7 @@
       include,,.
 
     .. change::
-        :tags: orm, bugs:
+        :tags: orm, bugs
         :tickets: 
 
       removed deprecated method of specifying custom collections on classes;
@@ -1724,34 +1724,34 @@
       assign_mapper methods).
 
     .. change::
-        :tags: orm, bugs:
+        :tags: orm, bugs
         :tickets: 454
 
       extension() query option propagates to Mapper._instance() method so that
       all loading-related methods get called
 
     .. change::
-        :tags: orm, bugs:
+        :tags: orm, bugs
         :tickets: 
 
       eager relation to an inheriting mapper wont fail if no rows returned for
       the relationship.
 
     .. change::
-        :tags: orm, bugs:
+        :tags: orm, bugs
         :tickets: 486
 
       eager relation loading bug fixed for eager relation on multiple
       descendant classes
 
     .. change::
-        :tags: orm, bugs:
+        :tags: orm, bugs
         :tickets: 423
 
       fix for very large topological sorts, courtesy ants.aasma at gmail
 
     .. change::
-        :tags: orm, bugs:
+        :tags: orm, bugs
         :tickets: 
 
       eager loading is slightly more strict about detecting "self-referential"
@@ -1759,35 +1759,35 @@
       an "eager degrade" to lazy loading.
 
     .. change::
-        :tags: orm, bugs:
+        :tags: orm, bugs
         :tickets: 449
 
       improved support for complex queries embedded into "where" criterion for
       query.select()
 
     .. change::
-        :tags: orm, bugs:
+        :tags: orm, bugs
         :tickets: 485
 
       mapper options like eagerload(), lazyload(), deferred(), will work for
       "synonym()" relationships
 
     .. change::
-        :tags: orm, bugs:
+        :tags: orm, bugs
         :tickets: 445
 
       fixed bug where cascade operations incorrectly included deleted
       collection items in the cascade
 
     .. change::
-        :tags: orm, bugs:
+        :tags: orm, bugs
         :tickets: 478
 
       fixed relationship deletion error when one-to-many child item is moved
       to a new parent in a single unit of work
 
     .. change::
-        :tags: orm, bugs:
+        :tags: orm, bugs
         :tickets: 
 
       fixed relationship deletion error where parent/child with a single
@@ -1796,14 +1796,14 @@
       was used
 
     .. change::
-        :tags: orm, bugs:
+        :tags: orm, bugs
         :tickets: 
 
       fix to deferred so that load operation doesnt mistakenly occur when only
       PK col attributes are set
 
     .. change::
-        :tags: orm, enhancements:
+        :tags: orm, enhancements
         :tickets: 385
 
       implemented foreign_keys argument to mapper. use in
@@ -1811,13 +1811,13 @@
       foreign keys defined on the Table instance.
 
     .. change::
-        :tags: orm, enhancements:
+        :tags: orm, enhancements
         :tickets: 
 
       contains_eager('foo') automatically implies eagerload('foo')
 
     .. change::
-        :tags: orm, enhancements:
+        :tags: orm, enhancements
         :tickets: 
 
       added "alias" argument to contains_eager(). use it to specify the string
@@ -1825,40 +1825,40 @@
       loaded child items. easier to use than "decorator"
 
     .. change::
-        :tags: orm, enhancements:
+        :tags: orm, enhancements
         :tickets: 
 
       added "contains_alias()" option for result set mapping to an alias of
       the mapped table
 
     .. change::
-        :tags: orm, enhancements:
+        :tags: orm, enhancements
         :tickets: 468
 
       added support for py2.5 "with" statement with SessionTransaction
 
     .. change::
-        :tags: extensions:
+        :tags: extensions
         :tickets: 
 
       added distinct() method to SelectResults. generally should only make a
       difference when using count().
 
     .. change::
-        :tags: extensions:
+        :tags: extensions
         :tickets: 472
 
       added options() method to SelectResults, equivalent to query.options()
 
     .. change::
-        :tags: extensions:
+        :tags: extensions
         :tickets: 462
 
       added optional __table_opts__ dictionary to ActiveMapper, will send kw
       options to Table objects
 
     .. change::
-        :tags: extensions:
+        :tags: extensions
         :tickets: 467
 
       added selectfirst(), selectfirst_by() to assign_mapper
@@ -1868,7 +1868,7 @@
     :released: Tue Jan 23 2007
 
     .. change::
-        :tags: general:
+        :tags: general
         :tickets: 
 
       global "insure"->"ensure" change. in US english "insure" is actually
@@ -1877,20 +1877,20 @@
       non-ambiguous.
 
     .. change::
-        :tags: sql:
+        :tags: sql
         :tickets: 
 
       added "fetchmany()" support to ResultProxy
 
     .. change::
-        :tags: sql:
+        :tags: sql
         :tickets: 
 
       added support for column "key" attribute to be useable in
       row[<key>]/row.<key>
 
     .. change::
-        :tags: sql:
+        :tags: sql
         :tickets: 
 
       changed "BooleanExpression" to subclass from "BinaryExpression", so that
@@ -1898,13 +1898,13 @@
       etc).
 
     .. change::
-        :tags: sql:
+        :tags: sql
         :tickets: 
 
       trailing underscores are trimmed from func.<xxx> calls, such as func.if_()
 
     .. change::
-        :tags: sql:
+        :tags: sql
         :tickets: 
 
       fix to correlation of subqueries when the column list of the select
@@ -1913,7 +1913,7 @@
       correlated with the main select generated by the Query object.
 
     .. change::
-        :tags: sql:
+        :tags: sql
         :tickets: 
 
       another fix to subquery correlation so that a subquery which has only one
@@ -1921,7 +1921,7 @@
       FROM element is required in a query.
 
     .. change::
-        :tags: sql:
+        :tags: sql
         :tickets: 414
 
       default "timezone" setting is now False. this corresponds to Python's
@@ -1929,7 +1929,7 @@
       only timezone-sensitive dialect at the moment)
 
     .. change::
-        :tags: sql:
+        :tags: sql
         :tickets: 
 
       the "op()" function is now treated as an "operation", rather than a
@@ -1938,14 +1938,14 @@
       more restrictive BooleanExpression
 
     .. change::
-        :tags: sql:
+        :tags: sql
         :tickets: 
 
       trying to redefine a reflected primary key column as non-primary key raises
       an error
 
     .. change::
-        :tags: sql:
+        :tags: sql
         :tickets: 
 
       type system slightly modified to support TypeDecorators that can be
@@ -1953,7 +1953,7 @@
       tweak below to be possible)
 
     .. change::
-        :tags: mssql:
+        :tags: mssql
         :tickets: 
 
       added an NVarchar type (produces NVARCHAR), also MSUnicode which provides
@@ -1961,14 +1961,14 @@
       setting.
 
     .. change::
-        :tags: postgres:
+        :tags: postgres
         :tickets: 424
 
       fix to the initial checkfirst for tables to take current schema into
       account
 
     .. change::
-        :tags: postgres:
+        :tags: postgres
         :tickets: 
 
       postgres has an optional "server_side_cursors=True" flag which will utilize
@@ -1981,21 +1981,21 @@
       psycopg mailing list.
 
     .. change::
-        :tags: postgres:
+        :tags: postgres
         :tickets: 
 
       added "BIGSERIAL" support for postgres table with
       PGBigInteger/autoincrement
 
     .. change::
-        :tags: postgres:
+        :tags: postgres
         :tickets: 402
 
       fixes to postgres reflection to better handle when schema names are
       present; thanks to jason (at) ncsmags.com
 
     .. change::
-        :tags: mysql:
+        :tags: mysql
         :tickets: 420
 
       mysql is inconsistent with what kinds of quotes it uses in foreign keys
@@ -2003,7 +2003,7 @@
       styles
 
     .. change::
-        :tags: mysql:
+        :tags: mysql
         :tickets: 418
 
       mysql table create options work on a generic passthru now, i.e. Table(...,
@@ -2011,26 +2011,26 @@
       mysql_auto_increment="5", mysql_<somearg>...), helps
 
     .. change::
-        :tags: firebird:
+        :tags: firebird
         :tickets: 408
 
       order of constraint creation puts primary key first before all other
       constraints; required for firebird, not a bad idea for others
 
     .. change::
-        :tags: firebird:
+        :tags: firebird
         :tickets: 409
 
       Firebird fix to autoload multifield foreign keys
 
     .. change::
-        :tags: firebird:
+        :tags: firebird
         :tickets: 409
 
       Firebird NUMERIC type properly handles a type without precision
 
     .. change::
-        :tags: oracle:
+        :tags: oracle
         :tickets: 
 
       *slight* support for binary, but still need to figure out how to insert
@@ -2038,7 +2038,7 @@
       create_engine(), rows must be fully fetched individually, etc.
 
     .. change::
-        :tags: orm:
+        :tags: orm
         :tickets: 
 
       poked the first hole in the can of worms: saying
@@ -2047,7 +2047,7 @@
       actual primary key in "someinstance".
 
     .. change::
-        :tags: orm:
+        :tags: orm
         :tickets: 
 
       reworked how relations interact with "polymorphic" mappers, i.e. mappers
@@ -2056,7 +2056,7 @@
       and support for self-referential polymorphic mappers.
 
     .. change::
-        :tags: orm:
+        :tags: orm
         :tickets: 
 
       related to polymorphic mapping relations, some deeper error checking when
@@ -2067,7 +2067,7 @@
       "primaryjoin"
 
     .. change::
-        :tags: orm:
+        :tags: orm
         :tickets: 
 
       a little bit of improvement to the concept of a "concrete" inheritance
@@ -2075,20 +2075,20 @@
       to support concrete mappers on top of a polymorphic base).
 
     .. change::
-        :tags: orm:
+        :tags: orm
         :tickets: 
 
       fix to "proxy=True" behavior on synonym()
 
     .. change::
-        :tags: orm:
+        :tags: orm
         :tickets: 427
 
       fixed bug where delete-orphan basically didn't work with many-to-many
       relationships, backref presence generally hid the symptom
 
     .. change::
-        :tags: orm:
+        :tags: orm
         :tickets: 
 
       added a mutex to the mapper compilation step. ive been reluctant to add any
@@ -2100,52 +2100,52 @@
       first-request time
 
     .. change::
-        :tags: orm:
+        :tags: orm
         :tickets: 
 
       basic idea of "session.merge()" actually implemented.  needs more testing.
 
     .. change::
-        :tags: orm:
+        :tags: orm
         :tickets: 
 
       added "compile_mappers()" function as a shortcut to compiling all mappers
 
     .. change::
-        :tags: orm:
+        :tags: orm
         :tickets: 
 
       fix to MapperExtension create_instance so that entity_name properly
       associated with new instance
 
     .. change::
-        :tags: orm:
+        :tags: orm
         :tickets: 
 
       speed enhancements to ORM object instantiation, eager loading of rows
 
     .. change::
-        :tags: orm:
+        :tags: orm
         :tickets: 406
 
       invalid options sent to 'cascade' string will raise an exception
 
     .. change::
-        :tags: orm:
+        :tags: orm
         :tickets: 407
 
       fixed bug in mapper refresh/expire whereby eager loaders didnt properly
       re-populate item lists
 
     .. change::
-        :tags: orm:
+        :tags: orm
         :tickets: 413
 
       fix to post_update to ensure rows are updated even for non insert/delete
       scenarios
 
     .. change::
-        :tags: orm:
+        :tags: orm
         :tickets: 412
 
       added an error message if you actually try to modify primary key values on
@@ -2343,25 +2343,25 @@
     :released: Mon Nov 13 2006
 
     .. change::
-        :tags: Engine/Pool:
+        :tags: Engine/Pool
         :tickets: 
 
       some new Pool utility classes, updated docs
 
     .. change::
-        :tags: Engine/Pool:
+        :tags: Engine/Pool
         :tickets: 
 
       "use_threadlocal" on Pool defaults to False (same as create_engine)
 
     .. change::
-        :tags: Engine/Pool:
+        :tags: Engine/Pool
         :tickets: 
 
       fixed direct execution of Compiled objects
 
     .. change::
-        :tags: Engine/Pool:
+        :tags: Engine/Pool
         :tickets: 
 
       create_engine() reworked to be strict about incoming **kwargs.  all keyword
@@ -2370,25 +2370,25 @@
       invalid kwargs in relation to the selected dialect/pool/engine configuration.
 
     .. change::
-        :tags: Databases/Types:
+        :tags: Databases/Types
         :tickets: 
 
       MySQL catches exception on "describe" and reports as NoSuchTableError
 
     .. change::
-        :tags: Databases/Types:
+        :tags: Databases/Types
         :tickets: 
 
       further fixes to sqlite booleans, weren't working as defaults
 
     .. change::
-        :tags: Databases/Types:
+        :tags: Databases/Types
         :tickets: 
 
       fix to postgres sequence quoting when using schemas
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       the "delete" cascade will load in all child objects, if they were not
@@ -2396,14 +2396,14 @@
       passive_deletes=True on a relation().
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       adjustments to reworked eager query generation to not fail on circular
       eager-loaded relationships (like backrefs)
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       fixed bug where eagerload() (nor lazyload()) option didn't properly
@@ -2411,7 +2411,7 @@
       LIMIT query.
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 360
 
       fixed bug in circular dependency sorting at flush time; if object A
@@ -2421,14 +2421,14 @@
       attribute wouldnt occur.
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 325
 
       implemented from_obj argument for query.count, improves count function
       on selectresults
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       added an assertion within the "cascade" step of ORM relationships to check
@@ -2436,7 +2436,7 @@
       (i.e. if A.items stores B objects, raise an error if a C is appended to A.items)
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       new extension sqlalchemy.ext.associationproxy, provides transparent
@@ -2444,27 +2444,27 @@
       examples/association/proxied_association.py illustrates.
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       improvement to single table inheritance to load full hierarchies beneath
       the target class
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 362
 
       fix to subtle condition in topological sort where a node could appear twice,
       for
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 365
 
       additional rework to topological sort, refactoring, for
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       "delete-orphan" for a certain type can be set on more than one parent class;
@@ -2475,7 +2475,7 @@
     :released: Sun Oct 22 2006
 
     .. change::
-        :tags: General:
+        :tags: General
         :tickets: 
 
       logging is now implemented via standard python "logging" module.
@@ -2490,65 +2490,65 @@
       to orm to allow tracking of mapper configurations, row iteration.
 
     .. change::
-        :tags: General:
+        :tags: General
         :tickets: 
 
       the documentation-generation system has been overhauled to be
       much simpler in design and more integrated with Markdown
 
     .. change::
-        :tags: SQLite:
+        :tags: SQLite
         :tickets: 
 
       sqlite boolean datatype converts False/True to 0/1 by default
 
     .. change::
-        :tags: SQLite:
+        :tags: SQLite
         :tickets: 335
 
       fixes to Date/Time (SLDate/SLTime) types; works as good as postgres
       now
 
     .. change::
-        :tags: MS-SQL:
+        :tags: MS-SQL
         :tickets: 
 
       fixes bug 261 (table reflection broken for MS-SQL case-sensitive
       databases)
 
     .. change::
-        :tags: MS-SQL:
+        :tags: MS-SQL
         :tickets: 
 
       can now specify port for pymssql
 
     .. change::
-        :tags: MS-SQL:
+        :tags: MS-SQL
         :tickets: 
 
       introduces new "auto_identity_insert" option for auto-switching
       between "SET IDENTITY_INSERT" mode when values specified for IDENTITY columns
 
     .. change::
-        :tags: MS-SQL:
+        :tags: MS-SQL
         :tickets: 
 
       now supports multi-column foreign keys
 
     .. change::
-        :tags: MS-SQL:
+        :tags: MS-SQL
         :tickets: 
 
       fix to reflecting date/datetime columns
 
     .. change::
-        :tags: MS-SQL:
+        :tags: MS-SQL
         :tickets: 
 
       NCHAR and NVARCHAR type support added
 
     .. change::
-        :tags: Oracle:
+        :tags: Oracle
         :tickets: 
 
       Oracle has experimental support for cx_Oracle.TIMESTAMP, which requires
@@ -2556,19 +2556,19 @@
       'auto_setinputsizes' flag to the oracle dialect.
 
     .. change::
-        :tags: Firebird:
+        :tags: Firebird
         :tickets: 
 
       aliases do not use "AS"
 
     .. change::
-        :tags: Firebird:
+        :tags: Firebird
         :tickets: 
 
       correctly raises NoSuchTableError when reflecting non-existent table
 
     .. change::
-        :tags: Schema:
+        :tags: Schema
         :tickets: 
 
       a fair amount of cleanup to the schema package, removal of ambiguous
@@ -2576,7 +2576,7 @@
       useage, greater emphasis on explicitness
 
     .. change::
-        :tags: Schema:
+        :tags: Schema
         :tickets: 
 
       the "primary_key" attribute of Table and other selectables becomes
@@ -2586,14 +2586,14 @@
       via table1.primary_key==table2.primary_key
 
     .. change::
-        :tags: Schema:
+        :tags: Schema
         :tickets: 
 
       ForeignKey(Constraint) supports "use_alter=True", to create/drop a foreign key
       via ALTER.  this allows circular foreign key relationships to be set up.
 
     .. change::
-        :tags: Schema:
+        :tags: Schema
         :tickets: 
 
       append_item() methods removed from Table and Column; preferably
@@ -2601,7 +2601,7 @@
       append_column(), append_foreign_key(), append_constraint(), etc.
 
     .. change::
-        :tags: Schema:
+        :tags: Schema
         :tickets: 
 
       table.create() no longer returns the Table object, instead has no
@@ -2609,14 +2609,14 @@
       which is preferable since it will handle table dependencies.
 
     .. change::
-        :tags: Schema:
+        :tags: Schema
         :tickets: 
 
       added UniqueConstraint (goes at Table level), CheckConstraint
       (goes at Table or Column level).
 
     .. change::
-        :tags: Schema:
+        :tags: Schema
         :tickets: 
 
       index=False/unique=True on Column now creates a UniqueConstraint,
@@ -2627,7 +2627,7 @@
       UniqueConstraint/Index constructs explicitly.
 
     .. change::
-        :tags: Schema:
+        :tags: Schema
         :tickets: 
 
       added autoincrement=True to Column; will disable schema generation
@@ -2635,14 +2635,14 @@
       explicitly set to False
 
     .. change::
-        :tags: Schema:
+        :tags: Schema
         :tickets: 
 
       TypeEngine objects now have methods to deal with copying and comparing
       values of their specific type.  Currently used by the ORM, see below.
 
     .. change::
-        :tags: Schema:
+        :tags: Schema
         :tickets: 
 
       fixed condition that occurred during reflection when a primary key
@@ -2650,7 +2650,7 @@
       get both the reflected and the programmatic column doubled up
 
     .. change::
-        :tags: Schema:
+        :tags: Schema
         :tickets: 
 
       the "foreign_key" attribute on Column and ColumnElement in general
@@ -2660,7 +2660,7 @@
       or None if the list is empty.
 
     .. change::
-        :tags: Connections/Pooling/Execution:
+        :tags: Connections/Pooling/Execution
         :tickets: 
 
       connection pool tracks open cursors and automatically closes them
@@ -2669,20 +2669,20 @@
       do nothing.  fixes issues with MySQL, others
 
     .. change::
-        :tags: Connections/Pooling/Execution:
+        :tags: Connections/Pooling/Execution
         :tickets: 
 
       fixed bug where Connection wouldnt lose its Transaction
       after commit/rollback
 
     .. change::
-        :tags: Connections/Pooling/Execution:
+        :tags: Connections/Pooling/Execution
         :tickets: 
 
       added scalar() method to ComposedSQLEngine, ResultProxy
 
     .. change::
-        :tags: Connections/Pooling/Execution:
+        :tags: Connections/Pooling/Execution
         :tickets: 
 
       ResultProxy will close() the underlying cursor when the ResultProxy
@@ -2690,14 +2690,14 @@
       that have had all their rows fetched (or had scalar() called).
 
     .. change::
-        :tags: Connections/Pooling/Execution:
+        :tags: Connections/Pooling/Execution
         :tickets: 
 
       ResultProxy.fetchall() internally uses DBAPI fetchall() for better efficiency,
       added to mapper iteration as well (courtesy Michael Twomey)
 
     .. change::
-        :tags: Construction:, SQL
+        :tags: Construction, SQL
         :tickets: 292
 
       changed "for_update" parameter to accept False/True/"nowait"
@@ -2705,28 +2705,28 @@
       Oracle and Mysql
 
     .. change::
-        :tags: Construction:, SQL
+        :tags: Construction, SQL
         :tickets: 
 
       added extract() function to sql dialect
       (SELECT extract(field FROM expr))
 
     .. change::
-        :tags: Construction:, SQL
+        :tags: Construction, SQL
         :tickets: 
 
       BooleanExpression includes new "negate" argument to specify
       the appropriate negation operator if one is available.
 
     .. change::
-        :tags: Construction:, SQL
+        :tags: Construction, SQL
         :tickets: 
 
       calling a negation on an "IN" or "IS" clause will result in
       "NOT IN", "IS NOT" (as opposed to NOT (x IN y)).
 
     .. change::
-        :tags: Construction:, SQL
+        :tags: Construction, SQL
         :tickets: 172
 
       Function objects know what to do in a FROM clause now.  their
@@ -2736,7 +2736,7 @@
       return columns
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       attribute tracking modified to be more intelligent about detecting
@@ -2750,7 +2750,7 @@
       checking to be more complete and extensible.
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       a wide refactoring to "attribute loader" and "options" architectures.
@@ -2764,7 +2764,7 @@
       in the new 'interfaces' module.
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       related to the mapper/property overhaul, internal refactoring to
@@ -2776,14 +2776,14 @@
       in widespread use as of yet.
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       instances() method moved to Query now, backwards-compatible
       version remains on Mapper.
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       added contains_eager() MapperOption, used in conjunction with
@@ -2792,7 +2792,7 @@
       given an custom row-translation function.
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       more rearrangements of unit-of-work commit scheme to better allow
@@ -2800,14 +2800,14 @@
       task traversal/logging implementation
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 321
 
       polymorphic mappers (i.e. using inheritance) now produces INSERT
       statements in order of tables across all inherited classes
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       added an automatic "row switch" feature to mapping, which will
@@ -2815,14 +2815,14 @@
       identity key and convert the INSERT/DELETE to a single UPDATE
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       "association" mappings simplified to take advantage of
       automatic "row switch" feature
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 212
 
       "custom list classes" is now implemented via the "collection_class"
@@ -2830,14 +2830,14 @@
       deprecated
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       added "viewonly" flag to relation(), allows construction of
       relations that have no effect on the flush() process.
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 292
 
       added "lockmode" argument to base Query select/get functions,
@@ -2846,7 +2846,7 @@
       arguments into a for_update argument on the select side.
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       implemented "version check" logic in Query/Mapper, used
@@ -2854,14 +2854,14 @@
       is used to get() an instance thats already loaded
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 208
 
       post_update behavior improved; does a better job at not
       updating too many rows, updates only required columns
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 308
 
       adjustments to eager loading so that its "eager chain" is
@@ -2869,19 +2869,19 @@
       preventing conflicts with lazy loader operation, fixes
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       fix to deferred group loading
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 346
 
       session.flush() wont close a connection it opened
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       added "batch=True" flag to mapper; if False, save_obj
@@ -2889,7 +2889,7 @@
       to before_XXXX and after_XXXX
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       added "column_prefix=None" argument to mapper; prepends the
@@ -2897,7 +2897,7 @@
       set up from the mapper's Table
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 315
 
       specifying joins in the from_obj argument of query.select() will
@@ -2906,7 +2906,7 @@
       outerjoins in queries without the main table getting added twice.
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       eagerloading is adjusted to more thoughtfully attach its LEFT OUTER JOINs
@@ -2914,7 +2914,7 @@
       already been set up.
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       added join_to and outerjoin_to transformative methods to SelectResults,
@@ -2922,7 +2922,7 @@
       added select_from to explicitly set from_obj parameter.
 
     .. change::
-        :tags: ORM:
+        :tags: ORM
         :tickets: 
 
       removed "is_primary" flag from mapper.

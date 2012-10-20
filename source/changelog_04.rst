@@ -76,7 +76,7 @@
 
 .. changelog::
     :version: 0.4.7p1
-    :released: 
+    :released: Thu Jul 31 2008
 
     .. change::
         :tags: orm
@@ -232,7 +232,7 @@
 
 .. changelog::
     :version: 0.4.6
-    :released: Thu Sep 27 2007
+    :released: Sat May 10 2008
 
     .. change::
         :tags: orm
@@ -944,7 +944,7 @@
 
 .. changelog::
     :version: 0.4.4
-    :released: Wed Aug 22 2007
+    :released: Wed Mar 12 2008
 
     .. change::
         :tags: sql
@@ -1178,7 +1178,7 @@
 
 .. changelog::
     :version: 0.4.3
-    :released: Thu Aug 16 2007
+    :released: Thu Feb 14 2008
 
     .. change::
         :tags: sql
@@ -1643,7 +1643,7 @@
 
 .. changelog::
     :version: 0.4.2p3
-    :released: 
+    :released: Wed Jan 09 2008
 
     .. change::
         :tags: general
@@ -1833,7 +1833,7 @@
 
 .. changelog::
     :version: 0.4.2
-    :released: Tue Aug 14 2007
+    :released: Wed Jan 02 2008
 
     .. change::
         :tags: sql
@@ -2330,7 +2330,7 @@
 
 .. changelog::
     :version: 0.4.1
-    :released: Sun Aug 12 2007
+    :released: Sun Nov 18 2007
 
     .. change::
         :tags: sql
@@ -2969,7 +2969,7 @@
 
 .. changelog::
     :version: 0.4.0beta6
-    :released: 
+    :released: Thu Sep 27 2007
 
     .. change::
         :tags: misc
@@ -3209,47 +3209,47 @@
       does not report proper rowcount for executemany().
 
     .. change::
-        :tags: Tickets, fixed:
+        :tags: Tickets, fixed
         :tickets: 742
 
       
 
     .. change::
-        :tags: Tickets, fixed:
+        :tags: Tickets, fixed
         :tickets: 748
 
       
 
     .. change::
-        :tags: Tickets, fixed:
+        :tags: Tickets, fixed
         :tickets: 760
 
       
 
     .. change::
-        :tags: Tickets, fixed:
+        :tags: Tickets, fixed
         :tickets: 762
 
       
 
     .. change::
-        :tags: Tickets, fixed:
+        :tags: Tickets, fixed
         :tickets: 763
 
       
 
 .. changelog::
     :version: 0.4.0beta4
-    :released: 
+    :released: Wed Aug 22 2007
 
     .. change::
-        :tags: Tickets, fixed:
+        :tags: Tickets, fixed
         :tickets: 
 
       Tidied up what ends up in your namespace when you 'from sqlalchemy import *':
 
     .. change::
-        :tags: Tickets, fixed:
+        :tags: Tickets, fixed
         :tickets: 
 
       'table' and 'column' are no longer imported.  They remain available by
@@ -3259,14 +3259,14 @@
       with SQLAlchemy, likewise column.
 
     .. change::
-        :tags: Tickets, fixed:
+        :tags: Tickets, fixed
         :tickets: 
 
       Internal-ish classes like ClauseElement, FromClause, NullTypeEngine,
       etc., are also no longer imported into your namespace
 
     .. change::
-        :tags: Tickets, fixed:
+        :tags: Tickets, fixed
         :tickets: 
 
       The 'Smallinteger' compatiblity name (small i!) is no longer imported,
@@ -3274,7 +3274,7 @@
       imported.
 
     .. change::
-        :tags: Tickets, fixed:
+        :tags: Tickets, fixed
         :tickets: 
 
       The connection pool uses a "threadlocal" strategy internally to return
@@ -3287,14 +3287,14 @@
       we'll roll it right back.
 
     .. change::
-        :tags: Tickets, fixed:
+        :tags: Tickets, fixed
         :tickets: 
 
       Fix to bind param processing such that "False" values (like blank strings)
       still get processed/encoded.
 
     .. change::
-        :tags: Tickets, fixed:
+        :tags: Tickets, fixed
         :tickets: 752
 
       Fix to select() "generative" behavior, such that calling column(),
@@ -3302,7 +3302,7 @@
       original select object
 
     .. change::
-        :tags: Tickets, fixed:
+        :tags: Tickets, fixed
         :tickets: 
 
       Added a "legacy" adapter to types, such that user-defined TypeEngine
@@ -3311,7 +3311,7 @@
       calling the super() version of those methods.
 
     .. change::
-        :tags: Tickets, fixed:
+        :tags: Tickets, fixed
         :tickets: 
 
       Added session.prune(), trims away instances cached in a session that
@@ -3319,7 +3319,7 @@
       identity maps).
 
     .. change::
-        :tags: Tickets, fixed:
+        :tags: Tickets, fixed
         :tickets: 
 
       Added close() method to Transaction.  Closes out a transaction using
@@ -3327,7 +3327,7 @@
       without affecting the outer transaction.
 
     .. change::
-        :tags: Tickets, fixed:
+        :tags: Tickets, fixed
         :tickets: 
 
       Transactional and non-transactional Session integrates better with
@@ -3336,75 +3336,75 @@
       being bound to the Session.
 
     .. change::
-        :tags: Tickets, fixed:
+        :tags: Tickets, fixed
         :tickets: 735
 
       Modified SQL operator functions to be module-level operators,
       allowing SQL expressions to be pickleable.
 
     .. change::
-        :tags: Tickets, fixed:
+        :tags: Tickets, fixed
         :tickets: 
 
       Small adjustment to mapper class.__init__ to allow for Py2.6
       object.__init__() behavior.
 
     .. change::
-        :tags: Tickets, fixed:
+        :tags: Tickets, fixed
         :tickets: 
 
       Fixed 'prefix' argument for select()
 
     .. change::
-        :tags: Tickets, fixed:
+        :tags: Tickets, fixed
         :tickets: 
 
       Connection.begin() no longer accepts nested=True, this logic is now
       all in begin_nested().
 
     .. change::
-        :tags: Tickets, fixed:
+        :tags: Tickets, fixed
         :tickets: 
 
       Fixes to new "dynamic" relation loader involving cascades
 
     .. change::
-        :tags: Tickets, fixed:
+        :tags: Tickets, fixed
         :tickets: 735
 
       
 
     .. change::
-        :tags: Tickets, fixed:
+        :tags: Tickets, fixed
         :tickets: 752
 
       
 
 .. changelog::
     :version: 0.4.0beta3
-    :released: 
+    :released: Thu Aug 16 2007
 
     .. change::
-        :tags: Tickets, fixed:
+        :tags: Tickets, fixed
         :tickets: 
 
       SQL types optimization:
 
     .. change::
-        :tags: Tickets, fixed:
+        :tags: Tickets, fixed
         :tickets: 
 
       New performance tests show a combined mass-insert/mass-select test as
       having 68% fewer function calls than the same test run against 0.3.
 
     .. change::
-        :tags: Tickets, fixed:
+        :tags: Tickets, fixed
         :tickets: 
 
       General performance improvement of result set iteration is around 10-20%.
 
     .. change::
-        :tags: Tickets, fixed:
+        :tags: Tickets, fixed
         :tickets: 
 
       In types.AbstractType, convert_bind_param() and convert_result_value()
@@ -3413,58 +3413,58 @@
       processing function is called.
 
     .. change::
-        :tags: Tickets, fixed:
+        :tags: Tickets, fixed
         :tickets: 
 
       Hooks added throughout base/sql/defaults to optimize the calling of bind
       aram/result processors so that method call overhead is minimized.
 
     .. change::
-        :tags: Tickets, fixed:
+        :tags: Tickets, fixed
         :tickets: 
 
       Support added for executemany() scenarios such that unneeded "last row id"
       logic doesn't kick in, parameters aren't excessively traversed.
 
     .. change::
-        :tags: Tickets, fixed:
+        :tags: Tickets, fixed
         :tickets: 
 
       Added 'inherit_foreign_keys' arg to mapper().
 
     .. change::
-        :tags: Tickets, fixed:
+        :tags: Tickets, fixed
         :tickets: 
 
       Added support for string date passthrough in sqlite.
 
     .. change::
-        :tags: Tickets, fixed:
+        :tags: Tickets, fixed
         :tickets: 738
 
       
 
     .. change::
-        :tags: Tickets, fixed:
+        :tags: Tickets, fixed
         :tickets: 739
 
       
 
     .. change::
-        :tags: Tickets, fixed:
+        :tags: Tickets, fixed
         :tickets: 743
 
       
 
     .. change::
-        :tags: Tickets, fixed:
+        :tags: Tickets, fixed
         :tickets: 744
 
       
 
 .. changelog::
     :version: 0.4.0beta2
-    :released: 
+    :released: Tue Aug 14 2007
 
     .. change::
         :tags: oracle, improvements.
@@ -3513,32 +3513,32 @@
       Moved ClauseVisitor traversal back to inlined non-recursive.
 
     .. change::
-        :tags: Tickets, fixed:
+        :tags: Tickets, fixed
         :tickets: 730
 
       
 
     .. change::
-        :tags: Tickets, fixed:
+        :tags: Tickets, fixed
         :tickets: 732
 
       
 
     .. change::
-        :tags: Tickets, fixed:
+        :tags: Tickets, fixed
         :tickets: 733
 
       
 
     .. change::
-        :tags: Tickets, fixed:
+        :tags: Tickets, fixed
         :tickets: 734
 
       
 
 .. changelog::
     :version: 0.4.0beta1
-    :released: 
+    :released: Sun Aug 12 2007
 
     .. change::
         :tags: orm
@@ -3926,31 +3926,31 @@
       Oracle's UPPERCASE style too).
 
     .. change::
-        :tags: Transactions:
+        :tags: Transactions
         :tickets: 
 
       Added context manager (with statement) support for transactions.
 
     .. change::
-        :tags: Transactions:
+        :tags: Transactions
         :tickets: 
 
       Added support for two phase commit, works with mysql and postgres so far.
 
     .. change::
-        :tags: Transactions:
+        :tags: Transactions
         :tickets: 
 
       Added a subtransaction implementation that uses savepoints.
 
     .. change::
-        :tags: Transactions:
+        :tags: Transactions
         :tickets: 
 
       Added support for savepoints.
 
     .. change::
-        :tags: MetaData:
+        :tags: MetaData
         :tickets: 
 
       Tables can be reflected from the database en-masse without declaring
@@ -3958,25 +3958,25 @@
       present in the database, or use metadata.reflect() for finer control.
 
     .. change::
-        :tags: MetaData:
+        :tags: MetaData
         :tickets: 
 
       DynamicMetaData has been renamed to ThreadLocalMetaData
 
     .. change::
-        :tags: MetaData:
+        :tags: MetaData
         :tickets: 
 
       The ThreadLocalMetaData constructor now takes no arguments.
 
     .. change::
-        :tags: MetaData:
+        :tags: MetaData
         :tickets: 
 
       BoundMetaData has been removed- regular MetaData is equivalent
 
     .. change::
-        :tags: MetaData:
+        :tags: MetaData
         :tickets: 646
 
       Numeric and Float types now have an "asdecimal" flag; defaults to True for
@@ -3986,7 +3986,7 @@
       modules.
 
     .. change::
-        :tags: MetaData:
+        :tags: MetaData
         :tickets: 475
 
       New SQL operator implementation which removes all hardcoded operators from
@@ -3996,14 +3996,14 @@
       numeric context it compiles to "+".  Fixes.
 
     .. change::
-        :tags: MetaData:
+        :tags: MetaData
         :tickets: 
 
       "Anonymous" alias and label names are now generated at SQL compilation
       time in a completely deterministic fashion... no more random hex IDs
 
     .. change::
-        :tags: MetaData:
+        :tags: MetaData
         :tickets: 
 
       Significant architectural overhaul to SQL elements (ClauseElement).  All
@@ -4013,7 +4013,7 @@
       mutations to SQL expressions.
 
     .. change::
-        :tags: MetaData:
+        :tags: MetaData
         :tickets: 
 
       select() and union()'s now have "generative" behavior.  Methods like
@@ -4021,7 +4021,7 @@
       is left unchanged.  Non-generative methods remain as well.
 
     .. change::
-        :tags: MetaData:
+        :tags: MetaData
         :tickets: 569, 52
 
       The internals of select/union vastly simplified- all decision making
@@ -4030,7 +4030,7 @@
       by any dialect's compilation process
 
     .. change::
-        :tags: MetaData:
+        :tags: MetaData
         :tickets: 
 
       select(scalar=True) argument is deprecated; use select(..).as_scalar().
@@ -4038,20 +4038,20 @@
       within expressions.
 
     .. change::
-        :tags: MetaData:
+        :tags: MetaData
         :tickets: 504
 
       Added select().with_prefix('foo') allowing any set of keywords to be
       placed before the columns clause of the SELECT
 
     .. change::
-        :tags: MetaData:
+        :tags: MetaData
         :tickets: 686
 
       Added array slice support to row[<index>]
 
     .. change::
-        :tags: MetaData:
+        :tags: MetaData
         :tickets: 
 
       Result sets make a better attempt at matching the DBAPI types present in
@@ -4060,7 +4060,7 @@
       textual SQL; constructed SQL statements always have an explicit type map.
 
     .. change::
-        :tags: MetaData:
+        :tags: MetaData
         :tickets: 
 
       Result sets from CRUD operations close their underlying cursor immediately
@@ -4069,7 +4069,7 @@
       with less chance of "dangling connections".
 
     .. change::
-        :tags: MetaData:
+        :tags: MetaData
         :tickets: 559
 
       Column defaults and onupdate Python functions (i.e. passed to
@@ -4079,27 +4079,27 @@
       so that you can pre-execute statements.
 
     .. change::
-        :tags: MetaData:
+        :tags: MetaData
         :tickets: 
 
       Added "explcit" create/drop/execute support for sequences (i.e. you can
       pass a "connectable" to each of those methods on Sequence).
 
     .. change::
-        :tags: MetaData:
+        :tags: MetaData
         :tickets: 
 
       Better quoting of identifiers when manipulating schemas.
 
     .. change::
-        :tags: MetaData:
+        :tags: MetaData
         :tickets: 
 
       Standardized the behavior for table reflection where types can't be
       located; NullType is substituted instead, warning is raised.
 
     .. change::
-        :tags: MetaData:
+        :tags: MetaData
         :tickets: 606
 
       ColumnCollection (i.e. the 'c' attribute on tables) follows dictionary

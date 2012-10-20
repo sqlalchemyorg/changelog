@@ -1865,7 +1865,7 @@
 
 .. changelog::
     :version: 0.7.3
-    :released: Sun Mar 20 2011
+    :released: Sun Oct 16 2011
 
     .. change::
         :tags: general
@@ -2392,7 +2392,7 @@
 
 .. changelog::
     :version: 0.7.2
-    :released: Sat Feb 19 2011
+    :released: Sun Jul 31 2011
 
     .. change::
         :tags: orm
@@ -2797,7 +2797,7 @@
 
 .. changelog::
     :version: 0.7.1
-    :released: Sat Feb 12 2011
+    :released: Sun Jun 05 2011
 
     .. change::
         :tags: general
@@ -3208,7 +3208,7 @@
 
 .. changelog::
     :version: 0.7.0b4
-    :released: 
+    :released: Sun Apr 17 2011
 
     .. change::
         :tags: general
@@ -3520,7 +3520,7 @@
 
 .. changelog::
     :version: 0.7.0b3
-    :released: 
+    :released: Sun Mar 20 2011
 
     .. change::
         :tags: general
@@ -3750,7 +3750,7 @@
 
 .. changelog::
     :version: 0.7.0b2
-    :released: 
+    :released: Sat Feb 19 2011
 
     .. change::
         :tags: orm
@@ -3853,7 +3853,7 @@
 
 .. changelog::
     :version: 0.7.0b1
-    :released: 
+    :released: Sat Feb 12 2011
 
     .. change::
         :tags: examples

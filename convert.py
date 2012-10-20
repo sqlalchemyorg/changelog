@@ -11,8 +11,21 @@ def read_dates():
         elif line.startswith("date:"):
             date, year = re.match(r'date:\s+(\w+ \w+ \d+) \d+:\d+:\d+ (\d+)', line).group(1, 2)
 
-            version = ".".join(re.findall(r"(\d+)", tag))
-            tags[version] = "%s %s" % (date, year)
+            digits = re.findall(r"(?:^|_)(\d+)", tag)
+            extra = re.match(".*?(beta\d|rc\d|[a-z]\d)$", tag)
+            if extra:
+                extra = extra.group(1)
+            else:
+                extra = ""
+
+            if len(digits) == 2 and extra:
+                versions = ".".join(digits) + extra, \
+                            ".".join(digits + ["0"]) + extra
+            else:
+                versions = (".".join(digits) + extra,)
+
+            for version in versions:
+                tags[version] = "%s %s" % (date, year)
     return tags
 
 def raw_blocks(fname):
@@ -22,7 +35,7 @@ def raw_blocks(fname):
                         (
                             ^\d+\.\d+ (?: \.\d+ )?
 
-                            (?:beta\d|rc\d|\w\d?)?
+                            (?:beta\d|rc\d|[a-z]\d?)?
                         )
 
                         (\(.*\))?$''', re.X)
@@ -37,7 +50,6 @@ def raw_blocks(fname):
 
     while lines:
         line = lines.pop(0)
-
         if state == normal:
             m = version_re.match(line)
             if m:
@@ -56,8 +68,7 @@ def raw_blocks(fname):
         elif state == in_bullet:
             another_bullet = bullet_re.match(line)
             version_number = version_re.match(line)
-            #import pdb
-            #pdb.set_trace()
+
             if \
                 line == "\n" or \
                 (
@@ -128,7 +139,9 @@ def emit_rst(records):
                 if current_output_file:
                     current_output_file.close()
                 current_major_version = major_version
-                current_output_file = open("source/changelog_%s.rst" % major_version.replace(".", ""), 'w')
+                cfile = "source/changelog_%s.rst" % major_version.replace(".", "")
+                print "writing %s" % cfile
+                current_output_file = open(cfile, 'w')
                 current_output_file.write("""
 ==============
 %s Changelog

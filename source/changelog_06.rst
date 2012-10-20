@@ -1328,7 +1328,7 @@
 
 .. changelog::
     :version: 0.6.3
-    :released: Sun Mar 28 2010
+    :released: Thu Jul 15 2010
 
     .. change::
         :tags: orm
@@ -1418,7 +1418,7 @@
 
 .. changelog::
     :version: 0.6.2
-    :released: Sat Mar 20 2010
+    :released: Tue Jul 06 2010
 
     .. change::
         :tags: orm
@@ -1727,7 +1727,7 @@
 
 .. changelog::
     :version: 0.6.1
-    :released: Wed Feb 03 2010
+    :released: Mon May 31 2010
 
     .. change::
         :tags: orm
@@ -2269,7 +2269,7 @@
 
 .. changelog::
     :version: 0.6beta3
-    :released: 
+    :released: Sun Mar 28 2010
 
     .. change::
         :tags: orm
@@ -2458,7 +2458,7 @@
 
 .. changelog::
     :version: 0.6beta2
-    :released: 
+    :released: Sat Mar 20 2010
 
     .. change::
         :tags: py3k
@@ -3183,7 +3183,7 @@
 
 .. changelog::
     :version: 0.6beta1
-    :released: 
+    :released: Wed Feb 03 2010
 
     .. change::
         :tags: Release, Major

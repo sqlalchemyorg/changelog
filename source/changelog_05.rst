@@ -708,7 +708,7 @@
 
 .. changelog::
     :version: 0.5.4p2
-    :released: 
+    :released: Tue May 26 2009
 
     .. change::
         :tags: sql
@@ -731,7 +731,7 @@
 
 .. changelog::
     :version: 0.5.4p1
-    :released: 
+    :released: Mon May 18 2009
 
     .. change::
         :tags: orm
@@ -742,7 +742,7 @@
 
 .. changelog::
     :version: 0.5.4
-    :released: Fri Nov 14 2008
+    :released: Sun May 17 2009
 
     .. change::
         :tags: orm
@@ -1029,7 +1029,7 @@
 
 .. changelog::
     :version: 0.5.3
-    :released: Mon Aug 04 2008
+    :released: Tue Mar 24 2009
 
     .. change::
         :tags: orm
@@ -1311,7 +1311,7 @@
 
 .. changelog::
     :version: 0.5.2
-    :released: Mon Jul 14 2008
+    :released: Sat Jan 24 2009
 
     .. change::
         :tags: orm
@@ -1403,7 +1403,7 @@
 
 .. changelog::
     :version: 0.5.1
-    :released: Thu Jun 12 2008
+    :released: Sat Jan 17 2009
 
     .. change::
         :tags: orm
@@ -2313,7 +2313,7 @@
 
 .. changelog::
     :version: 0.5.0rc4
-    :released: 
+    :released: Fri Nov 14 2008
 
     .. change::
         :tags: orm
@@ -2345,7 +2345,7 @@
       bugfixes and behavioral changes
 
     .. change::
-        :tags: general:
+        :tags: general
         :tickets: 
 
       global "propigate"->"propagate" change.
@@ -2472,7 +2472,7 @@
 
 .. changelog::
     :version: 0.5.0rc3
-    :released: 
+    :released: Fri Nov 07 2008
 
     .. change::
         :tags: orm
@@ -2740,7 +2740,7 @@
 
 .. changelog::
     :version: 0.5.0rc2
-    :released: 
+    :released: Sun Oct 12 2008
 
     .. change::
         :tags: orm
@@ -2890,7 +2890,7 @@
 
 .. changelog::
     :version: 0.5.0rc1
-    :released: 
+    :released: Thu Sep 11 2008
 
     .. change::
         :tags: orm
@@ -3247,7 +3247,7 @@
 
 .. changelog::
     :version: 0.5beta3
-    :released: 
+    :released: Mon Aug 04 2008
 
     .. change::
         :tags: orm
@@ -3406,7 +3406,7 @@
 
 .. changelog::
     :version: 0.5beta2
-    :released: 
+    :released: Mon Jul 14 2008
 
     .. change::
         :tags: orm
@@ -3555,7 +3555,7 @@
 
 .. changelog::
     :version: 0.5beta1
-    :released: 
+    :released: Thu Jun 12 2008
 
     .. change::
         :tags: extensions
@@ -3663,7 +3663,7 @@
       updates and deletes (2.1+ only).
 
     .. change::
-        :tags: general:
+        :tags: general
         :tickets: 
 
       global "propigate"->"propagate" change.

@@ -6,7 +6,16 @@
 Welcome to changelog's documentation!
 =====================================
 
-Contents:
+Migration Guides
+----------------
+
+.. toctree::
+   :maxdepth: 2
+
+   migration_08
+
+Change logs
+-----------
 
 .. toctree::
    :maxdepth: 2
@@ -19,9 +28,6 @@ Contents:
    changelog_03
    changelog_02
    changelog_01
-
-   migration_08
-
 
 Indices and tables
 ==================

@@ -4,6 +4,7 @@ from docutils.statemachine import StringList
 from docutils import nodes
 import textwrap
 import itertools
+import collections
 
 def _comma_list(text):
     return re.split(r"\s*,\s*", text.strip())
@@ -38,96 +39,135 @@ class ChangeLogDirective(EnvDirective, Directive):
 
     sections = _comma_list("general, orm, orm declarative, orm querying, \
                 orm configuration, engine, sql, \
-                postgresql, mysql, sqlite, mssql, oracle, firebird")
+                schema, \
+                postgresql, mysql, sqlite, mssql, oracle, firebird, misc")
 
-    subsections = ["feature", "bug", "removed"]
+    subsections = ["feature", "bug", "moved", "changed", "removed", ""]
 
 
-    def run(self):
-        self.env.temp_data['ChangeLogDirective_changes'] = changes = []
-        content = _parse_content(self.content)
-        version = content.get('version', '')
+    def _organize_by_section(self, changes):
+        compound_sections = [(s, s.split(" ")) for s in
+                                self.sections if " " in s]
+
+        bysection = collections.defaultdict(list)
+        for rec in changes:
+            subsection = rec['tags'].intersection(self.subsections)
+            if subsection:
+                subsection = subsection.pop()
+            else:
+                subsection = ""
+
+            for compound, comp_words in compound_sections:
+                if rec['tags'].issuperset(comp_words):
+                    bysection[(compound, subsection)].append(rec)
+                    break
+
+            intersect = rec['tags'].intersection(self.sections)
+            if intersect:
+                bysection[(intersect.pop(), subsection)].append(rec)
+                continue
+
+            bysection[('misc', subsection)].append(rec)
+        return bysection
+
+    @classmethod
+    def changes(cls, env):
+        return env.temp_data['ChangeLogDirective_%s_changes' % cls.type_]
+
+    def _setup_run(self):
+        self.env.temp_data['ChangeLogDirective_%s_changes' % self.type_] = []
+        self._parsed_content = _parse_content(self.content)
 
         p = nodes.paragraph('', '',)
         self.state.nested_parse(self.content[1:], 0, p)
 
+    def run(self):
+        self._setup_run()
+        changes = self.changes(self.env)
         output = []
 
+        version = self._parsed_content.get('version', '')
         id_prefix = "%s-%s" % (self.type_, version)
+        topsection = self._run_top(id_prefix)
+        output.append(topsection)
+
+        bysection = self._organize_by_section(changes)
+
+        counter = itertools.count()
+
+        for section in self.sections:
+            sec, append_sec = self._section(section, id_prefix)
+
+            for cat in self.subsections:
+                for rec in bysection[(section, cat)]:
+                    rec["id"] = "%s-%s" % (id_prefix, next(counter))
+
+                    self._render_rec(rec, section, cat, append_sec)
+
+            if append_sec.children:
+                topsection.append(sec)
+
+        return output
+
+    def _section(self, section, id_prefix):
+        bullets = nodes.bullet_list()
+        sec = nodes.section('',
+                nodes.title(section, section),
+                bullets,
+                ids=["%s-%s" % (id_prefix, section.replace(" ", "-"))]
+        )
+        return sec, bullets
+
+    def _run_top(self, id_prefix):
+        version = self._parsed_content.get('version', '')
         topsection = nodes.section('',
                 nodes.title(version, version),
                 ids=[id_prefix]
             )
-        if "released" in content:
-            topsection.append(nodes.Text("Released: %s" % content['released']))
+
+        if "released" in self._parsed_content:
+            topsection.append(nodes.Text("Released: %s" % self._parsed_content['released']))
         else:
             topsection.append(nodes.Text("no release date"))
-        output.append(topsection)
+        return topsection
 
-        all_section_tags = set()
-        for rec in changes:
-            all_section_tags.update(rec['tags'])
+    def _render_rec(self, rec, section, cat, append_sec):
+        para = rec['node'].deepcopy()
+        insert_ticket = nodes.paragraph('')
+        para.append(insert_ticket)
 
-        counter = itertools.count()
-
-        for section in list(self.sections) + list(all_section_tags.difference(self.sections)):
-            sec_tags = set(section.split(" "))
-            bullets = nodes.bullet_list()
-            sec = nodes.section('',
-                    nodes.title(section, section),
-                    bullets,
-                    ids=["%s-%s" % (id_prefix, section.replace(" ", "-"))]
+        for i, ticket in enumerate(rec['tickets']):
+            if i > 0:
+                insert_ticket.append(nodes.Text(", ", ", "))
+            else:
+                insert_ticket.append(nodes.Text(" ", " "))
+            insert_ticket.append(
+                nodes.reference('', '',
+                    nodes.Text("#%s" % ticket, "#%s" % ticket),
+                    refuri=_ticketurl(ticket)
+                )
             )
 
-            for cat in self.subsections + [""]:
-                for rec in changes:
-                    if not rec.get("emitted") and rec['type'] == self.type_ and \
-                        (
-                            rec['tags'].intersection(all_section_tags) == sec_tags
-                        ) and \
-                        (
-                            cat in rec['tags'] or
-                            not cat and not rec['tags'].intersection(self.subsections)
-                        ):
+        if cat or rec['tags']:
+            #tag_node = nodes.strong('',
+            #            "[" + cat + "] "
+            #        )
+            tag_node = nodes.strong('',
+                        " ".join("[%s]" % t for t
+                            in
+                                [cat] +
+                                list(rec['tags'].difference([cat]))
+                            if t
+                        ) + " "
+                    )
+            para.children[0].insert(0, tag_node)
 
-                        rec["emitted"] = True
-                        rec["id"] = "%s-%s" % (id_prefix, next(counter))
-                        para = rec['node'].deepcopy()
-
-                        insert_ticket = nodes.paragraph('')
-                        para.append(insert_ticket)
-
-                        for i, ticket in enumerate(rec['tickets']):
-                            if i > 0:
-                                insert_ticket.append(nodes.Text(", ", ", "))
-                            else:
-                                insert_ticket.append(nodes.Text(" ", " "))
-                            insert_ticket.append(
-                                nodes.reference('', '',
-                                    nodes.Text("#%s" % ticket, "#%s" % ticket),
-                                    refuri=_ticketurl(ticket)
-                                )
-                            )
-
-                        if cat or rec['tags']:
-                            #tag_node = nodes.strong('',
-                            #            "[" + cat + "] "
-                            #        )
-                            tag_node = nodes.strong('',
-                                        "[" + ", ".join(rec['tags']) + "] "
-                                    )
-                            para.children[0].insert(0, tag_node)
-
-                        bullets.append(
-                            nodes.list_item('',
-                                nodes.target('', '', ids=[rec['id']]),
-                                para
-                            )
-                        )
-            if bullets.children:
-                topsection.append(sec)
-
-        return output
+        append_sec.append(
+            nodes.list_item('',
+                nodes.target('', '', ids=[rec['id']]),
+                para
+            )
+        )
 
 
 class MigrationLogDirective(ChangeLogDirective):
@@ -139,79 +179,51 @@ class MigrationLogDirective(ChangeLogDirective):
                 orm configuration, engine, sql, \
                 postgresql, mysql, sqlite")
 
-    def run(self):
-        self.env.temp_data['ChangeLogDirective_changes'] = changes = []
-
-        content = _parse_content(self.content)
-        version = content.get('version', '')
-
-        p = nodes.paragraph('', '',)
-        self.state.nested_parse(self.content[1:], 0, p)
-
-        output = []
-
-        id_prefix = "%s-%s" % (self.type_, version)
-
+    def _run_top(self, id_prefix):
+        version = self._parsed_content.get('version', '')
         title = "What's new in %s?" % version
         topsection = nodes.section('',
                 nodes.title(title, title),
                 ids=[id_prefix]
             )
-        if "released" in content:
-            topsection.append(nodes.Text("Released: %s" % content['released']))
+        if "released" in self._parsed_content:
+            topsection.append(nodes.Text("Released: %s" % self._parsed_content['released']))
+        return topsection
 
-        output.append(topsection)
+    def _section(self, section, id_prefix):
+        sec = nodes.section('',
+                nodes.title(section, section),
+                ids=["%s-%s" % (id_prefix, section.replace(" ", "-"))]
+        )
+        return sec, sec
 
-        counter = itertools.count()
+    def _render_rec(self, rec, section, cat, append_sec):
+        para = rec['node'].deepcopy()
 
-        for section in self.sections:
-            sec = nodes.section('',
-                    nodes.title(section, section),
-                    ids=["%s-%s" % (id_prefix, section.replace(" ", "-"))]
+        insert_ticket = nodes.paragraph('')
+        para.append(insert_ticket)
+
+        for i, ticket in enumerate(rec['tickets']):
+            if i > 0:
+                insert_ticket.append(nodes.Text(", ", ", "))
+            else:
+                insert_ticket.append(nodes.Text(" ", " "))
+            insert_ticket.append(
+                nodes.reference('', '',
+                    nodes.Text("#%s" % ticket, "#%s" % ticket),
+                    refuri=_ticketurl(ticket)
+                )
             )
 
-            for cat in self.subsections + [""]:
-                for rec in changes:
-                    if not rec.get("emitted") and rec['type'] == self.type_ and \
-                        (
-                            section in rec['tags']
-                        ) and \
-                        (
-                            cat in rec['tags'] or
-                            not cat and not rec['tags'].intersection(self.subsections)
-                        ):
-
-                        para = rec['node'].deepcopy()
-                        rec["emitted"] = True
-                        rec["id"] = "%s-%s" % (id_prefix, next(counter))
-
-                        insert_ticket = nodes.paragraph('')
-                        para.append(insert_ticket)
-
-                        for i, ticket in enumerate(rec['tickets']):
-                            if i > 0:
-                                insert_ticket.append(nodes.Text(", ", ", "))
-                            else:
-                                insert_ticket.append(nodes.Text(" ", " "))
-                            insert_ticket.append(
-                                nodes.reference('', '',
-                                    nodes.Text("#%s" % ticket, "#%s" % ticket),
-                                    refuri=_ticketurl(ticket)
-                                )
-                            )
+        append_sec.append(
+            nodes.section('',
+                nodes.title(rec['title'], rec['title']),
+                para,
+                ids=[rec['id']]
+            )
+        )
 
 
-                        sec.append(
-                            nodes.section('',
-                                nodes.title(rec['title'], rec['title']),
-                                para,
-                                ids=[rec['id']]
-                            )
-                        )
-            if sec.children:
-                topsection.append(sec)
-
-        return output
 
 class ChangeDirective(EnvDirective, Directive):
     has_content = True
@@ -234,7 +246,7 @@ class ChangeDirective(EnvDirective, Directive):
             rec['tags'].add("orm")
 
         self.state.nested_parse(content['text'], 0, p)
-        self.env.temp_data['ChangeLogDirective_changes'].append(rec)
+        self.parent_cls.changes(self.env).append(rec)
 
         return []
 
