@@ -103,13 +103,15 @@ def tagged(elements):
                 tickets = set()
                 def tag(m):
                     tag_content = m.group(1)
-                    t_r = re.match(r'ticket:(\d+)', tag_content)
+                    t_r = re.match(r'(?:ticket:|#)(\d+)', tag_content)
                     if t_r:
                         tickets.add(t_r.group(1))
                     else:
                         in_content_tags.add(tag_content)
 
                 content = re.sub(r'(?:^|\s)\[(.+?)\]', tag, content)
+
+                content = re.sub(r'\s(#\d+)', tag, content)
 
                 yield {
                     'version': current_version,
