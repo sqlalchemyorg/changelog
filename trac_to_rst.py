@@ -129,7 +129,8 @@ def code(recs):
                     current_chunk = []
 
             elif code:
-                current_chunk.append(line)
+                if not re.match(r'^\s*#!', line):
+                    current_chunk.append(line)
             elif not line:
                 if current_chunk:
                     yield {
@@ -144,9 +145,11 @@ def code(recs):
                 if line == "----" or \
                     line.startswith("[[PageOutline"):
                     continue
+                line = re.sub(r'(\*\*?\w+)(?!\*)\b', lambda m: "\\%s" % m.group(1), line)
+                line = re.sub(r'\!(\w+)\b', lambda m: m.group(1), line)
                 line = re.sub(r"`(.+?)`", lambda m: "``%s``" % m.group(1), line)
-                line = re.sub(r"'''(.+?)'''", lambda m: "**%s**" % m.group(1), line)
-                line = re.sub(r"''(.+?)'", lambda m: "*%s*" % m.group(1), line)
+                line = re.sub(r"'''(.+?)'''", lambda m: "**%s**" % m.group(1).replace("``", ""), line)
+                line = re.sub(r"''(.+?)'", lambda m: "*%s*" % m.group(1).replace("``", ""), line)
                 line = re.sub(r'\[(http://\S+) (.*)\]',
                         lambda m: "`%s <%s>`_" % (m.group(2), m.group(1)),
                         line
