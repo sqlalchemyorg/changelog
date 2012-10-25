@@ -13,6 +13,7 @@ Migration Guides
    :maxdepth: 2
 
    migration_08
+   migration_05
 
 Change logs
 -----------
