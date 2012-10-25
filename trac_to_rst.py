@@ -24,7 +24,7 @@ def structure(fname):
             if current_chunk:
                 yield {
                     "bullet": state == bullet,
-                    "indent": len(current_indent),
+                    "indent": len(current_indent) if state == bullet else 0,
                     "lines": current_chunk
                 }
             current_chunk = []
@@ -34,11 +34,18 @@ def structure(fname):
             state = bullet
             current_chunk.append(line)
         elif state == bullet:
+            if not line:
+                current_chunk.append(line)
+            elif (
+                line
+                and (
+                        # line indent is less
+                        line_indent < len(current_indent)
+                        or
 
-            # in bullet with no indent, and a blank
-            # line - bullet ends
-            if (not line and not current_indent and line_indent == 0) or \
-                (line and line_indent < len(current_indent)
+                        # or no indent and previous line was blank
+                        (not line_indent and len(current_indent) == 0 and current_chunk and not current_chunk[-1])
+                    )
                 ):
                 yield {
                     "bullet": True,
@@ -47,40 +54,92 @@ def structure(fname):
                 }
                 current_chunk = []
                 state = plain
+                current_chunk.append(line)
             else:
                 current_chunk.append(line[len(current_indent):])
-        elif not line:
-            if current_chunk:
-                yield {
-                    "bullet": state == bullet,
-                    "indent": len(current_indent),
-                    "lines": current_chunk
-                }
-                current_chunk = []
+        #elif not line:
+        #    if current_chunk:
+        #        yield {
+        #            "bullet": state == bullet,
+        #           "indent": len(current_indent) if state == bullet else 0,
+        #            "lines": current_chunk
+        #        }
+        #       current_chunk = []
         else:
             current_chunk.append(line)
 
     yield {
         "bullet": state == bullet,
-        "indent": len(current_indent),
+        "indent": len(current_indent) if state == bullet else 0,
         "lines": current_chunk
     }
 
+def bullet_depth(recs):
+    bullet_indent = 0
+    rec_indent = 0
+    for rec in recs:
 
-def markup(recs):
+        if rec['bullet']:
+            if bullet_indent:
+                if rec['indent'] > rec_indent:
+                    bullet_indent += 1
+                elif rec['indent'] < rec_indent:
+                    bullet_indent -= 1
+            else:
+                bullet_indent = 1
+        else:
+            bullet_indent = 0
+
+        rec_indent = rec['indent']
+
+        rec['bullet_depth'] = bullet_indent
+        yield rec
+
+def code(recs):
     for rec in recs:
         code = False
         current_chunk = []
+
+        asterisk = rec['bullet']
+
         for line in rec["lines"]:
 
-            if line.startswith("{{{"):
+            if re.match(r'^\s*{{{', line):
                 code = True
-                current_chunk.extend(["::", ""])
 
-            elif line.startswith("}}}"):
+                if current_chunk:
+                    yield {
+                        'bullet_depth': rec['bullet_depth'],
+                        'lines': current_chunk,
+                        'code': False,
+                        'asterisk': asterisk
+                    }
+                    asterisk = False
+                    current_chunk = []
+
+
+            elif re.match(r'^\s*}}}', line):
                 code = False
+                if current_chunk:
+                    yield {
+                        'bullet_depth': rec['bullet_depth'],
+                        'lines': current_chunk,
+                        'code': True
+                    }
+                    current_chunk = []
+
             elif code:
-                current_chunk.append("    " + line)
+                current_chunk.append(line)
+            elif not line:
+                if current_chunk:
+                    yield {
+                        'bullet_depth': rec['bullet_depth'],
+                        'lines': current_chunk,
+                        'code': False,
+                        'asterisk': asterisk
+                    }
+                asterisk = False
+                current_chunk = []
             else:
                 if line == "----" or \
                     line.startswith("[[PageOutline"):
@@ -92,28 +151,70 @@ def markup(recs):
                         lambda m: "`%s <%s>`_" % (m.group(2), m.group(1)),
                         line
                     )
+
                 if line.startswith("=") and line.endswith("="):
-                    line = output_header(line)
-                current_chunk.append(line)
+                    if current_chunk:
+                        yield {
+                            'bullet_depth': rec['bullet_depth'],
+                            'lines': current_chunk,
+                            'code': False,
+                            'asterisk': asterisk,
+                        }
+                        asterisk = False
+                        current_chunk = []
 
-        rec['lines'] = current_chunk
-        yield rec
+                    header_lines = output_header(line)
+                    yield {
+                        'bullet_depth': 0,
+                        'lines': header_lines,
+                        'code': False,
+                        'asterisk': False,
+                        'header': True
+                    }
+                else:
+                    if line or current_chunk:
+                        current_chunk.append(line)
+
+        if current_chunk:
+            yield {
+                'bullet_depth': rec['bullet_depth'],
+                'lines': current_chunk,
+                'code': False,
+                'asterisk': asterisk
+            }
 
 
-#            m = re.match(r'^(\s*){{{\s*$', line)
+def render(recs):
+    for rec in recs:
+        bullet_depth = rec['bullet_depth']
 
-#            if line.startswith("=") and line.endswith("="):
-#                yield output_header(line)
-#                continue
+        bullet_indent = "  " * bullet_depth
 
-#        if state == code:
-#            if re.match(r'^\s*#\!', line):
-#                continue
+        if rec.get('header', False):
+            print "\n".join(rec['lines'])
+            print ""
+        elif rec['code']:
+            text = "\n".join(
+                bullet_indent + "    " + line
+                for line in rec['lines']
+            )
+            print bullet_indent + "::\n"
+            print text
 
-#            if re.match(r'^\s*}}}\s*$', line):
-#                state = prevstate
-#                continue
+            print ""
+        else:
+            text = textwrap.dedent("\n".join(rec['lines']))
+            lines = textwrap.wrap(text, 60 - (2 * bullet_depth))
 
+            if rec['asterisk']:
+                line = lines.pop(0)
+                print ("  " * (bullet_depth - 1)) + "* " + line
+
+            print "\n".join(
+                    [bullet_indent + line for line in lines]
+                    )
+
+            print ""
 
 def remove_double_blanks(lines):
     blank = 0
@@ -131,22 +232,24 @@ def output_header(line):
     m = re.match(r'^(=+) (.*?) =+$', line)
     depth = len(m.group(1))
     if depth == 1:
-        return "%s\n%s\n%s" % (
+        return [
                     "=" * len(m.group(2)),
                     m.group(2),
                     "=" * len(m.group(2))
-                )
+                ]
     char = {
         2: "=",
         3: "-",
         4: "^"
     }[depth]
-    return "%s\n%s" % (
+    return [
                 m.group(2),
                 char * len(m.group(2))
-            )
+            ]
 
 if __name__ == '__main__':
     fname = sys.argv[1]
-    for rec in markup(structure(fname)):
-        print rec
+
+#    for rec in structure(fname):
+#        print rec
+    render(code(bullet_depth(structure(fname))))
