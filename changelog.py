@@ -1,4 +1,4 @@
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 
 import re
 from sphinx.util.compat import Directive
@@ -16,8 +16,7 @@ def _parse_content(content):
     d = {}
     d['text'] = []
     idx = 0
-    for line in content:
-        idx += 1
+    for idx, line in enumerate(content):
         m = re.match(r' *\:(.+?)\:(?: +(.+))?', line)
         if m:
             attrname, value = m.group(1, 2)
