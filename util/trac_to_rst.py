@@ -1,3 +1,5 @@
+"""Parses a trac wiki page into rst."""
+
 import sys
 import re
 import textwrap
@@ -154,6 +156,7 @@ def code(recs):
                         lambda m: "`%s <%s>`_" % (m.group(2), m.group(1)),
                         line
                     )
+                line = re.sub(r'#(\d+)', lambda m: ":ticket:`%s`" % m.group(1), line)
 
                 if line.startswith("=") and line.endswith("="):
                     if current_chunk:

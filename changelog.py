@@ -1,3 +1,5 @@
+__version__ = '0.1.0'
+
 import re
 from sphinx.util.compat import Directive
 from docutils.statemachine import StringList
@@ -230,9 +232,6 @@ class ChangeDirective(EnvDirective, Directive):
             'sorted_tags': sorted_tags
         }
 
-        if "declarative" in rec['tags']:
-            rec['tags'].add("orm")
-
         self.state.nested_parse(content['text'], 0, p)
         self.parent_cls.changes(self.env).append(rec)
 
@@ -253,6 +252,19 @@ def _rst2sphinx(text):
         [line.strip() for line in textwrap.dedent(text).split("\n")]
     )
 
+
+def make_ticket_link(name, rawtext, text, lineno, inliner,
+                      options={}, content=[]):
+    env = inliner.document.settings.env
+    render_ticket = env.config.changelog_render_ticket or "%s"
+    prefix = "#%s"
+    if render_ticket:
+        ref = render_ticket % text
+        node = nodes.reference(rawtext, prefix % text, refuri=ref, **options)
+    else:
+        node = nodes.Text(prefix % text, prefix % text)
+    return [node], []
+
 def setup(app):
     app.add_directive('changelog', ChangeLogDirective)
     app.add_directive('change', ChangeDirective)
@@ -270,3 +282,4 @@ def setup(app):
             None,
             'env'
         )
+    app.add_role('ticket', make_ticket_link)

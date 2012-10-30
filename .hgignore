@@ -1,3 +1,8 @@
 syntax:regexp
-^build
-.*\.pyc
+^build/
+^dist/
+^docs/build/output
+.pyc$
+.orig$
+.egg-info
+.coverage

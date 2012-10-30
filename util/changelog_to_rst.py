@@ -1,9 +1,16 @@
+"""Parses a SQLAlchemy-style CHANGES file into changelog format.
+
+This is pretty specific to the files changelog was created for.
+
+"""
 import sys
 import re
 import textwrap
 
+TAGFILE = "all_my_tags.txt"
+
 def read_dates():
-    lines = open("all_sqla_tags.txt").readlines()
+    lines = open(TAGFILE).readlines()
     tags = {}
     for line in lines:
         if line.startswith("tag:"):
@@ -178,11 +185,5 @@ def emit_rst(records):
 
 if __name__ == '__main__':
     fname = sys.argv[1]
-#    for type_, content in raw_blocks(fname):
-#        print "---------- %s ----------" % type_
-#        print content
-
-#    for elem in tagged(raw_blocks(fname)):
-#        print elem
 
     emit_rst(tagged(raw_blocks(fname)))
