@@ -7,15 +7,21 @@ import sys
 import re
 import textwrap
 
+# this is a history file generated from "hg log".
+# it's parsed for "tag: <sometag>" in order to get the dates
+# for releases.   It relates a tag to a release in CHANGELOG
+# using the form tag_X_Y_Z -> X.Y.Z.
 TAGFILE = "all_my_tags.txt"
 
 def read_dates():
     lines = open(TAGFILE).readlines()
     tags = {}
     for line in lines:
-        if line.startswith("tag:"):
+        if line.startswith("changeset:"):
+            tag = None
+        elif line.startswith("tag:"):
             tag = re.match(r'tag:\s+(.+)', line).group(1)
-        elif line.startswith("date:"):
+        elif line.startswith("date:") and tag is not None:
             date, year = re.match(r'date:\s+(\w+ \w+ \d+) \d+:\d+:\d+ (\d+)', line).group(1, 2)
 
             digits = re.findall(r"(?:^|_)(\d+)", tag)
@@ -149,7 +155,7 @@ def emit_rst(records):
                 if current_output_file:
                     current_output_file.close()
                 current_major_version = major_version
-                cfile = "source/changelog_%s.rst" % major_version.replace(".", "")
+                cfile = "changelog_%s.rst" % major_version.replace(".", "")
                 print "writing %s" % cfile
                 current_output_file = open(cfile, 'w')
                 current_output_file.write("""
