@@ -67,7 +67,7 @@ special markup for tags, tickets mentioned, pull requests, changesets.   The ent
 be grouped and sorted by tag according to the configuration of the ``changelog_sections``
 and ``changelog_inner_tag_sort`` configurations.
 
-A "compoound tag" can also be used, if the configuration has a section like this::
+A "compound tag" can also be used, if the configuration has a section like this::
 
     changelog_sections = ["orm declarative", "orm"]
 
