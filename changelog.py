@@ -1,9 +1,8 @@
-__version__ = '0.1.1'
-
+__version__ = '0.2.0'
 import re
 from sphinx.util.compat import Directive
 from docutils.statemachine import StringList
-from docutils import nodes
+from docutils import nodes, utils
 import textwrap
 import itertools
 import collections
@@ -16,7 +15,8 @@ def _parse_content(content):
     d = {}
     d['text'] = []
     idx = 0
-    for idx, line in enumerate(content):
+    for line in content:
+        idx += 1
         m = re.match(r' *\:(.+?)\:(?: +(.+))?', line)
         if m:
             attrname, value = m.group(1, 2)
@@ -143,6 +143,16 @@ class ChangeLogDirective(EnvDirective, Directive):
                         self._parsed_content['released']))
         else:
             topsection.append(nodes.Text("no release date"))
+
+        intro_para = nodes.paragraph('', '')
+        for len_, text in enumerate(self._parsed_content['text']):
+            if ".. change::" in text:
+                break
+        if len_:
+            self.state.nested_parse(self._parsed_content['text'][0:len_], 0,
+                            intro_para)
+            topsection.append(intro_para)
+
         return topsection
 
 
