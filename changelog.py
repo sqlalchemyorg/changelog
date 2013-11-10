@@ -1,13 +1,20 @@
-__version__ = '0.3.1'
+__version__ = '0.3.2'
 
 import re
 from sphinx.util.compat import Directive
 from docutils.statemachine import StringList
-from docutils import nodes, utils
+from docutils import nodes
+from docutils import utils
 import textwrap
 import itertools
 import collections
-import md5
+import sys
+
+py2k = sys.version_info < (3, 0)
+if py2k:
+    import md5
+else:
+    import hashlib as md5
 
 def _comma_list(text):
     return re.split(r"\s*,\s*", text.strip())
@@ -218,6 +225,7 @@ class ChangeLogDirective(EnvDirective, Directive):
                             typ, refval = refname.split(":")
                         else:
                             typ = "default"
+                            refval = refname
                         refuri = render[typ] % refval
                     else:
                         refuri = render % refname
