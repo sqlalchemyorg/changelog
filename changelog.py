@@ -1,4 +1,4 @@
-__version__ = '0.3.0'
+__version__ = '0.3.1'
 
 import re
 from sphinx.util.compat import Directive
@@ -213,8 +213,12 @@ class ChangeLogDirective(EnvDirective, Directive):
                     insert_ticket.append(nodes.Text("References: """))
                 i += 1
                 if render is not None:
-                    if callable(render):
-                        refuri = render(refname)
+                    if isinstance(render, dict):
+                        if ":" in refname:
+                            typ, refval = refname.split(":")
+                        else:
+                            typ = "default"
+                        refuri = render[typ] % refval
                     else:
                         refuri = render % refname
                     node = nodes.reference('', '',
@@ -341,16 +345,7 @@ def setup(app):
     app.add_directive('changelog_imports', ChangeLogImportDirective)
     app.add_config_value("changelog_sections", [], 'env')
     app.add_config_value("changelog_inner_tag_sort", [], 'env')
-    app.add_config_value("changelog_render_ticket",
-            None,
-            'env'
-        )
-    app.add_config_value("changelog_render_pullreq",
-            None,
-            'env'
-        )
-    app.add_config_value("changelog_render_changeset",
-            None,
-            'env'
-        )
+    app.add_config_value("changelog_render_ticket", None, 'env')
+    app.add_config_value("changelog_render_pullreq", None, 'env')
+    app.add_config_value("changelog_render_changeset", None, 'env')
     app.add_role('ticket', make_ticket_link)
