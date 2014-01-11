@@ -29,6 +29,7 @@ setup(name='changelog',
       author_email='mike@zzzcomputing.com',
       url='http://bitbucket.org/zzzeek/changelog',
       license='MIT',
-      py_modules=('changelog',),
+      packages=['changelog'],
+      include_package_data=True,
       zip_safe=False,
 )

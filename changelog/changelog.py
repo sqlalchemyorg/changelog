@@ -1,10 +1,13 @@
-__version__ = '0.3.2'
+#! coding: utf-8
+
 
 import re
 from sphinx.util.compat import Directive
 from docutils.statemachine import StringList
 from docutils import nodes
-from docutils import utils
+from sphinx.util.console import bold
+import os
+from sphinx.util.osutil import copyfile
 import textwrap
 import itertools
 import collections
@@ -15,6 +18,9 @@ if py2k:
     import md5
 else:
     import hashlib as md5
+
+def _is_html(app):
+    return app.builder.name in ('html', 'readthedocs')   # 'readthedocs', classy
 
 def _comma_list(text):
     return re.split(r"\s*,\s*", text.strip())
@@ -187,9 +193,9 @@ class ChangeLogDirective(EnvDirective, Directive):
         targetnode = nodes.target('', '', ids=[targetid])
         para.insert(0, targetnode)
         permalink = nodes.reference('', '',
-                        nodes.Text("(link)", "(link)"),
+                        nodes.Text(u"¶", u"¶"),
                         refid=targetid,
-                        classes=['changeset-link']
+                        classes=['changeset-link', 'headerlink'],
                     )
         para.append(permalink)
 
@@ -347,6 +353,26 @@ def make_ticket_link(name, rawtext, text, lineno, inliner,
         node = nodes.Text(prefix % text, prefix % text)
     return [node], []
 
+def add_stylesheet(app):
+    app.add_stylesheet('changelog.css')
+
+def copy_stylesheet(app, exception):
+    app.info(bold('The name of the builder is: %s' % app.builder.name), nonl=True)
+
+    if not _is_html(app) or exception:
+        return
+    app.info(bold('Copying sphinx_paramlinks stylesheet... '), nonl=True)
+
+    source = os.path.abspath(os.path.dirname(__file__))
+
+    # the '_static' directory name is hardcoded in
+    # sphinx.builders.html.StandaloneHTMLBuilder.copy_static_files.
+    # would be nice if Sphinx could improve the API here so that we just
+    # give it the path to a .css file and it does the right thing.
+    dest = os.path.join(app.builder.outdir, '_static', 'changelog.css')
+    copyfile(os.path.join(source, "changelog.css"), dest)
+    app.info('done')
+
 def setup(app):
     app.add_directive('changelog', ChangeLogDirective)
     app.add_directive('change', ChangeDirective)
@@ -356,4 +382,6 @@ def setup(app):
     app.add_config_value("changelog_render_ticket", None, 'env')
     app.add_config_value("changelog_render_pullreq", None, 'env')
     app.add_config_value("changelog_render_changeset", None, 'env')
+    app.connect('builder-inited', add_stylesheet)
+    app.connect('build-finished', copy_stylesheet)
     app.add_role('ticket', make_ticket_link)
