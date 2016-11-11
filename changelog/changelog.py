@@ -35,6 +35,9 @@ def _parse_content(content):
         if m:
             attrname, value = m.group(1, 2)
             d[attrname] = value or ''
+        elif idx == 1 and line:
+            # accomodate a unique value on the edge of .. change::
+            continue
         else:
             break
     d["text"] = content[idx:]
