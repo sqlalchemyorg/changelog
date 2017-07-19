@@ -19,11 +19,14 @@ if py2k:
 else:
     import hashlib as md5
 
+
 def _is_html(app):
-    return app.builder.name in ('html', 'readthedocs')   # 'readthedocs', classy
+    return app.builder.name in ('html', 'readthedocs')
+
 
 def _comma_list(text):
     return re.split(r"\s*,\s*", text.strip())
+
 
 def _parse_content(content):
     d = {}
@@ -53,14 +56,15 @@ class EnvDirective(object):
     def changes(cls, env):
         return env.temp_data['ChangeLogDirective_changes']
 
+
 class ChangeLogDirective(EnvDirective, Directive):
     has_content = True
 
     default_section = 'misc'
 
     def _organize_by_section(self, changes):
-        compound_sections = [(s, s.split(" ")) for s in
-                                self.sections if " " in s]
+        compound_sections = [
+            (s, s.split(" ")) for s in self.sections if " " in s]
 
         bysection = collections.defaultdict(list)
         all_sections = set()
@@ -96,7 +100,6 @@ class ChangeLogDirective(EnvDirective, Directive):
         if 'ChangeLogDirective_changes' not in self.env.temp_data:
             self.env.temp_data['ChangeLogDirective_changes'] = []
         self._parsed_content = _parse_content(self.content)
-
         self.version = version = self._parsed_content.get('version', '')
         self.env.temp_data['ChangeLogDirective_version'] = version
 
@@ -134,9 +137,10 @@ class ChangeLogDirective(EnvDirective, Directive):
                     topsection.append(append_sec)
         else:
             for section in sections_to_render + [self.default_section]:
-                sec = nodes.section('',
-                        nodes.title(section, section),
-                        ids=["%s-%s" % (id_prefix, section.replace(" ", "-"))]
+                sec = nodes.section(
+                    '',
+                    nodes.title(section, section),
+                    ids=["%s-%s" % (id_prefix, section.replace(" ", "-"))]
                 )
 
                 append_sec = self._append_node()
@@ -157,14 +161,17 @@ class ChangeLogDirective(EnvDirective, Directive):
 
     def _run_top(self, id_prefix):
         version = self._parsed_content.get('version', '')
-        topsection = nodes.section('',
-                nodes.title(version, version),
-                ids=[id_prefix]
-            )
+        topsection = nodes.section(
+            '',
+            nodes.title(version, version),
+            ids=[id_prefix]
+        )
 
         if self._parsed_content.get("released"):
-            topsection.append(nodes.Text("Released: %s" %
-                        self._parsed_content['released']))
+            topsection.append(
+                nodes.Text("Released: %s" %
+                           self._parsed_content['released'])
+            )
         else:
             topsection.append(nodes.Text("no release date"))
 
@@ -177,12 +184,12 @@ class ChangeLogDirective(EnvDirective, Directive):
         # if encountered any text elements that didn't start with
         # ".. change::", those become the intro
         if len_ > 0:
-            self.state.nested_parse(self._parsed_content['text'][0:len_], 0,
-                            intro_para)
+            self.state.nested_parse(
+                self._parsed_content['text'][0:len_], 0,
+                intro_para)
             topsection.append(intro_para)
 
         return topsection
-
 
     def _render_rec(self, rec, section, cat, append_sec):
         para = rec['node'].deepcopy()
@@ -191,25 +198,27 @@ class ChangeLogDirective(EnvDirective, Directive):
 
         to_hash = "%s %s" % (self.version, text[0:100])
         targetid = "change-%s" % (
-                        md5.md5(to_hash.encode('ascii', 'ignore')
-                            ).hexdigest())
+            md5.md5(to_hash.encode('ascii', 'ignore')).hexdigest())
         targetnode = nodes.target('', '', ids=[targetid])
         para.insert(0, targetnode)
-        permalink = nodes.reference('', '',
-                        nodes.Text(u"¶", u"¶"),
-                        refid=targetid,
-                        classes=['changeset-link', 'headerlink'],
-                    )
+        permalink = nodes.reference(
+            '', '',
+            nodes.Text(u"¶", u"¶"),
+            refid=targetid,
+            classes=['changeset-link', 'headerlink'],
+        )
         para.append(permalink)
 
         if len(rec['versions']) > 1:
 
-            backported_changes = rec['sorted_versions'][rec['sorted_versions'].index(self.version) + 1:]
+            backported_changes = rec['sorted_versions'][
+                rec['sorted_versions'].index(self.version) + 1:]
             if backported_changes:
                 backported = nodes.paragraph('')
                 backported.append(nodes.Text("This change is also ", ""))
                 backported.append(nodes.strong("", "backported"))
-                backported.append(nodes.Text(" to: %s" % ", ".join(backported_changes), ""))
+                backported.append(
+                    nodes.Text(" to: %s" % ", ".join(backported_changes), ""))
                 para.append(backported)
 
         insert_ticket = nodes.paragraph('')
@@ -217,11 +226,14 @@ class ChangeLogDirective(EnvDirective, Directive):
 
         i = 0
         for collection, render, prefix in (
-                (rec['tickets'], self.env.config.changelog_render_ticket, "#%s"),
-                (rec['pullreq'], self.env.config.changelog_render_pullreq,
-                                            "pull request %s"),
-                (rec['changeset'], self.env.config.changelog_render_changeset, "r%s"),
-            ):
+                (rec['tickets'],
+                 self.env.config.changelog_render_ticket, "#%s"),
+                (rec['pullreq'],
+                 self.env.config.changelog_render_pullreq,
+                 "pull request %s"),
+                (rec['changeset'],
+                 self.env.config.changelog_render_changeset, "r%s"),
+        ):
             for refname in collection:
                 if i > 0:
                     insert_ticket.append(nodes.Text(", ", ", "))
@@ -238,32 +250,34 @@ class ChangeLogDirective(EnvDirective, Directive):
                         refuri = render[typ] % refval
                     else:
                         refuri = render % refname
-                    node = nodes.reference('', '',
-                            nodes.Text(prefix % refname, prefix % refname),
-                            refuri=refuri
-                        )
+                    node = nodes.reference(
+                        '', '',
+                        nodes.Text(prefix % refname, prefix % refname),
+                        refuri=refuri
+                    )
                 else:
                     node = nodes.Text(prefix % refname, prefix % refname)
                 insert_ticket.append(node)
 
         if rec['tags']:
-            tag_node = nodes.strong('',
-                        " ".join("[%s]" % t for t
-                            in
-                                [t1 for t1 in [section, cat]
-                                    if t1 in rec['tags']] +
-
-                                list(rec['tags'].difference([section, cat]))
-                        ) + " "
-                    )
+            tag_node = nodes.strong(
+                '',
+                " ".join(
+                    "[%s]" % t for t in
+                    [t1 for t1 in [section, cat] if t1 in rec['tags']] +
+                    list(rec['tags'].difference([section, cat]))
+                ) + " "
+            )
             para.children[0].insert(0, tag_node)
 
         append_sec.append(
-            nodes.list_item('',
+            nodes.list_item(
+                '',
                 nodes.target('', '', ids=[rec['id']]),
                 para
             )
         )
+
 
 class ChangeLogImportDirective(EnvDirective, Directive):
     has_content = True
@@ -285,6 +299,7 @@ class ChangeLogImportDirective(EnvDirective, Directive):
 
         return []
 
+
 class ChangeDirective(EnvDirective, Directive):
     has_content = True
 
@@ -293,12 +308,14 @@ class ChangeDirective(EnvDirective, Directive):
         p = nodes.paragraph('', '',)
         sorted_tags = _comma_list(content.get('tags', ''))
         declared_version = self.env.temp_data['ChangeLogDirective_version']
-        versions = set(_comma_list(content.get("versions", ""))).difference(['']).\
-                            union([declared_version])
+        versions = set(
+            _comma_list(content.get("versions", ""))).difference(['']).\
+            union([declared_version])
 
         # if we don't refer to any other versions and we're in an include,
         # skip
-        if len(versions) == 1 and 'ChangeLogDirective_includes' in self.env.temp_data:
+        if len(versions) == 1 and \
+                'ChangeLogDirective_includes' in self.env.temp_data:
             return []
 
         def int_ver(ver):
@@ -312,9 +329,12 @@ class ChangeDirective(EnvDirective, Directive):
 
         rec = {
             'tags': set(sorted_tags).difference(['']),
-            'tickets': set(_comma_list(content.get('tickets', ''))).difference(['']),
-            'pullreq': set(_comma_list(content.get('pullreq', ''))).difference(['']),
-            'changeset': set(_comma_list(content.get('changeset', ''))).difference(['']),
+            'tickets': set(
+                _comma_list(content.get('tickets', ''))).difference(['']),
+            'pullreq': set(
+                _comma_list(content.get('pullreq', ''))).difference(['']),
+            'changeset': set(
+                _comma_list(content.get('changeset', ''))).difference(['']),
             'node': p,
             'type': "change",
             "title": content.get("title", None),
@@ -328,6 +348,7 @@ class ChangeDirective(EnvDirective, Directive):
 
         return []
 
+
 def _text_rawsource_from_node(node):
     src = []
     stack = [node]
@@ -338,14 +359,16 @@ def _text_rawsource_from_node(node):
         stack.extend(n.children)
     return "".join(src)
 
+
 def _rst2sphinx(text):
     return StringList(
         [line.strip() for line in textwrap.dedent(text).split("\n")]
     )
 
 
-def make_ticket_link(name, rawtext, text, lineno, inliner,
-                      options={}, content=[]):
+def make_ticket_link(
+        name, rawtext, text, lineno, inliner,
+        options={}, content=[]):
     env = inliner.document.settings.env
     render_ticket = env.config.changelog_render_ticket or "%s"
     prefix = "#%s"
@@ -356,11 +379,14 @@ def make_ticket_link(name, rawtext, text, lineno, inliner,
         node = nodes.Text(prefix % text, prefix % text)
     return [node], []
 
+
 def add_stylesheet(app):
     app.add_stylesheet('changelog.css')
 
+
 def copy_stylesheet(app, exception):
-    app.info(bold('The name of the builder is: %s' % app.builder.name), nonl=True)
+    app.info(
+        bold('The name of the builder is: %s' % app.builder.name), nonl=True)
 
     if not _is_html(app) or exception:
         return
@@ -375,6 +401,7 @@ def copy_stylesheet(app, exception):
     dest = os.path.join(app.builder.outdir, '_static', 'changelog.css')
     copyfile(os.path.join(source, "changelog.css"), dest)
     app.info('done')
+
 
 def setup(app):
     app.add_directive('changelog', ChangeLogDirective)

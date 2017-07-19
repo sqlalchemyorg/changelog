@@ -1,3 +1,3 @@
 __version__ = '0.4.0'
 
-from .changelog import setup
+from .sphinxext import setup
