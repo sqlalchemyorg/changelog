@@ -1,0 +1,12 @@
+*.pyc
+*.pyo
+/build/
+dist/
+/docs/build/output/
+*.orig
+.venv
+*.egg-info
+.coverage
+coverage.xml
+.tox
+*.patch
