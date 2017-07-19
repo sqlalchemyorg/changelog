@@ -53,7 +53,9 @@ class EnvDirective(object):
         return self.state.document.settings.env
 
     @classmethod
-    def changes(cls, env):
+    def get_changes_list(cls, env):
+        if 'ChangeLogDirective_changes' not in env.temp_data:
+            env.temp_data['ChangeLogDirective_changes'] = []
         return env.temp_data['ChangeLogDirective_changes']
 
 
@@ -62,43 +64,17 @@ class ChangeLogDirective(EnvDirective, Directive):
 
     default_section = 'misc'
 
-    def _organize_by_section(self, changes):
-        compound_sections = [
-            (s, s.split(" ")) for s in self.sections if " " in s]
+    def run(self):
+        self._parse()
 
-        bysection = collections.defaultdict(list)
-        all_sections = set()
-        for rec in changes:
-            if self.version not in rec['versions']:
-                continue
-            inner_tag = rec['tags'].intersection(self.inner_tag_sort)
-            if inner_tag:
-                inner_tag = inner_tag.pop()
-            else:
-                inner_tag = ""
+        if not ChangeLogImportDirective.in_include_directive(self.env):
+            return self._generate_output()
+        else:
+            return []
 
-            for compound, comp_words in compound_sections:
-                if rec['tags'].issuperset(comp_words):
-                    bysection[(compound, inner_tag)].append(rec)
-                    all_sections.add(compound)
-                    break
-            else:
-                intersect = rec['tags'].intersection(self.sections)
-                if intersect:
-                    for sec in rec['sorted_tags']:
-                        if sec in intersect:
-                            bysection[(sec, inner_tag)].append(rec)
-                            all_sections.add(sec)
-                            break
-                else:
-                    bysection[(self.default_section, inner_tag)].append(rec)
-        return bysection, all_sections
-
-    def _setup_run(self):
+    def _parse(self):
         self.sections = self.env.config.changelog_sections
         self.inner_tag_sort = self.env.config.changelog_inner_tag_sort + [""]
-        if 'ChangeLogDirective_changes' not in self.env.temp_data:
-            self.env.temp_data['ChangeLogDirective_changes'] = []
         self._parsed_content = _parse_content(self.content)
         self.version = version = self._parsed_content.get('version', '')
         self.env.temp_data['ChangeLogDirective_version'] = version
@@ -106,13 +82,8 @@ class ChangeLogDirective(EnvDirective, Directive):
         p = nodes.paragraph('', '',)
         self.state.nested_parse(self.content[1:], 0, p)
 
-    def run(self):
-        self._setup_run()
-
-        if 'ChangeLogDirective_includes' in self.env.temp_data:
-            return []
-
-        changes = self.changes(self.env)
+    def _generate_output(self):
+        changes = self.get_changes_list(self.env)
         output = []
 
         id_prefix = "change-%s" % (self.version, )
@@ -155,6 +126,38 @@ class ChangeLogDirective(EnvDirective, Directive):
                     topsection.append(sec)
 
         return output
+
+    def _organize_by_section(self, changes):
+        compound_sections = [
+            (s, s.split(" ")) for s in self.sections if " " in s]
+
+        bysection = collections.defaultdict(list)
+        all_sections = set()
+        for rec in changes:
+            if self.version not in rec['versions']:
+                continue
+            inner_tag = rec['tags'].intersection(self.inner_tag_sort)
+            if inner_tag:
+                inner_tag = inner_tag.pop()
+            else:
+                inner_tag = ""
+
+            for compound, comp_words in compound_sections:
+                if rec['tags'].issuperset(comp_words):
+                    bysection[(compound, inner_tag)].append(rec)
+                    all_sections.add(compound)
+                    break
+            else:
+                intersect = rec['tags'].intersection(self.sections)
+                if intersect:
+                    for sec in rec['sorted_tags']:
+                        if sec in intersect:
+                            bysection[(sec, inner_tag)].append(rec)
+                            all_sections.add(sec)
+                            break
+                else:
+                    bysection[(self.default_section, inner_tag)].append(rec)
+        return bysection, all_sections
 
     def _append_node(self):
         return nodes.bullet_list()
@@ -282,16 +285,14 @@ class ChangeLogDirective(EnvDirective, Directive):
 class ChangeLogImportDirective(EnvDirective, Directive):
     has_content = True
 
-    def _setup_run(self):
-        if 'ChangeLogDirective_changes' not in self.env.temp_data:
-            self.env.temp_data['ChangeLogDirective_changes'] = []
+    @classmethod
+    def in_include_directive(cls, env):
+        return 'ChangeLogDirective_includes' in env.temp_data
 
     def run(self):
-        self._setup_run()
-
         # tell ChangeLogDirective we're here, also prevent
         # nested .. include calls
-        if 'ChangeLogDirective_includes' not in self.env.temp_data:
+        if self.in_include_directive(self.env):
             self.env.temp_data['ChangeLogDirective_includes'] = True
             p = nodes.paragraph('', '',)
             self.state.nested_parse(self.content, 0, p)
@@ -315,7 +316,8 @@ class ChangeDirective(EnvDirective, Directive):
         # if we don't refer to any other versions and we're in an include,
         # skip
         if len(versions) == 1 and \
-                'ChangeLogDirective_includes' in self.env.temp_data:
+                ChangeLogImportDirective.in_include_directive(self.env):
+
             return []
 
         def int_ver(ver):
@@ -344,7 +346,7 @@ class ChangeDirective(EnvDirective, Directive):
         }
 
         self.state.nested_parse(content['text'], 0, p)
-        ChangeLogDirective.changes(self.env).append(rec)
+        ChangeLogDirective.get_changes_list(self.env).append(rec)
 
         return []
 
