@@ -102,7 +102,7 @@ class ChangeLogImportDirective(EnvDirective, Directive):
     def run(self):
         # tell ChangeLogDirective we're here, also prevent
         # nested .. include calls
-        if self.in_include_directive(self.env):
+        if not self.in_include_directive(self.env):
             self.env.temp_data['ChangeLogDirective_includes'] = True
             p = nodes.paragraph('', '',)
             self.state.nested_parse(self.content, 0, p)
