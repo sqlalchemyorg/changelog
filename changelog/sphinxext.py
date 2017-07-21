@@ -1,10 +1,11 @@
 import re
-from sphinx.util.compat import Directive
+from docutils.parsers.rst import Directive
 from docutils import nodes
 from sphinx.util.console import bold
 import os
 from sphinx.util.osutil import copyfile
 from . import render
+import copy
 
 
 def _is_html(app):
@@ -69,20 +70,42 @@ class ChangeLogDirective(EnvDirective, Directive):
 
         # 2. examine top level directives inside the .. changelog::
         # directive.  version, release date
-        self._parsed_content = _parse_content(self.content)
-        self.version = version = self._parsed_content.get('version', '')
-        self.release_date = self._parsed_content.get('released', None)
+        self._parsed_content = parsed = _parse_content(self.content)
+        self.version = version = parsed.get('version', '')
+        self.release_date = parsed.get('released', None)
         self.is_released = bool(self.release_date)
         self.env.temp_data['ChangeLogDirective_version'] = version
 
-        # 3. if unreleased, parse out "unreleased" files and add them
-        # to content as .rst text.
+        content = self.content
+
+        # 3. read extra per-file included notes
+        if 'include_notes_from' in parsed:
+            if content.items and content.items[0]:
+                source = content.items[0][0]
+                path = os.path.join(
+                    os.path.dirname(source), parsed['include_notes_from'])
+            else:
+                path = parsed['include_notes_from']
+            if not os.path.exists(path):
+                raise Exception("included nodes path %s does not exist" % path)
+
+            content = copy.deepcopy(content)
+            for fname in os.listdir(path):
+                fpath = os.path.join(path, fname)
+                print "READING!!! %s %s %s" % (version, self, fpath)
+                with open(fpath) as handle:
+                    content.append("", path, 0)
+                    for num, line in enumerate(handle):
+                            line = line.rstrip()
+                            content.append(
+                                line, path, num
+                            )
 
         # 4. parse the content of the .. changelog:: directive. This
         # is where we parse individual .. change:: directives and construct
         # a list of items, stored in the env via self.get_changes_list(env)
         p = nodes.paragraph('', '',)
-        self.state.nested_parse(self.content[1:], 0, p)
+        self.state.nested_parse(content[1:], 0, p)
 
 
 class ChangeLogImportDirective(EnvDirective, Directive):
@@ -118,6 +141,10 @@ class ChangeDirective(EnvDirective, Directive):
     has_content = True
 
     def run(self):
+        # don't do anything if we're not inside of a version
+        if 'ChangeLogDirective_version' not in self.env.temp_data:
+            return []
+
         content = _parse_content(self.content)
         p = nodes.paragraph('', '',)
         sorted_tags = _comma_list(content.get('tags', ''))
