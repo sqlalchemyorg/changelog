@@ -3,16 +3,11 @@ from docutils import nodes
 
 import itertools
 import collections
-import sys
-py2k = sys.version_info < (3, 0)
-if py2k:
-    import md5
-else:
-    import hashlib as md5
 
 
 def render_changelog(changelog_directive):
-    changes = changelog_directive.get_changes_list(changelog_directive.env)
+    changes = changelog_directive.get_changes_list(
+        changelog_directive.env, changelog_directive.version).values()
     output = []
 
     id_prefix = "change-%s" % (changelog_directive.version, )
@@ -69,8 +64,8 @@ def _organize_by_section(changelog_directive, changes):
     bysection = collections.defaultdict(list)
     all_sections = set()
     for rec in changes:
-        if changelog_directive.version not in rec['versions']:
-            continue
+        assert changelog_directive.version == rec['render_for_version']
+
         inner_tag = rec['tags'].intersection(
             changelog_directive.inner_tag_sort)
         if inner_tag:
@@ -138,11 +133,9 @@ def _run_top(changelog_directive, id_prefix):
 def _render_rec(changelog_directive, rec, section, cat, append_sec):
     para = rec['node'].deepcopy()
 
-    text = _text_rawsource_from_node(para)
-
-    to_hash = "%s %s" % (changelog_directive.version, text[0:100])
     targetid = "change-%s" % (
-        md5.md5(to_hash.encode('ascii', 'ignore')).hexdigest())
+        rec['version_to_hash'][changelog_directive.version],
+    )
     targetnode = nodes.target('', '', ids=[targetid])
     para.insert(0, targetnode)
     permalink = nodes.reference(
@@ -222,14 +215,4 @@ def _render_rec(changelog_directive, rec, section, cat, append_sec):
         )
     )
 
-
-def _text_rawsource_from_node(node):
-    src = []
-    stack = [node]
-    while stack:
-        n = stack.pop(0)
-        if isinstance(n, nodes.Text):
-            src.append(n.rawsource)
-        stack.extend(n.children)
-    return "".join(src)
 

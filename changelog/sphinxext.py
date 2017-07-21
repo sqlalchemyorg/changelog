@@ -1,11 +1,18 @@
+import collections
+import copy
+import hashlib as md5
+import os
 import re
+
 from docutils.parsers.rst import Directive
 from docutils import nodes
 from sphinx.util.console import bold
-import os
 from sphinx.util.osutil import copyfile
+from sphinx.util import status_iterator
+from sphinx.util import logging
 from . import render
-import copy
+
+LOG = logging.getLogger(__name__)
 
 
 def _is_html(app):
@@ -41,10 +48,11 @@ class EnvDirective(object):
         return self.state.document.settings.env
 
     @classmethod
-    def get_changes_list(cls, env):
-        if 'ChangeLogDirective_changes' not in env.temp_data:
-            env.temp_data['ChangeLogDirective_changes'] = []
-        return env.temp_data['ChangeLogDirective_changes']
+    def get_changes_list(cls, env, hash_on_version):
+        key = ('ChangeLogDirective_changes', hash_on_version)
+        if key not in env.temp_data:
+            env.temp_data[key] = collections.OrderedDict()
+        return env.temp_data[key]
 
 
 class ChangeLogDirective(EnvDirective, Directive):
@@ -74,7 +82,7 @@ class ChangeLogDirective(EnvDirective, Directive):
         self.version = version = parsed.get('version', '')
         self.release_date = parsed.get('released', None)
         self.is_released = bool(self.release_date)
-        self.env.temp_data['ChangeLogDirective_version'] = version
+        self.env.temp_data['ChangeLogDirective'] = self
 
         content = self.content
 
@@ -90,9 +98,16 @@ class ChangeLogDirective(EnvDirective, Directive):
                 raise Exception("included nodes path %s does not exist" % path)
 
             content = copy.deepcopy(content)
-            for fname in os.listdir(path):
+
+            files = [
+                fname for fname in os.listdir(path) if fname.endswith(".rst")
+            ]
+            for fname in status_iterator(
+                files,
+                "reading changelog note files (version %s)..." % version,
+                "purple", length=len(files), verbosity=self.env.app.verbosity
+            ):
                 fpath = os.path.join(path, fname)
-                print "READING!!! %s %s %s" % (version, self, fpath)
                 with open(fpath) as handle:
                     content.append("", path, 0)
                     for num, line in enumerate(handle):
@@ -142,13 +157,14 @@ class ChangeDirective(EnvDirective, Directive):
 
     def run(self):
         # don't do anything if we're not inside of a version
-        if 'ChangeLogDirective_version' not in self.env.temp_data:
+        if 'ChangeLogDirective' not in self.env.temp_data:
             return []
 
         content = _parse_content(self.content)
-        p = nodes.paragraph('', '',)
+        body_paragraph = nodes.paragraph('', '',)
         sorted_tags = _comma_list(content.get('tags', ''))
-        declared_version = self.env.temp_data['ChangeLogDirective_version']
+        changelog_directive = self.env.temp_data['ChangeLogDirective']
+        declared_version = changelog_directive.version
         versions = set(
             _comma_list(content.get("versions", ""))).difference(['']).\
             union([declared_version])
@@ -160,35 +176,130 @@ class ChangeDirective(EnvDirective, Directive):
 
             return []
 
-        def int_ver(ver):
-            out = []
-            for dig in ver.split("."):
-                try:
-                    out.append(int(dig))
-                except ValueError:
-                    out.append(0)
-            return tuple(out)
+        self.state.nested_parse(content['text'], 0, body_paragraph)
 
-        rec = {
-            'tags': set(sorted_tags).difference(['']),
-            'tickets': set(
-                _comma_list(content.get('tickets', ''))).difference(['']),
-            'pullreq': set(
-                _comma_list(content.get('pullreq', ''))).difference(['']),
-            'changeset': set(
-                _comma_list(content.get('changeset', ''))).difference(['']),
-            'node': p,
-            'type': "change",
-            "title": content.get("title", None),
-            'sorted_tags': sorted_tags,
-            "versions": versions,
-            "sorted_versions": list(reversed(sorted(versions, key=int_ver)))
-        }
+        raw_text = _text_rawsource_from_node(body_paragraph)
+        tickets = set(_comma_list(content.get('tickets', ''))).difference([''])
+        pullreq = set(_comma_list(content.get('pullreq', ''))).difference([''])
+        tags = set(sorted_tags).difference([''])
 
-        self.state.nested_parse(content['text'], 0, p)
-        ChangeLogDirective.get_changes_list(self.env).append(rec)
+        for hash_on_version in versions:
+            issue_hash = _get_robust_version_hash(
+                raw_text, hash_on_version, tickets, tags)
+
+            rec = ChangeLogDirective.get_changes_list(
+                changelog_directive.env, hash_on_version).setdefault(
+                issue_hash, {})
+            if not rec:
+                rec.update({
+                    'hash': issue_hash,
+                    "render_for_version": hash_on_version,
+                    'tags': tags,
+                    'tickets': tickets,
+                    'pullreq': pullreq,
+                    'changeset': set(
+                        _comma_list(content.get('changeset', ''))
+                    ).difference(['']),
+                    'node': body_paragraph,
+                    'raw_text': raw_text,
+                    'type': "change",
+                    "title": content.get("title", None),
+                    'sorted_tags': sorted_tags,
+                    "versions": versions,
+                    "version_to_hash": {
+                        version: _get_legacy_version_hash(raw_text, version)
+                        for version in versions
+                    },
+                    "source_versions": [declared_version],
+                    "sorted_versions": list(
+                        reversed(sorted(versions, key=_str_version_as_tuple)))
+                })
+            else:
+                LOG.info(
+                    "Merging changelog record '%s' from version(s) %s "
+                    "with that of version %s",
+                    _quick_rec_str(rec),
+                    ", ".join(rec['source_versions']),
+                    declared_version
+                )
+                rec["source_versions"].append(declared_version)
+
+                assert rec['raw_text'] == raw_text
+                assert rec['tags'] == tags
+                assert rec["render_for_version"] == hash_on_version
+
+                rec['tickets'].update(tickets)
+                rec['pullreq'].update(pullreq)
+                rec['changeset'].update(
+                    set(
+                        _comma_list(content.get('changeset', ''))).
+                    difference([''])
+                )
+                rec['versions'].update(versions)
+
+                rec['version_to_hash'].update(
+                    {
+                        version: _get_legacy_version_hash(raw_text, version)
+                        for version in versions
+                    }
+                )
+                rec["sorted_versions"] = list(
+                    reversed(
+                        sorted(rec['versions'], key=_str_version_as_tuple)))
 
         return []
+
+
+def _quick_rec_str(rec):
+    """try to print an identifiable description of a record"""
+
+    if rec['tickets']:
+        return "[tickets: %s]" % ", ".join(rec["tickets"])
+    else:
+        return "%s..." % rec["raw_text"][0:25]
+
+
+def _get_legacy_version_hash(raw_text, version):
+    # this needs to stay like this for link compatibility
+    # with thousands of already-published changelogs
+    to_hash = "%s %s" % (version, raw_text[0:100])
+    return md5.md5(to_hash.encode('ascii', 'ignore')).hexdigest()
+
+
+def _get_robust_version_hash(raw_text, version, tickets, tags):
+    # this needs to stay like this for link compatibility
+    # with thousands of already-published changelogs
+    to_hash = "%s %s %s %s" % (
+        version, ", ".join(tickets), ", ".join(tags), raw_text)
+    return md5.md5(to_hash.encode('ascii', 'ignore')).hexdigest()
+
+
+def _text_rawsource_from_node(node):
+    src = []
+    stack = [node]
+    while stack:
+        n = stack.pop(0)
+        if isinstance(n, nodes.Text):
+            src.append(n.rawsource)
+        stack.extend(n.children)
+    return "".join(src)
+
+
+_VERSION_IDS = {}
+
+
+def _str_version_as_tuple(ver):
+    if ver in _VERSION_IDS:
+        return _VERSION_IDS[ver]
+
+    out = []
+    for dig in ver.split("."):
+        try:
+            out.append(int(dig))
+        except ValueError:
+            out.append(dig)
+    _VERSION_IDS[ver] = result = tuple(out)
+    return result
 
 
 def make_ticket_link(
