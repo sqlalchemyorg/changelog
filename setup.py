@@ -32,4 +32,7 @@ setup(name='changelog',
       packages=['changelog'],
       include_package_data=True,
       zip_safe=False,
+      entry_points={
+          'console_scripts': ['changelog = changelog.cmd:main'],
+      }
 )
