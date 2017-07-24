@@ -22,7 +22,7 @@ def release_notes_into_changelog_file(target_filename, release_date):
                     output.write("\n")
                     with open(fname_path) as inner:
                         for inner_line in inner:
-                            output.write("    " + inner_line)
+                            output.write(("    " + inner_line).rstrip())
                     os.system("git rm %s" % fname_path)
             else:
                 output.write(line)
