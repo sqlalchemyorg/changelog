@@ -111,10 +111,14 @@ class ChangeLogDirective(EnvDirective, Directive):
                 with open(fpath) as handle:
                     content.append("", path, 0)
                     for num, line in enumerate(handle):
-                            line = line.rstrip()
-                            content.append(
-                                line, path, num
-                            )
+                        if "\t" in line:
+                            raise ValueError(
+                                "file %s has a tab in it! please "
+                                "convert to spaces." % fname)
+                        line = line.rstrip()
+                        content.append(
+                            line, path, num
+                        )
 
         # 4. parse the content of the .. changelog:: directive. This
         # is where we parse individual .. change:: directives and construct
