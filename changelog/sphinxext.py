@@ -3,6 +3,7 @@ import copy
 import hashlib as md5
 import os
 import re
+import warnings
 
 from docutils.parsers.rst import Directive
 from docutils import nodes
@@ -111,10 +112,12 @@ class ChangeLogDirective(EnvDirective, Directive):
                 with open(fpath) as handle:
                     content.append("", path, 0)
                     for num, line in enumerate(handle):
+
                         if "\t" in line:
-                            raise ValueError(
+                            warnings.warn(
                                 "file %s has a tab in it! please "
                                 "convert to spaces." % fname)
+                            line = line.replace("\t", "    ")
                         line = line.rstrip()
                         content.append(
                             line, path, num
