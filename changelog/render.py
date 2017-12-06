@@ -202,7 +202,7 @@ def _render_rec(changelog_directive, rec, section, cat, append_sec):
             " ".join(
                 "[%s]" % t for t in
                 [t1 for t1 in [section, cat] if t1 in rec['tags']] +
-                list(rec['tags'].difference([section, cat]))
+                list(sorted(rec['tags'].difference([section, cat])))
             ) + " "
         )
         para.children[0].insert(0, tag_node)
