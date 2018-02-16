@@ -4,6 +4,7 @@ import hashlib as md5
 import os
 import re
 import warnings
+import sys
 
 from docutils.parsers.rst import Directive
 from docutils import nodes
@@ -12,6 +13,8 @@ from sphinx.util.osutil import copyfile
 from sphinx.util import status_iterator
 from sphinx.util import logging
 from . import render
+
+py3k = sys.version_info >= (3, 0)
 
 LOG = logging.getLogger(__name__)
 
@@ -112,7 +115,8 @@ class ChangeLogDirective(EnvDirective, Directive):
                 with open(fpath) as handle:
                     content.append("", path, 0)
                     for num, line in enumerate(handle):
-
+                        if not py3k:
+                            line = line.decode('utf-8')
                         if "\t" in line:
                             warnings.warn(
                                 "file %s has a tab in it! please "
