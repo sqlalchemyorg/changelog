@@ -7,7 +7,7 @@ import sys
 
 
 def release_notes_into_changelog_file(target_filename, version, release_date):
-    output = tempfile.NamedTemporaryFile(delete=False)
+    output = tempfile.NamedTemporaryFile(mode='w', delete=False, encoding='utf-8')
     with open(target_filename) as handle:
         for line in handle:
             m = re.match(r".*:version: %s" % version, line)
