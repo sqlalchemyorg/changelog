@@ -156,7 +156,6 @@ class ChangeLogImportDirective(EnvDirective, Directive):
             p = nodes.paragraph('', '',)
             self.state.nested_parse(self.content, 0, p)
             del self.env.temp_data['ChangeLogDirective_includes']
-
         return []
 
 
@@ -172,6 +171,7 @@ class ChangeDirective(EnvDirective, Directive):
             return []
 
         content = _parse_content(self.content)
+
         body_paragraph = nodes.paragraph('', '',)
         sorted_tags = _comma_list(content.get('tags', ''))
         changelog_directive = self.env.temp_data['ChangeLogDirective']
@@ -226,7 +226,10 @@ class ChangeDirective(EnvDirective, Directive):
                         reversed(sorted(versions, key=_str_version_as_tuple)))
                 })
             else:
-                LOG.info(
+                # This seems to occur repeated times for each included
+                # changelog, not clear if sphinx has changed the scope
+                # of self.env to lead to this occurring more often
+                LOG.debug(
                     "Merging changelog record '%s' from version(s) %s "
                     "with that of version %s",
                     _quick_rec_str(rec),
