@@ -14,6 +14,7 @@ from sphinx.util import status_iterator
 from sphinx.util import logging
 from . import render
 
+
 py3k = sys.version_info >= (3, 0)
 
 LOG = logging.getLogger(__name__)
@@ -94,6 +95,12 @@ class ChangeLogDirective(EnvDirective, Directive):
         if 'include_notes_from' in parsed:
             if content.items and content.items[0]:
                 source = content.items[0][0]
+
+                # seems we are now getting strings like:
+                # changelog/changelog_11.rst <included from
+                # /home/classic/dev/sqlalchemy/doc/build/changelog/changelog_12.rst>
+                source = source.split(' ')[0]
+
                 path = os.path.join(
                     os.path.dirname(source), parsed['include_notes_from'])
             else:
@@ -335,12 +342,12 @@ def add_stylesheet(app):
 
 
 def copy_stylesheet(app, exception):
-    app.info(
+    LOG.info(
         bold('The name of the builder is: %s' % app.builder.name), nonl=True)
 
     if not _is_html(app) or exception:
         return
-    app.info(bold('Copying sphinx_paramlinks stylesheet... '), nonl=True)
+    LOG.info(bold('Copying sphinx_paramlinks stylesheet... '), nonl=True)
 
     source = os.path.abspath(os.path.dirname(__file__))
 
@@ -350,7 +357,7 @@ def copy_stylesheet(app, exception):
     # give it the path to a .css file and it does the right thing.
     dest = os.path.join(app.builder.outdir, '_static', 'changelog.css')
     copyfile(os.path.join(source, "changelog.css"), dest)
-    app.info('done')
+    LOG.info('done')
 
 
 def setup(app):
