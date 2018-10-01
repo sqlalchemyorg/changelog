@@ -171,7 +171,7 @@ def _render_rec(changelog_directive, rec, section, cat, append_sec):
             (rec['changeset'],
              changelog_directive.env.config.changelog_render_changeset, "r%s"),
     ):
-        for refname in collection:
+        for refname in sorted(collection):
             if i > 0:
                 insert_ticket.append(nodes.Text(", ", ", "))
             else:
