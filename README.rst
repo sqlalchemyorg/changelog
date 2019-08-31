@@ -84,4 +84,26 @@ to render a ticket link::
     :ticket:`456`
 
 
+Other things not documented yet
+===============================
 
+* the ``:version:`` directive, which indicates a changelog entry should be
+  listed in other versions as well
+
+* the ``.. changelog_imports::`` directive - reads other changelog.rst files
+  looking for ``:version:`` directives which apply to this changelog file,
+  adding those entries to the changelog entries in this file
+
+* the ``:include_notes_from:`` symbol - imports all the .rst files in a
+  directory into the current one so that changes can be one-per-file, makes
+  git merges possible
+
+* the ``changelog release-notes`` command that at release time gathers up
+  the above-mentioned change-per-file .rst files and renders them into the
+  main changelog.rst file, running "git rm" on the individual files
+
+* the changelog.rst -> markdown converter, used for web guis that want
+  changelog sections written in markdown
+
+* the changelog.rst -> stream per changelog markdown API function, which can
+  for example stream the changelogs per release to the github releases API

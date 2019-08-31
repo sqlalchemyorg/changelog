@@ -106,7 +106,10 @@ def _append_node(changelog_directive):
 def _run_top(changelog_directive, id_prefix):
     version = changelog_directive._parsed_content.get("version", "")
     topsection = nodes.section(
-        "", nodes.title(version, version), ids=[id_prefix]
+        "",
+        nodes.title(version, version, classes=["release-version"]),
+        ids=[id_prefix],
+        version_string=version,
     )
 
     if changelog_directive._parsed_content.get("released"):
@@ -149,7 +152,7 @@ def _render_rec(changelog_directive, rec, section, cat, append_sec):
         "",
         nodes.Text(u"¶", u"¶"),
         refid=targetid,
-        classes=["changeset-link", "headerlink"],
+        classes=["changelog-reference", "headerlink"],
     )
     para.append(permalink)
 
@@ -174,17 +177,17 @@ def _render_rec(changelog_directive, rec, section, cat, append_sec):
     for collection, render, prefix in (
         (
             rec["tickets"],
-            changelog_directive.env.config.changelog_render_ticket,
+            changelog_directive.env.changelog_render_ticket,
             "#%s",
         ),
         (
             rec["pullreq"],
-            changelog_directive.env.config.changelog_render_pullreq,
+            changelog_directive.env.changelog_render_pullreq,
             "pull request %s",
         ),
         (
             rec["changeset"],
-            changelog_directive.env.config.changelog_render_changeset,
+            changelog_directive.env.changelog_render_changeset,
             "r%s",
         ),
     ):
@@ -221,9 +224,9 @@ def _render_rec(changelog_directive, rec, section, cat, append_sec):
                 "[%s]" % t
                 for t in [t1 for t1 in [section, cat] if t1 in rec["tags"]]
                 + list(sorted(rec["tags"].difference([section, cat])))
-            )
-            + " ",
+            ),
         )
+        para.children[0].insert(0, nodes.Text(" ", " "))
         para.children[0].insert(0, tag_node)
 
     append_sec.append(

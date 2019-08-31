@@ -5,8 +5,23 @@ import shutil
 import sys
 import tempfile
 
+from docutils.core import publish_file
+
+from . import docutils
+from . import mdwriter
+from .environment import DefaultEnvironment
+from .environment import Environment
+
 
 def release_notes_into_changelog_file(target_filename, version, release_date):
+    """Read changelog fragment files and render them into a single .rst file.
+
+    remove the fragment files afterwards using git rm.
+
+    The fragment files are located by looking for ':include_notes_from:'
+    directives in the given changelog file.
+
+    """
     output = tempfile.NamedTemporaryFile(
         mode="w", delete=False, encoding="utf-8"
     )
@@ -38,9 +53,27 @@ def release_notes_into_changelog_file(target_filename, version, release_date):
     shutil.move(output.name, target_filename)
 
 
+def render_changelog_as_md(target_filename, config_filename, version):
+    # see also mdwriter.stream_changelog_sections
+
+    Environment.register(DefaultEnvironment)
+
+    docutils.setup_docutils()
+    with open(target_filename) as handle:
+        publish_file(
+            handle,
+            writer=mdwriter.Writer(limit_version=version),
+            settings_overrides={
+                "changelog_env": DefaultEnvironment(config_filename),
+                "report_level": 3,
+            },
+        )
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers()
+
     subparser = subparsers.add_parser(
         "release-notes", help="Merge notes files into changelog and git rm"
     )
@@ -54,6 +87,18 @@ def main(argv=None):
             release_notes_into_changelog_file,
             ["filename", "version", "date"],
         )
+    )
+
+    subparser = subparsers.add_parser(
+        "generate-md", help="Generate file into markdown"
+    )
+    subparser.add_argument("filename", help="target changelog filename")
+    subparser.add_argument("-c", "--config", help="path to conf.py")
+    subparser.add_argument(
+        "-v", "--version", help="render changelog only for version given"
+    )
+    subparser.set_defaults(
+        cmd=(render_changelog_as_md, ["filename", "config", "version"])
     )
 
     options = parser.parse_args(argv)
