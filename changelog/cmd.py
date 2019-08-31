@@ -8,7 +8,9 @@ import tempfile
 from docutils.core import publish_file
 
 from . import docutils
-from .docutils import Environment
+from . import mdwriter
+from .environment import DefaultEnvironment
+from .environment import Environment
 
 
 def release_notes_into_changelog_file(target_filename, version, release_date):
@@ -43,51 +45,18 @@ def release_notes_into_changelog_file(target_filename, version, release_date):
     shutil.move(output.name, target_filename)
 
 
-class CmdEnvironment(Environment):
-    def __init__(self, config):
-        self._temp_data = {}
-        self.config = config
-
-    @property
-    def temp_data(self):
-        return self._temp_data
-
-    @property
-    def changelog_sections(self):
-        return self.config.get("changelog_sections", [])
-
-    @property
-    def changelog_inner_tag_sort(self):
-        return self.config.get("inner_tag_sort", [])
-
-    @property
-    def changelog_render_ticket(self):
-        return self.config.get("changelog_render_ticket", "ticket:%s")
-
-    @property
-    def changelog_render_pullreq(self):
-        return self.config.get("changelog_render_pullreq", "pullreq:%s")
-
-    @property
-    def changelog_render_changeset(self):
-        return self.config.get("changelog_render_changeset", "changeset:%s")
-
-    def status_iterator(self, elements, message):
-        for element in elements:
-            print(message)
-            yield element
-
-
 def render_changelog_as_md(target_filename, config_filename):
-    locals_ = {}
-    if config_filename is not None:
-        exec(open(config_filename).read(), locals_)
+    Environment.register(DefaultEnvironment)
+
     docutils.setup_docutils()
     with open(target_filename) as handle:
         print(
             publish_file(
                 handle,
-                settings_overrides={"changelog_cmd": CmdEnvironment(locals_)},
+                writer=mdwriter.Writer(),
+                settings_overrides={
+                    "changelog_env": DefaultEnvironment(config_filename)
+                },
             )
         )
 

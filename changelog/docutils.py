@@ -9,8 +9,10 @@ import warnings
 from docutils import nodes
 from docutils.parsers.rst import Directive
 from docutils.parsers.rst import directives
+from docutils.parsers.rst import roles
 
 from . import generate_rst
+from .environment import Environment
 
 py3k = sys.version_info >= (3, 0)
 
@@ -36,48 +38,6 @@ def _parse_content(content):
             break
     d["text"] = content[idx:]
     return d
-
-
-class Environment(object):
-    __slots__ = ()
-
-    @classmethod
-    def from_document_settings(self, settings):
-        from . import sphinxext
-
-        if hasattr(settings, "env"):
-            return sphinxext.SphinxEnvironment(settings.env)
-        elif hasattr(settings, "changelog_cmd"):
-            return settings.changelog_cmd
-        else:
-            raise NotImplementedError("TODO")
-
-    @property
-    def temp_data(self):
-        raise NotImplementedError()
-
-    @property
-    def changelog_sections(self):
-        raise NotImplementedError()
-
-    @property
-    def changelog_inner_tag_sort(self):
-        raise NotImplementedError()
-
-    @property
-    def changelog_render_ticket(self):
-        raise NotImplementedError()
-
-    @property
-    def changelog_render_pullreq(self):
-        raise NotImplementedError()
-
-    @property
-    def changelog_render_changeset(self):
-        raise NotImplementedError()
-
-    def status_iterator(self, elements, message):
-        raise NotImplementedError()
 
 
 class EnvDirective(object):
@@ -197,6 +157,23 @@ class ChangeLogImportDirective(EnvDirective, Directive):
             self.state.nested_parse(self.content, 0, p)
             del self.env.temp_data["ChangeLogDirective_includes"]
         return []
+
+
+class SeeAlsoDirective(EnvDirective, Directive):
+    """implement a quick version of Sphinx "seealso" when running outside
+    of sphinx."""
+
+    has_content = True
+
+    def run(self):
+        text = "\n".join(self.content)
+        ad = nodes.admonition(rawsource=text)
+        st = nodes.strong()
+        st.append(nodes.Text("See also:"))
+        ad.append(st)
+        ad.append(nodes.Text("\n"))
+        self.state.nested_parse(self.content, 0, ad)
+        return [ad]
 
 
 class ChangeDirective(EnvDirective, Directive):
@@ -395,3 +372,5 @@ def setup_docutils():
     directives.register_directive(
         "changelog_imports", ChangeLogImportDirective
     )
+    directives.register_directive("seealso", SeeAlsoDirective)
+    roles.register_canonical_role("ticket", make_ticket_link)

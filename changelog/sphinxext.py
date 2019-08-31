@@ -8,8 +8,8 @@ from sphinx.util.osutil import copyfile
 from .docutils import ChangeDirective
 from .docutils import ChangeLogDirective
 from .docutils import ChangeLogImportDirective
-from .docutils import Environment
 from .docutils import make_ticket_link
+from .environment import Environment
 
 
 LOG = logging.getLogger(__name__)
@@ -21,6 +21,10 @@ def _is_html(app):
 
 class SphinxEnvironment(Environment):
     __slots__ = ("sphinx_env",)
+
+    @classmethod
+    def from_document_settings(cls, settings):
+        return SphinxEnvironment(settings.env)
 
     def __init__(self, sphinx_env):
         self.sphinx_env = sphinx_env
@@ -84,6 +88,7 @@ def copy_stylesheet(app, exception):
 
 
 def setup(app):
+    Environment.register(SphinxEnvironment)
     app.add_directive("changelog", ChangeLogDirective)
     app.add_directive("change", ChangeDirective)
     app.add_directive("changelog_imports", ChangeLogImportDirective)
