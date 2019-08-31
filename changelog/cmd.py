@@ -5,6 +5,10 @@ import shutil
 import sys
 import tempfile
 
+from docutils.core import publish_file
+
+from . import docutils
+
 
 def release_notes_into_changelog_file(target_filename, version, release_date):
     output = tempfile.NamedTemporaryFile(
@@ -38,9 +42,26 @@ def release_notes_into_changelog_file(target_filename, version, release_date):
     shutil.move(output.name, target_filename)
 
 
+class Environment(object):
+    def __init__(self, config):
+        self.temp_data = {}
+        self.config = config
+
+
+def render_changelog_as_md(target_filename):
+    docutils.setup_docutils()
+    with open(target_filename) as handle:
+        print(
+            publish_file(
+                handle, settings_overrides={"changelog_env": Environment()}
+            )
+        )
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers()
+
     subparser = subparsers.add_parser(
         "release-notes", help="Merge notes files into changelog and git rm"
     )
@@ -55,6 +76,12 @@ def main(argv=None):
             ["filename", "version", "date"],
         )
     )
+
+    subparser = subparsers.add_parser(
+        "generate-md", help="Generate file into markdown"
+    )
+    subparser.add_argument("filename", help="target changelog filename")
+    subparser.set_defaults(cmd=(render_changelog_as_md, ["filename"]))
 
     options = parser.parse_args(argv)
     fn, argnames = options.cmd

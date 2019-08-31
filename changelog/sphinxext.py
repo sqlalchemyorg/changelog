@@ -48,10 +48,88 @@ def _parse_content(content):
     return d
 
 
+class Environment(object):
+    __slots__ = ()
+
+    @classmethod
+    def from_document_settings(self, settings):
+        if hasattr(settings, "env"):
+            return SphinxEnvironment(settings.env)
+        else:
+            raise NotImplementedError("TODO")
+
+    @property
+    def temp_data(self):
+        raise NotImplementedError()
+
+    @property
+    def changelog_sections(self):
+        raise NotImplementedError()
+
+    @property
+    def changelog_inner_tag_sort(self):
+        raise NotImplementedError()
+
+    @property
+    def changelog_render_ticket(self):
+        raise NotImplementedError()
+
+    @property
+    def changelog_render_pullreq(self):
+        raise NotImplementedError()
+
+    @property
+    def changelog_render_changeset(self):
+        raise NotImplementedError()
+
+    def status_iterator(self, elements, message):
+        raise NotImplementedError()
+
+
+class SphinxEnvironment(Environment):
+    __slots__ = ("sphinx_env",)
+
+    def __init__(self, sphinx_env):
+        self.sphinx_env = sphinx_env
+
+    @property
+    def temp_data(self):
+        return self.sphinx_env.temp_data
+
+    @property
+    def changelog_sections(self):
+        return self.sphinx_env.config.changelog_sections
+
+    @property
+    def changelog_inner_tag_sort(self):
+        return self.sphinx_env.config.changelog_inner_tag_sort
+
+    @property
+    def changelog_render_ticket(self):
+        return self.sphinx_env.config.changelog_render_ticket
+
+    @property
+    def changelog_render_pullreq(self):
+        return self.sphinx_env.config.changelog_render_pullreq
+
+    @property
+    def changelog_render_changeset(self):
+        return self.sphinx_env.config.changelog_render_changeset
+
+    def status_iterator(self, elements, message):
+        return status_iterator(
+            elements,
+            message,
+            "purple",
+            length=len(elements),
+            verbosity=self.sphinx_env.app.verbosity,
+        )
+
+
 class EnvDirective(object):
     @property
     def env(self):
-        return self.state.document.settings.env
+        return Environment.from_document_settings(self.state.document.settings)
 
     @classmethod
     def get_changes_list(cls, env, hash_on_version):
@@ -80,8 +158,8 @@ class ChangeLogDirective(EnvDirective, Directive):
 
     def _parse(self):
         # 1. pull in global configuration from conf.py
-        self.sections = self.env.config.changelog_sections
-        self.inner_tag_sort = self.env.config.changelog_inner_tag_sort + [""]
+        self.sections = self.env.changelog_sections
+        self.inner_tag_sort = self.env.changelog_inner_tag_sort + [""]
 
         # 2. examine top level directives inside the .. changelog::
         # directive.  version, release date
@@ -116,12 +194,8 @@ class ChangeLogDirective(EnvDirective, Directive):
             files = [
                 fname for fname in os.listdir(path) if fname.endswith(".rst")
             ]
-            for fname in status_iterator(
-                files,
-                "reading changelog note files (version %s)..." % version,
-                "purple",
-                length=len(files),
-                verbosity=self.env.app.verbosity,
+            for fname in self.env.status_iterator(
+                files, "reading changelog note files (version %s)..." % version
             ):
                 fpath = os.path.join(path, fname)
                 with open(fpath) as handle:

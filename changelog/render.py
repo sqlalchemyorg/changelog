@@ -174,17 +174,17 @@ def _render_rec(changelog_directive, rec, section, cat, append_sec):
     for collection, render, prefix in (
         (
             rec["tickets"],
-            changelog_directive.env.config.changelog_render_ticket,
+            changelog_directive.env.changelog_render_ticket,
             "#%s",
         ),
         (
             rec["pullreq"],
-            changelog_directive.env.config.changelog_render_pullreq,
+            changelog_directive.env.changelog_render_pullreq,
             "pull request %s",
         ),
         (
             rec["changeset"],
-            changelog_directive.env.config.changelog_render_changeset,
+            changelog_directive.env.changelog_render_changeset,
             "r%s",
         ),
     ):
