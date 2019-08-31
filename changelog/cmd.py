@@ -42,7 +42,7 @@ def release_notes_into_changelog_file(target_filename, version, release_date):
     shutil.move(output.name, target_filename)
 
 
-class Environment(object):
+class CmdEnvironment(object):
     def __init__(self, config):
         self.temp_data = {}
         self.config = config
@@ -53,7 +53,7 @@ def render_changelog_as_md(target_filename):
     with open(target_filename) as handle:
         print(
             publish_file(
-                handle, settings_overrides={"changelog_env": Environment()}
+                handle, settings_overrides={"changelog_cmd": CmdEnvironment()}
             )
         )
 
