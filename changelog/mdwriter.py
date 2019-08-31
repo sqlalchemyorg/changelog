@@ -4,6 +4,8 @@ import sys
 from docutils import nodes
 from docutils import writers
 
+from .environment import Environment
+
 
 class Writer(writers.Writer):
 
@@ -24,6 +26,7 @@ class MarkdownTranslator(nodes.NodeVisitor):
 
     def visit_document(self, node):
         self.document = node
+        self.env = Environment.from_document_settings(self.document.settings)
 
     def visit_section(self, node):
         self.section += 1
@@ -59,23 +62,29 @@ class MarkdownTranslator(nodes.NodeVisitor):
         self.buf.write("`")
 
     def visit_title(self, node):
+        if "version_string" in node.attributes:
+            pass
         self.buf.write("\n%s %s\n\n" % ("#" * self.section, node.astext()))
         raise nodes.SkipNode()
 
     def visit_changeset_link(self, node):
+        # it would be nice to have an absolutely link to the HTML
+        # hosted changelog but this requires being able to generate
+        # the absolute link from the document filename and all that.
+        # it can perhaps be sent on the commandline
         raise nodes.SkipNode()
 
     def depart_changeset_link(self, node):
         pass
 
     def visit_reference(self, node):
-        if "changeset-link" in node.attributes["classes"]:
+        if "changelog-reference" in node.attributes["classes"]:
             self.visit_changeset_link(node)
         else:
             self.buf.write("[")
 
     def depart_reference(self, node):
-        if "changeset-link" in node.attributes["classes"]:
+        if "changelog-reference" in node.attributes["classes"]:
             self.depart_changeset_link(node)
         else:
             self.buf.write("](%s)" % node.attributes["refuri"])

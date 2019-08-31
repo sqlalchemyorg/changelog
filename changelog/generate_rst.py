@@ -106,7 +106,14 @@ def _append_node(changelog_directive):
 def _run_top(changelog_directive, id_prefix):
     version = changelog_directive._parsed_content.get("version", "")
     topsection = nodes.section(
-        "", nodes.title(version, version), ids=[id_prefix]
+        "",
+        nodes.title(
+            version,
+            version,
+            classes=["release-version"],
+            version_string=version,
+        ),
+        ids=[id_prefix],
     )
 
     if changelog_directive._parsed_content.get("released"):
@@ -149,7 +156,7 @@ def _render_rec(changelog_directive, rec, section, cat, append_sec):
         "",
         nodes.Text(u"¶", u"¶"),
         refid=targetid,
-        classes=["changeset-link", "headerlink"],
+        classes=["changelog-reference", "headerlink"],
     )
     para.append(permalink)
 
