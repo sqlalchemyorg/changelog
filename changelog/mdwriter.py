@@ -1,5 +1,4 @@
 import io
-import sys
 
 from docutils import nodes
 from docutils import writers
@@ -11,27 +10,54 @@ class Writer(writers.Writer):
 
     supported = ("markdown",)
 
+    def __init__(self, limit_version=None):
+        super(Writer, self).__init__()
+        self.limit_version = limit_version
+
     def translate(self):
-        translator = MarkdownTranslator(self.document)
+        translator = MarkdownTranslator(self.document, self.limit_version)
         self.document.walkabout(translator)
-        self.output = translator.buf.getvalue()
+        self.output = translator.output_buf.getvalue()
 
 
 class MarkdownTranslator(nodes.NodeVisitor):
-    def __init__(self, document):
+    def __init__(self, document, limit_version):
         super(MarkdownTranslator, self).__init__(document)
-        self.buf = io.StringIO()
-        self.section = 0
+        self.buf = self.output_buf = io.StringIO()
+        self.limit_version = limit_version
+        self.section = 1
         self.stack = []
+
+        if self.limit_version:
+            self.disable_writing()
+
+    def enable_writing(self):
+        self.buf = self.output_buf
+
+    def disable_writing(self):
+        self.buf = io.StringIO()
 
     def visit_document(self, node):
         self.document = node
         self.env = Environment.from_document_settings(self.document.settings)
 
     def visit_section(self, node):
-        self.section += 1
+        if (
+            self.limit_version
+            and node.attributes.get("version_string", "") == self.limit_version
+        ):
+            self.enable_writing()
+            self.section = 1
+        else:
+            self.section += 1
 
     def depart_section(self, node):
+        if (
+            self.limit_version
+            and node.attributes.get("version_string", "") == self.limit_version
+        ):
+            self.disable_writing()
+
         self.section -= 1
 
     def visit_strong(self, node):
@@ -62,8 +88,6 @@ class MarkdownTranslator(nodes.NodeVisitor):
         self.buf.write("`")
 
     def visit_title(self, node):
-        if "version_string" in node.attributes:
-            pass
         self.buf.write("\n%s %s\n\n" % ("#" * self.section, node.astext()))
         raise nodes.SkipNode()
 
@@ -109,22 +133,17 @@ class MarkdownTranslator(nodes.NodeVisitor):
         value = popped.getvalue().strip()
 
         lines = value.split("\n")
-        self.buf.write(indent_string + "-   ")
+        self.buf.write("\n" + indent_string + "-   ")
         line = lines.pop(0)
         self.buf.write(line + "\n")
         for line in lines:
             self.buf.write(indent_string + "    " + line + "\n")
 
-    def _visit_generic_node(self, nodename):
-        sys.stderr.write("generic node: %s\n" % nodename)
-
-        def go(node):
-            pass
-
-        return go
+    def _visit_generic_node(self, node):
+        pass
 
     def __getattr__(self, name):
         if not name.startswith("_"):
-            return self._visit_generic_node(name)
+            return self._visit_generic_node
         else:
             raise AttributeError(name)

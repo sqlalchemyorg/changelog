@@ -107,13 +107,9 @@ def _run_top(changelog_directive, id_prefix):
     version = changelog_directive._parsed_content.get("version", "")
     topsection = nodes.section(
         "",
-        nodes.title(
-            version,
-            version,
-            classes=["release-version"],
-            version_string=version,
-        ),
+        nodes.title(version, version, classes=["release-version"]),
         ids=[id_prefix],
+        version_string=version,
     )
 
     if changelog_directive._parsed_content.get("released"):

@@ -29,6 +29,9 @@ class SphinxEnvironment(Environment):
     def __init__(self, sphinx_env):
         self.sphinx_env = sphinx_env
 
+    def log_debug(self, msg, *args):
+        LOG.debug(msg, *args)
+
     @property
     def temp_data(self):
         return self.sphinx_env.temp_data

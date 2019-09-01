@@ -258,7 +258,7 @@ class ChangeDirective(EnvDirective, Directive):
                 # This seems to occur repeated times for each included
                 # changelog, not clear if sphinx has changed the scope
                 # of self.env to lead to this occurring more often
-                LOG.debug(
+                self.env.log_debug(
                     "Merging changelog record '%s' from version(s) %s "
                     "with that of version %s",
                     _quick_rec_str(rec),
@@ -366,6 +366,39 @@ def make_ticket_link(
     return [node], []
 
 
+def make_generic_attrref(
+    name, rawtext, text, lineno, inliner, options={}, content=[]
+):
+    text = text.lstrip(".")
+    lt = nodes.literal(rawtext=rawtext)
+    lt.append(nodes.Text(text))
+    return [lt], []
+
+
+def make_generic_funcref(
+    name, rawtext, text, lineno, inliner, options={}, content=[]
+):
+    if not text.endswith("()"):
+        text += "()"
+    return make_generic_attrref(
+        name, rawtext, text, lineno, inliner, options, content
+    )
+
+
+def make_generic_docref(
+    name, rawtext, text, lineno, inliner, options={}, content=[]
+):
+    lt = nodes.literal(rawtext=rawtext)
+    lt.append(nodes.Text(text))
+    return [lt], []
+
+
+def exc_wtf(name, rawtext, text, lineno, inliner, options={}, content=[]):
+    import pdb
+
+    pdb.set_trace()
+
+
 def setup_docutils():
     directives.register_directive("changelog", ChangeLogDirective)
     directives.register_directive("change", ChangeDirective)
@@ -374,3 +407,16 @@ def setup_docutils():
     )
     directives.register_directive("seealso", SeeAlsoDirective)
     roles.register_canonical_role("ticket", make_ticket_link)
+
+    # sphinx autodoc stuff we don't have in this context
+    roles.register_canonical_role("func", make_generic_funcref)
+    roles.register_canonical_role("class", make_generic_attrref)
+    roles.register_canonical_role("paramref", make_generic_attrref)
+    roles.register_canonical_role("attr", make_generic_attrref)
+    roles.register_canonical_role("mod", make_generic_attrref)
+    roles.register_canonical_role("meth", make_generic_funcref)
+    roles.register_canonical_role("obj", make_generic_attrref)
+    roles.register_canonical_role("exc", make_generic_attrref)
+
+    roles.register_canonical_role("doc", make_generic_docref)
+    roles.register_canonical_role("ref", make_generic_docref)

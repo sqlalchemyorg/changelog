@@ -1,4 +1,7 @@
+import logging
 import sys
+
+LOG = logging.getLogger(__name__)
 
 
 class Environment(object):
@@ -57,6 +60,9 @@ class DefaultEnvironment(Environment):
         self.config = {}
         if config_filename is not None:
             exec(open(config_filename).read(), self.config)
+
+    def log_debug(self, msg, *args):
+        LOG.debug(msg, *args)
 
     @property
     def temp_data(self):
