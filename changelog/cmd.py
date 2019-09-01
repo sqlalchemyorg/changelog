@@ -5,12 +5,7 @@ import shutil
 import sys
 import tempfile
 
-from docutils.core import publish_file
-
-from . import docutils
 from . import mdwriter
-from .environment import DefaultEnvironment
-from .environment import Environment
 
 
 def release_notes_into_changelog_file(target_filename, version, release_date):
@@ -53,23 +48,6 @@ def release_notes_into_changelog_file(target_filename, version, release_date):
     shutil.move(output.name, target_filename)
 
 
-def render_changelog_as_md(target_filename, config_filename, version):
-    # see also mdwriter.stream_changelog_sections
-
-    Environment.register(DefaultEnvironment)
-
-    docutils.setup_docutils()
-    with open(target_filename) as handle:
-        publish_file(
-            handle,
-            writer=mdwriter.Writer(limit_version=version),
-            settings_overrides={
-                "changelog_env": DefaultEnvironment(config_filename),
-                "report_level": 3,
-            },
-        )
-
-
 def main(argv=None):
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers()
@@ -95,10 +73,22 @@ def main(argv=None):
     subparser.add_argument("filename", help="target changelog filename")
     subparser.add_argument("-c", "--config", help="path to conf.py")
     subparser.add_argument(
-        "-v", "--version", help="render changelog only for version given"
+        "-v",
+        "--version",
+        type=str,
+        help="render changelog only for version given",
+    )
+    subparser.add_argument(
+        "-s",
+        "--sections-only",
+        action="store_true",
+        help="render changelogs as top level sections",
     )
     subparser.set_defaults(
-        cmd=(render_changelog_as_md, ["filename", "config", "version"])
+        cmd=(
+            mdwriter.render_changelog_as_md,
+            ["filename", "config", "version", "sections_only"],
+        )
     )
 
     options = parser.parse_args(argv)

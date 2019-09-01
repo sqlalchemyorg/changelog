@@ -2,6 +2,7 @@ import io
 
 from docutils import nodes
 from docutils import writers
+from docutils.core import publish_file
 from docutils.core import publish_string
 
 from .docutils import setup_docutils
@@ -32,14 +33,13 @@ class MarkdownTranslator(nodes.NodeVisitor):
         self.buf = self.output_buf = io.StringIO()
         self.limit_version = limit_version
         self.receive_sections = receive_sections
-        self.section = 1
+        self.section_level = 1
         self.stack = []
 
-        assert not (
-            self.limit_version and self.receive_sections
-        ), "limit_version and receive_sections are mutually exclusive"
-
-        if self.limit_version or self.receive_sections:
+        self._standalone_section_display = (
+            self.limit_version or self.receive_sections
+        )
+        if self._standalone_section_display:
             self.disable_writing()
 
     def enable_writing(self):
@@ -52,32 +52,46 @@ class MarkdownTranslator(nodes.NodeVisitor):
         self.document = node
         self.env = Environment.from_document_settings(self.document.settings)
 
-    def visit_section(self, node):
-        if (
-            self.limit_version
-            and node.attributes.get("version_string", "") == self.limit_version
-        ):
-            self.enable_writing()
-            self.section = 1
-        elif self.receive_sections and "version_string" in node.attributes:
-            self.buf = io.StringIO()
-            self.section = 1
-        else:
-            self.section += 1
+    def visit_standalone_version_section(self, node, version_string):
+        if self.limit_version and self.limit_version != version_string:
+            return
 
-    def depart_section(self, node):
-        if (
-            self.limit_version
-            and node.attributes.get("version_string", "") == self.limit_version
-        ):
-            self.disable_writing()
-        elif self.receive_sections and "version_string" in node.attributes:
+        self.section_level = 1
+        self.enable_writing()
+        if self.receive_sections:
+            self.buf = io.StringIO()
+
+    def depart_standalone_version_section(self, node, version_string):
+        if self.limit_version and self.limit_version != version_string:
+            return
+
+        if self.receive_sections:
             self.receive_sections(
                 node.attributes["version_string"], self.buf.getvalue()
             )
-            self.disable_writing()
+        self.disable_writing()
 
-        self.section -= 1
+    def visit_section(self, node):
+        if (
+            "version_string" in node.attributes
+            and self._standalone_section_display
+        ):
+            self.visit_standalone_version_section(
+                node, node.attributes["version_string"]
+            )
+        else:
+            self.section_level += 1
+
+    def depart_section(self, node):
+        if (
+            "version_string" in node.attributes
+            and self._standalone_section_display
+        ):
+            self.depart_standalone_version_section(
+                node, node.attributes["version_string"]
+            )
+        else:
+            self.section_level -= 1
 
     def visit_strong(self, node):
         self.buf.write("**")
@@ -107,7 +121,9 @@ class MarkdownTranslator(nodes.NodeVisitor):
         self.buf.write("`")
 
     def visit_title(self, node):
-        self.buf.write("\n%s %s\n\n" % ("#" * self.section, node.astext()))
+        self.buf.write(
+            "\n%s %s\n\n" % ("#" * self.section_level, node.astext())
+        )
         raise nodes.SkipNode()
 
     def visit_changeset_link(self, node):
@@ -193,3 +209,39 @@ def stream_changelog_sections(
                 "report_level": 3,
             },
         )
+
+
+def render_changelog_as_md(
+    target_filename, config_filename, version, sections_only
+):
+
+    Environment.register(DefaultEnvironment)
+
+    setup_docutils()
+
+    if sections_only:
+
+        def receive_sections(version_string, text):
+            print(text)
+
+    else:
+        receive_sections = None
+
+    writer = Writer(limit_version=version, receive_sections=receive_sections)
+    settings_overrides = {
+        "changelog_env": DefaultEnvironment(config_filename),
+        "report_level": 3,
+    }
+
+    with open(target_filename, encoding="utf-8") as handle:
+        if receive_sections:
+            publish_string(
+                handle.read(),
+                source_path=target_filename,
+                writer=writer,
+                settings_overrides=settings_overrides,
+            )
+        else:
+            publish_file(
+                handle, writer=writer, settings_overrides=settings_overrides
+            )
