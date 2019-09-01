@@ -15,12 +15,16 @@ class Environment(object):
 
     @classmethod
     def from_document_settings(cls, settings):
-        for cls in cls.env_classes:
-            e = cls.from_document_settings(settings)
-            if e is not None:
-                return e
+        try:
+            return settings._changelog_env
+        except AttributeError:
+            for cls in cls.env_classes:
+                e = cls.from_document_settings(settings)
+                if e is not None:
+                    settings._changelog_env = e
+                    return e
 
-        raise NotImplementedError("TODO")
+            raise NotImplementedError("TODO")
 
     @property
     def temp_data(self):
