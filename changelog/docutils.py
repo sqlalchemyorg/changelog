@@ -1,5 +1,4 @@
 import collections
-import copy
 import hashlib as md5
 import os
 import re
@@ -103,8 +102,6 @@ class ChangeLogDirective(EnvDirective, Directive):
             if not os.path.exists(path):
                 raise Exception("included nodes path %s does not exist" % path)
 
-            content = copy.deepcopy(content)
-
             files = [
                 fname for fname in os.listdir(path) if fname.endswith(".rst")
             ]
@@ -190,7 +187,6 @@ class ChangeDirective(EnvDirective, Directive):
 
         content = _parse_content(self.content)
 
-        body_paragraph = nodes.paragraph("", "")
         sorted_tags = _comma_list(content.get("tags", ""))
         changelog_directive = self.env.temp_data["ChangeLogDirective"]
         declared_version = changelog_directive.version
@@ -208,7 +204,12 @@ class ChangeDirective(EnvDirective, Directive):
 
             return []
 
-        self.state.nested_parse(content["text"], 0, body_paragraph)
+        def create_change_paragraph():
+            body_paragraph = nodes.paragraph("", "")
+            self.state.nested_parse(content["text"], 0, body_paragraph)
+            return body_paragraph
+
+        body_paragraph = create_change_paragraph()
 
         raw_text = _text_rawsource_from_node(body_paragraph)
         tickets = set(_comma_list(content.get("tickets", ""))).difference([""])
@@ -234,7 +235,7 @@ class ChangeDirective(EnvDirective, Directive):
                         "changeset": set(
                             _comma_list(content.get("changeset", ""))
                         ).difference([""]),
-                        "node": body_paragraph,
+                        "create_change_paragraph": create_change_paragraph,
                         "raw_text": raw_text,
                         "type": "change",
                         "title": content.get("title", None),
