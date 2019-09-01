@@ -54,7 +54,8 @@ def render_changelog_as_md(target_filename, config_filename, version):
             handle,
             writer=mdwriter.Writer(limit_version=version),
             settings_overrides={
-                "changelog_env": DefaultEnvironment(config_filename)
+                "changelog_env": DefaultEnvironment(config_filename),
+                "report_level": 3,
             },
         )
 
