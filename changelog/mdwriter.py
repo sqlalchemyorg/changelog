@@ -2,7 +2,10 @@ import io
 
 from docutils import nodes
 from docutils import writers
+from docutils.core import publish_string
 
+from .docutils import setup_docutils
+from .environment import DefaultEnvironment
 from .environment import Environment
 
 
@@ -10,25 +13,33 @@ class Writer(writers.Writer):
 
     supported = ("markdown",)
 
-    def __init__(self, limit_version=None):
+    def __init__(self, limit_version=None, receive_sections=None):
         super(Writer, self).__init__()
         self.limit_version = limit_version
+        self.receive_sections = receive_sections
 
     def translate(self):
-        translator = MarkdownTranslator(self.document, self.limit_version)
+        translator = MarkdownTranslator(
+            self.document, self.limit_version, self.receive_sections
+        )
         self.document.walkabout(translator)
         self.output = translator.output_buf.getvalue()
 
 
 class MarkdownTranslator(nodes.NodeVisitor):
-    def __init__(self, document, limit_version):
+    def __init__(self, document, limit_version, receive_sections):
         super(MarkdownTranslator, self).__init__(document)
         self.buf = self.output_buf = io.StringIO()
         self.limit_version = limit_version
+        self.receive_sections = receive_sections
         self.section = 1
         self.stack = []
 
-        if self.limit_version:
+        assert not (
+            self.limit_version and self.receive_sections
+        ), "limit_version and receive_sections are mutually exclusive"
+
+        if self.limit_version or self.receive_sections:
             self.disable_writing()
 
     def enable_writing(self):
@@ -48,6 +59,9 @@ class MarkdownTranslator(nodes.NodeVisitor):
         ):
             self.enable_writing()
             self.section = 1
+        elif self.receive_sections and "version_string" in node.attributes:
+            self.buf = io.StringIO()
+            self.section = 1
         else:
             self.section += 1
 
@@ -56,6 +70,11 @@ class MarkdownTranslator(nodes.NodeVisitor):
             self.limit_version
             and node.attributes.get("version_string", "") == self.limit_version
         ):
+            self.disable_writing()
+        elif self.receive_sections and "version_string" in node.attributes:
+            self.receive_sections(
+                node.attributes["version_string"], self.buf.getvalue()
+            )
             self.disable_writing()
 
         self.section -= 1
@@ -147,3 +166,30 @@ class MarkdownTranslator(nodes.NodeVisitor):
             return self._visit_generic_node
         else:
             raise AttributeError(name)
+
+
+def stream_changelog_sections(
+    target_filename, config_filename, receive_sections
+):
+    """Send individual changelog sections to a callable, one per version.
+
+    The callable accepts two arguments, the string version number of the
+    changelog section, and the markdown-formatted content of the changelog
+    section.
+
+    Used for APIs that receive changelog sections per version.
+
+    """
+    Environment.register(DefaultEnvironment)
+
+    setup_docutils()
+    with open(target_filename, encoding="utf-8") as handle:
+        publish_string(
+            handle.read(),
+            source_path=target_filename,
+            writer=Writer(receive_sections=receive_sections),
+            settings_overrides={
+                "changelog_env": DefaultEnvironment(config_filename),
+                "report_level": 3,
+            },
+        )

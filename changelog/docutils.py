@@ -393,13 +393,9 @@ def make_generic_docref(
     return [lt], []
 
 
-def exc_wtf(name, rawtext, text, lineno, inliner, options={}, content=[]):
-    import pdb
-
-    pdb.set_trace()
-
-
 def setup_docutils():
+    """register docutils directives and roles assuming Sphinx is not in use."""
+
     directives.register_directive("changelog", ChangeLogDirective)
     directives.register_directive("change", ChangeDirective)
     directives.register_directive(

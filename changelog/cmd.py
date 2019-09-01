@@ -14,6 +14,14 @@ from .environment import Environment
 
 
 def release_notes_into_changelog_file(target_filename, version, release_date):
+    """Read changelog fragment files and render them into a single .rst file.
+
+    remove the fragment files afterwards using git rm.
+
+    The fragment files are located by looking for ':include_notes_from:'
+    directives in the given changelog file.
+
+    """
     output = tempfile.NamedTemporaryFile(
         mode="w", delete=False, encoding="utf-8"
     )
@@ -46,6 +54,8 @@ def release_notes_into_changelog_file(target_filename, version, release_date):
 
 
 def render_changelog_as_md(target_filename, config_filename, version):
+    # see also mdwriter.stream_changelog_sections
+
     Environment.register(DefaultEnvironment)
 
     docutils.setup_docutils()
