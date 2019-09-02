@@ -204,12 +204,8 @@ class ChangeDirective(EnvDirective, Directive):
 
             return []
 
-        def create_change_paragraph():
-            body_paragraph = nodes.paragraph("", "")
-            self.state.nested_parse(content["text"], 0, body_paragraph)
-            return body_paragraph
-
-        body_paragraph = create_change_paragraph()
+        body_paragraph = nodes.paragraph("", "")
+        self.state.nested_parse(content["text"], 0, body_paragraph)
 
         raw_text = _text_rawsource_from_node(body_paragraph)
         tickets = set(_comma_list(content.get("tickets", ""))).difference([""])
@@ -235,7 +231,7 @@ class ChangeDirective(EnvDirective, Directive):
                         "changeset": set(
                             _comma_list(content.get("changeset", ""))
                         ).difference([""]),
-                        "create_change_paragraph": create_change_paragraph,
+                        "node": body_paragraph,
                         "raw_text": raw_text,
                         "type": "change",
                         "title": content.get("title", None),

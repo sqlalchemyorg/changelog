@@ -140,7 +140,7 @@ def _run_top(changelog_directive, id_prefix):
 
 
 def _render_rec(changelog_directive, rec, section, cat, append_sec):
-    para = rec["create_change_paragraph"]()
+    para = rec["node"].deepcopy()
 
     targetid = "change-%s" % (
         rec["version_to_hash"][changelog_directive.version],

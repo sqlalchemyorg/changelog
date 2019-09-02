@@ -48,11 +48,50 @@ class MarkdownTranslator(nodes.NodeVisitor):
     def disable_writing(self):
         self.buf = io.StringIO()
 
+    def _detect_section_was_squashed_into_subtitle(self, document_node):
+        # docutils converts a single section we generated into a "subtitle"
+        # and squashes the section object
+        # http://docutils.sourceforge.net/FAQ.html\
+        # #how-can-i-indicate-the-document-title-subtitle
+        for subnode in document_node:
+            if "version_string" in subnode.attributes:
+                if isinstance(subnode, nodes.subtitle):
+                    return subnode
+                elif isinstance(subnode, nodes.section):
+                    return False
+                else:
+                    raise NotImplementedError(
+                        "detected version_string in unexpected node type: %s"
+                        % subnode
+                    )
+
     def visit_document(self, node):
         self.document = node
         self.env = Environment.from_document_settings(self.document.settings)
 
-    def visit_standalone_version_section(self, node, version_string):
+        subtitle_node = self._detect_section_was_squashed_into_subtitle(node)
+        if subtitle_node:
+            version = subtitle_node.attributes["version_string"]
+            rebuild_our_lost_section = nodes.section(
+                "",
+                nodes.title(version, version, classes=["release-version"]),
+                **subtitle_node.attributes
+            )
+
+            # note we are taking the nodes from the document and moving them
+            # into the new section.   nodes have a "parent" which means that
+            # parent changes, which means we are mutating the internal
+            # state of the document node.  so use deepcopy() to avoid this
+            # side effect; deepcopy() for these nodes seems to not be a
+            # performance problem.
+            rebuild_our_lost_section.extend([n.deepcopy() for n in node[2:]])
+            rebuild_our_lost_section.walkabout(self)
+            raise nodes.SkipNode()
+
+    def visit_standalone_version_node(self, node, version_string):
+        """visit a section or document that has a changelog version string
+        at the top"""
+
         if self.limit_version and self.limit_version != version_string:
             return
 
@@ -61,14 +100,15 @@ class MarkdownTranslator(nodes.NodeVisitor):
         if self.receive_sections:
             self.buf = io.StringIO()
 
-    def depart_standalone_version_section(self, node, version_string):
+    def depart_standalone_version_node(self, node, version_string):
+        """depart a section or document that has a changelog version string
+        at the top"""
+
         if self.limit_version and self.limit_version != version_string:
             return
 
         if self.receive_sections:
-            self.receive_sections(
-                node.attributes["version_string"], self.buf.getvalue()
-            )
+            self.receive_sections(version_string, self.buf.getvalue())
         self.disable_writing()
 
     def visit_section(self, node):
@@ -76,7 +116,7 @@ class MarkdownTranslator(nodes.NodeVisitor):
             "version_string" in node.attributes
             and self._standalone_section_display
         ):
-            self.visit_standalone_version_section(
+            self.visit_standalone_version_node(
                 node, node.attributes["version_string"]
             )
         else:
@@ -87,7 +127,7 @@ class MarkdownTranslator(nodes.NodeVisitor):
             "version_string" in node.attributes
             and self._standalone_section_display
         ):
-            self.depart_standalone_version_section(
+            self.depart_standalone_version_node(
                 node, node.attributes["version_string"]
             )
         else:

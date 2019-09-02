@@ -93,6 +93,7 @@ class DefaultEnvironment(Environment):
         return self.config.get("changelog_render_changeset", "changeset:%s")
 
     def status_iterator(self, elements, message):
-        for element in elements:
-            sys.stderr.write(message)
+        for i, element in enumerate(elements, 1):
+            percent = (i / len(elements)) * 100
+            sys.stderr.write(message + "...[%d%%] %s\n" % (percent, element))
             yield element
