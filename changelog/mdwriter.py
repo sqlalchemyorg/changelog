@@ -185,7 +185,7 @@ class MarkdownTranslator(nodes.NodeVisitor):
 
 
 def stream_changelog_sections(
-    target_filename, config_filename, receive_sections
+    target_filename, config_filename, receive_sections, version=None
 ):
     """Send individual changelog sections to a callable, one per version.
 
@@ -203,7 +203,9 @@ def stream_changelog_sections(
         publish_string(
             handle.read(),
             source_path=target_filename,
-            writer=Writer(receive_sections=receive_sections),
+            writer=Writer(
+                limit_version=version, receive_sections=receive_sections
+            ),
             settings_overrides={
                 "changelog_env": DefaultEnvironment(config_filename),
                 "report_level": 3,
