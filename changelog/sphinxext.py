@@ -67,7 +67,9 @@ class SphinxEnvironment(Environment):
 
 
 def add_stylesheet(app):
-    app.add_stylesheet("changelog.css")
+    # changed in 1.8 from add_stylesheet()
+    # https://www.sphinx-doc.org/en/master/extdev/appapi.html#sphinx.application.Sphinx.add_css_file
+    app.add_css_file("changelog.css")
 
 
 def copy_stylesheet(app, exception):
