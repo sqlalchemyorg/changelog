@@ -105,3 +105,5 @@ def setup(app):
     app.connect("builder-inited", add_stylesheet)
     app.connect("build-finished", copy_stylesheet)
     app.add_role("ticket", make_ticket_link)
+
+    return {"parallel_read_safe": True, "parallel_write_safe": True}
