@@ -1,4 +1,5 @@
 import collections
+from distutils.version import LooseVersion
 import hashlib as md5
 import os
 import re
@@ -221,6 +222,12 @@ class ChangeDirective(EnvDirective, Directive):
                 changelog_directive.env, hash_on_version
             ).setdefault(issue_hash, {})
             if not rec:
+                try:
+                    sorted(versions, key=_str_version_as_tuple)
+                except:
+                    import pdb
+
+                    pdb.set_trace()
                 rec.update(
                     {
                         "hash": issue_hash,
@@ -338,13 +345,8 @@ def _str_version_as_tuple(ver):
     if ver in _VERSION_IDS:
         return _VERSION_IDS[ver]
 
-    out = []
-    for dig in ver.split("."):
-        try:
-            out.append(int(dig))
-        except ValueError:
-            out.append(dig)
-    _VERSION_IDS[ver] = result = tuple(out)
+    result = LooseVersion(ver)
+    _VERSION_IDS[ver] = result
     return result
 
 
