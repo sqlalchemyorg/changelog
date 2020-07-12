@@ -222,12 +222,7 @@ class ChangeDirective(EnvDirective, Directive):
                 changelog_directive.env, hash_on_version
             ).setdefault(issue_hash, {})
             if not rec:
-                try:
-                    sorted(versions, key=_str_version_as_tuple)
-                except:
-                    import pdb
-
-                    pdb.set_trace()
+                sorted(versions, key=_str_version_as_tuple)
                 rec.update(
                     {
                         "hash": issue_hash,
