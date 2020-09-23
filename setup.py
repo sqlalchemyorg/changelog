@@ -33,7 +33,7 @@ setup(
     keywords="Sphinx",
     author="Mike Bayer",
     author_email="mike@zzzcomputing.com",
-    url="http://bitbucket.org/zzzeek/changelog",
+    url="https://github.com/sqlalchemyorg/changelog",
     license="MIT",
     packages=["changelog"],
     include_package_data=True,
