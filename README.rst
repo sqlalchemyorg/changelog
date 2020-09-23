@@ -2,7 +2,21 @@
 Changelog
 ==========
 
-A `Sphinx <http://sphinx.pocoo.org/>`_ extension to generate changelog files.
+|PyPI| |Python| |Downloads|
+
+.. |PyPI| image:: https://img.shields.io/pypi/v/changelog
+    :target: https://pypi.org/project/changelog
+    :alt: PyPI
+
+.. |Python| image:: https://img.shields.io/pypi/pyversions/changelog
+    :target: https://pypi.org/project/changelog
+    :alt: PyPI - Python Version
+
+.. |Downloads| image:: https://img.shields.io/pypi/dm/changelog
+    :target: https://pypi.org/project/changelog
+    :alt: PyPI - Downloads
+
+A `Sphinx <https://www.sphinx-doc.org>`_ extension to generate changelog files.
 
 This is an experimental, possibly-not-useful extension that's used by the
 `SQLAlchemy <http://www.sqlalchemy.org>`_ project and related projects.
