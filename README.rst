@@ -27,6 +27,9 @@ A sample configuration in ``conf.py`` looks like this::
     # tags to sort on inside of sections - also optional
     changelog_inner_tag_sort = ["feature", "bug"]
 
+    # whether sections should be hidden from tags list
+    changelog_hide_sections_from_tags = False
+
     # how to render changelog links - these are plain
     # python string templates, ticket/pullreq/changeset number goes
     # in "%s"

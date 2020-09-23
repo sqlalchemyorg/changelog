@@ -39,6 +39,10 @@ class Environment(object):
         raise NotImplementedError()
 
     @property
+    def changelog_hide_sections_from_tags(self):
+        raise NotImplementedError()
+
+    @property
     def changelog_render_ticket(self):
         raise NotImplementedError()
 
@@ -78,7 +82,11 @@ class DefaultEnvironment(Environment):
 
     @property
     def changelog_inner_tag_sort(self):
-        return self.config.get("inner_tag_sort", [])
+        return self.config.get("changelog_inner_tag_sort", [])
+
+    @property
+    def changelog_hide_sections_from_tags(self):
+        return self.config.get("changelog_hide_sections_from_tags", [])
 
     @property
     def changelog_render_ticket(self):
