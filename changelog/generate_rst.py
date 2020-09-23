@@ -162,13 +162,24 @@ def _render_rec(changelog_directive, rec, section, cat, append_sec):
             rec["sorted_versions"].index(changelog_directive.version) + 1 :
         ]
         if backported_changes:
-            backported = nodes.paragraph("")
-            backported.append(nodes.Text("This change is also ", ""))
-            backported.append(nodes.strong("", "backported"))
-            backported.append(
-                nodes.Text(" to: %s" % ", ".join(backported_changes), "")
-            )
-            para.append(backported)
+            backported_para = nodes.paragraph("")
+            backported_para.append(nodes.Text("This change is also ", ""))
+            backported_para.append(nodes.strong("", "backported"))
+            backported_para.append(nodes.Text(" to: ", ""))
+
+            for i, backported in enumerate(backported_changes):
+                backported_para.append(
+                    nodes.reference(
+                    "",
+                    "",
+                    nodes.Text(backported, backported),
+                    refid="change-%s" % backported,
+                ))
+
+                if i != len(backported_changes)-1:
+                    backported_para.append(nodes.Text(", ", ""))
+
+            para.append(backported_para)
 
     insert_ticket = nodes.paragraph("")
     para.append(insert_ticket)
