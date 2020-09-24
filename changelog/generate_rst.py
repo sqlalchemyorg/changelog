@@ -146,7 +146,7 @@ def _render_rec(changelog_directive, rec, section, cat, append_sec):
         rec["version_to_hash"][changelog_directive.version],
     )
     targetnode = nodes.target("", "", ids=[targetid])
-    para.insert(0, targetnode)
+
     permalink = nodes.reference(
         "",
         "",
@@ -154,7 +154,8 @@ def _render_rec(changelog_directive, rec, section, cat, append_sec):
         refid=targetid,
         classes=["changelog-reference", "headerlink"],
     )
-    para.append(permalink)
+    targetnode.append(permalink)
+    para.insert(0, targetnode)
 
     if len(rec["versions"]) > 1:
 
@@ -217,13 +218,14 @@ def _render_rec(changelog_directive, rec, section, cat, append_sec):
                 node = nodes.Text(prefix % refname, prefix % refname)
             insert_ticket.append(node)
 
-    if rec["tags"]:
+    tags = rec["tags"] or {'no_tags'}
+    if tags:
         tag_node = nodes.strong(
             "",
             " ".join(
                 "[%s]" % t
-                for t in [t1 for t1 in [section, cat] if t1 in rec["tags"]]
-                + list(sorted(rec["tags"].difference([section, cat])))
+                for t in [t1 for t1 in [section, cat] if t1 in tags]
+                + list(sorted(tags.difference([section, cat])))
             ),
         )
         para.children[0].insert(0, nodes.Text(" ", " "))
