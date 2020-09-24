@@ -147,7 +147,7 @@ def _render_rec(changelog_directive, rec, section, cat, append_sec):
     )
     targetnode = nodes.target("", "", ids=[targetid])
 
-    sections = section.split(" ")
+    sections = section.split(" ") if section else []
     section_tags = [tag for tag in sections if tag in rec["tags"]]
     category_tags = [cat] if cat in rec["tags"] else []
     other_tags = list(sorted(rec["tags"].difference(section_tags+category_tags)))
@@ -158,16 +158,15 @@ def _render_rec(changelog_directive, rec, section, cat, append_sec):
         all_items.extend(section_tags)
     all_items.extend(category_tags)
     all_items.extend(other_tags)
+    
+    all_items = all_items or ['no_tags']
 
-    if all_items:
-        tag_node = nodes.strong(
-            "",
-            " ".join("[%s]" % t for t in all_items),
-        )
-        targetnode.insert(0, nodes.Text(" ", " "))
-        targetnode.insert(0, tag_node)
-
-    para.insert(0, targetnode)
+    tag_node = nodes.strong(
+        "",
+        " ".join("[%s]" % t for t in all_items),
+    )
+    targetnode.insert(0, nodes.Text(" ", " "))
+    targetnode.insert(0, tag_node)    
 
     permalink = nodes.reference(
         "",
@@ -176,7 +175,9 @@ def _render_rec(changelog_directive, rec, section, cat, append_sec):
         refid=targetid,
         classes=["changelog-reference", "headerlink"],
     )
-    para.append(permalink)
+    targetnode.append(permalink)
+    
+    para.insert(0, targetnode)
 
     if len(rec["versions"]) > 1:
 

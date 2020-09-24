@@ -206,7 +206,7 @@ class ChangeDirective(EnvDirective, Directive):
 
             return []
 
-        body_paragraph = nodes.paragraph("", "")
+        body_paragraph = nodes.paragraph("", "", classes=["caption"])
         self.state.nested_parse(content["text"], 0, body_paragraph)
 
         raw_text = _text_rawsource_from_node(body_paragraph)
