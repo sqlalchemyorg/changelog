@@ -147,6 +147,26 @@ def _render_rec(changelog_directive, rec, section, cat, append_sec):
     )
     targetnode = nodes.target("", "", ids=[targetid])
 
+    sections = section.split(" ") if section else []
+    section_tags = [tag for tag in sections if tag in rec["tags"]]
+    category_tags = [cat] if cat in rec["tags"] else []
+    other_tags = list(
+        sorted(rec["tags"].difference(section_tags + category_tags))
+    )
+
+    all_items = []
+
+    if not changelog_directive.hide_sections_from_tags:
+        all_items.extend(section_tags)
+    all_items.extend(category_tags)
+    all_items.extend(other_tags)
+
+    all_items = all_items or ["no_tags"]
+
+    tag_node = nodes.strong("", " ".join("[%s]" % t for t in all_items))
+    targetnode.insert(0, nodes.Text(" ", " "))
+    targetnode.insert(0, tag_node)
+
     permalink = nodes.reference(
         "",
         "",
@@ -155,6 +175,7 @@ def _render_rec(changelog_directive, rec, section, cat, append_sec):
         classes=["changelog-reference", "headerlink"],
     )
     targetnode.append(permalink)
+
     para.insert(0, targetnode)
 
     if len(rec["versions"]) > 1:
@@ -217,19 +238,6 @@ def _render_rec(changelog_directive, rec, section, cat, append_sec):
             else:
                 node = nodes.Text(prefix % refname, prefix % refname)
             insert_ticket.append(node)
-
-    tags = rec["tags"] or {'no_tags'}
-    if tags:
-        tag_node = nodes.strong(
-            "",
-            " ".join(
-                "[%s]" % t
-                for t in [t1 for t1 in [section, cat] if t1 in tags]
-                + list(sorted(tags.difference([section, cat])))
-            ),
-        )
-        para.children[0].insert(0, nodes.Text(" ", " "))
-        para.children[0].insert(0, tag_node)
 
     append_sec.append(
         nodes.list_item("", nodes.target("", "", ids=[rec["id"]]), para)

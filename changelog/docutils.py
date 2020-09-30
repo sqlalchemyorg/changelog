@@ -74,6 +74,9 @@ class ChangeLogDirective(EnvDirective, Directive):
         # 1. pull in global configuration from conf.py
         self.sections = self.env.changelog_sections
         self.inner_tag_sort = self.env.changelog_inner_tag_sort + [""]
+        self.hide_sections_from_tags = bool(
+            self.env.changelog_hide_sections_from_tags
+        )
 
         # 2. examine top level directives inside the .. changelog::
         # directive.  version, release date
