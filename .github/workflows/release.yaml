@@ -41,13 +41,13 @@ jobs:
         uses: sqlalchemyorg/git-auto-commit-action@sa
         with:
           commit_message: Version ${{ github.event.inputs.version }}
-          file_pattern: __init__.py
+          file_pattern: changelog/__init__.py
 
       - name: Get version
         # Get current version
         id: get-version
         run: |
-          version=`grep '__version__ =' changelog/__init__.py | awk '{print $NF}'` | sed 's/\"//g'
+          version=`grep '__version__ =' changelog/__init__.py | awk '{print $NF}' | sed 's/\"//g'`
           echo $version
           echo "::set-output name=version::$version"
 
@@ -80,7 +80,7 @@ jobs:
         # Get new current version
         id: get-new-version
         run: |
-          version=`grep '__version__ =' changelog/__init__.py | awk '{print $NF}'` | sed 's/\"//g'
+          version=`grep '__version__ =' changelog/__init__.py | awk '{print $NF}' | sed 's/\"//g'`
           echo $version
           echo "::set-output name=version::$version"
 
@@ -89,7 +89,7 @@ jobs:
         uses: sqlalchemyorg/git-auto-commit-action@sa
         with:
           commit_message: Start work on ${{ steps.get-new-version.outputs.version }}
-          file_pattern: __init__.py
+          file_pattern: changelog/__init__.py
 
       - name: Publish distribution
         # Publish to pypi
