@@ -163,10 +163,6 @@ def _render_rec(changelog_directive, rec, section, cat, append_sec):
 
     all_items = all_items or ["no_tags"]
 
-    tag_node = nodes.strong("", " ".join("[%s]" % t for t in all_items))
-    targetnode.insert(0, nodes.Text(" ", " "))
-    targetnode.insert(0, tag_node)
-
     permalink = nodes.reference(
         "",
         "",
@@ -174,9 +170,13 @@ def _render_rec(changelog_directive, rec, section, cat, append_sec):
         refid=targetid,
         classes=["changelog-reference", "headerlink"],
     )
-    targetnode.append(permalink)
 
-    para.insert(0, targetnode)
+    if not changelog_directive.hide_tags_in_entry:
+        tag_node = nodes.strong("", " ".join("[%s]" % t for t in all_items))
+        targetnode.insert(0, nodes.Text(" ", " "))
+        targetnode.insert(0, tag_node)
+        targetnode.append(permalink)
+        para.insert(0, targetnode)
 
     if len(rec["versions"]) > 1:
 
@@ -191,6 +191,9 @@ def _render_rec(changelog_directive, rec, section, cat, append_sec):
                 nodes.Text(" to: %s" % ", ".join(backported_changes), "")
             )
             para.append(backported)
+
+    if changelog_directive.hide_tags_in_entry:
+        para.append(permalink)
 
     insert_ticket = nodes.paragraph("")
     para.append(insert_ticket)

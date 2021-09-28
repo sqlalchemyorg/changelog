@@ -89,6 +89,10 @@ class DefaultEnvironment(Environment):
         return self.config.get("changelog_hide_sections_from_tags", [])
 
     @property
+    def changelog_hide_tags_in_entry(self):
+        return self.config.get("changelog_hide_tags_in_entry", [])
+
+    @property
     def changelog_render_ticket(self):
         return self.config.get("changelog_render_ticket", "ticket:%s")
 
