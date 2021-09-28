@@ -44,6 +44,9 @@ A sample configuration in ``conf.py`` looks like this::
     # whether sections should be hidden from tags list
     changelog_hide_sections_from_tags = False
 
+    # whether tags should be hidden from entries
+    changelog_hide_tags_in_entry = False
+
     # how to render changelog links - these are plain
     # python string templates, ticket/pullreq/changeset number goes
     # in "%s"

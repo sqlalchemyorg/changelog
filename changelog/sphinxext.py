@@ -49,6 +49,10 @@ class SphinxEnvironment(Environment):
         return self.sphinx_env.config.changelog_hide_sections_from_tags
 
     @property
+    def changelog_hide_tags_in_entry(self):
+        return self.sphinx_env.config.changelog_hide_tags_in_entry
+
+    @property
     def changelog_render_ticket(self):
         return self.sphinx_env.config.changelog_render_ticket
 
@@ -104,6 +108,7 @@ def setup(app):
     app.add_config_value("changelog_sections", [], "env")
     app.add_config_value("changelog_inner_tag_sort", [], "env")
     app.add_config_value("changelog_hide_sections_from_tags", False, "env")
+    app.add_config_value("changelog_hide_tags_in_entry", False, "env")
     app.add_config_value("changelog_render_ticket", None, "env")
     app.add_config_value("changelog_render_pullreq", None, "env")
     app.add_config_value("changelog_render_changeset", None, "env")

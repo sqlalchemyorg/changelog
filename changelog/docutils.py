@@ -77,6 +77,9 @@ class ChangeLogDirective(EnvDirective, Directive):
         self.hide_sections_from_tags = bool(
             self.env.changelog_hide_sections_from_tags
         )
+        self.hide_tags_in_entry = bool(
+            self.env.changelog_hide_tags_in_entry
+        )
 
         # 2. examine top level directives inside the .. changelog::
         # directive.  version, release date
