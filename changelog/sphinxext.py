@@ -41,6 +41,10 @@ class SphinxEnvironment(Environment):
         return self.sphinx_env.config.changelog_sections
 
     @property
+    def changelog_caption_class(self):
+        return self.sphinx_env.config.changelog_caption_class
+
+    @property
     def changelog_inner_tag_sort(self):
         return self.sphinx_env.config.changelog_inner_tag_sort
 
@@ -106,6 +110,7 @@ def setup(app):
     app.add_directive("change", ChangeDirective)
     app.add_directive("changelog_imports", ChangeLogImportDirective)
     app.add_config_value("changelog_sections", [], "env")
+    app.add_config_value("changelog_caption_class", "caption", "env")
     app.add_config_value("changelog_inner_tag_sort", [], "env")
     app.add_config_value("changelog_hide_sections_from_tags", False, "env")
     app.add_config_value("changelog_hide_tags_in_entry", False, "env")
