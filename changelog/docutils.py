@@ -73,6 +73,7 @@ class ChangeLogDirective(EnvDirective, Directive):
     def _parse(self):
         # 1. pull in global configuration from conf.py
         self.sections = self.env.changelog_sections
+        self.caption_classes = self.env.changelog_caption_class.split(" ")
         self.inner_tag_sort = self.env.changelog_inner_tag_sort + [""]
         self.hide_sections_from_tags = bool(
             self.env.changelog_hide_sections_from_tags
@@ -211,7 +212,7 @@ class ChangeDirective(EnvDirective, Directive):
 
             return []
 
-        body_paragraph = nodes.paragraph("", "", classes=["caption"])
+        body_paragraph = nodes.paragraph("", "", classes=changelog_directive.caption_classes)
         self.state.nested_parse(content["text"], 0, body_paragraph)
 
         raw_text = _text_rawsource_from_node(body_paragraph)

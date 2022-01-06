@@ -38,6 +38,9 @@ A sample configuration in ``conf.py`` looks like this::
     # section names - optional
     changelog_sections = ["general", "rendering", "tests"]
 
+    # section css classes - optional
+    changelog_caption_class = "caption"
+
     # tags to sort on inside of sections - also optional
     changelog_inner_tag_sort = ["feature", "bug"]
 

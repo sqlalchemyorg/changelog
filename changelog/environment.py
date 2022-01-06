@@ -35,6 +35,10 @@ class Environment(object):
         raise NotImplementedError()
 
     @property
+    def changelog_caption_class(self):
+        raise NotImplementedError()
+
+    @property
     def changelog_inner_tag_sort(self):
         raise NotImplementedError()
 
@@ -79,6 +83,10 @@ class DefaultEnvironment(Environment):
     @property
     def changelog_sections(self):
         return self.config.get("changelog_sections", [])
+
+    @property
+    def changelog_caption_class(self):
+        return self.config.get("changelog_caption_class", "caption")
 
     @property
     def changelog_inner_tag_sort(self):
