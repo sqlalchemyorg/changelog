@@ -78,9 +78,7 @@ class ChangeLogDirective(EnvDirective, Directive):
         self.hide_sections_from_tags = bool(
             self.env.changelog_hide_sections_from_tags
         )
-        self.hide_tags_in_entry = bool(
-            self.env.changelog_hide_tags_in_entry
-        )
+        self.hide_tags_in_entry = bool(self.env.changelog_hide_tags_in_entry)
 
         # 2. examine top level directives inside the .. changelog::
         # directive.  version, release date
@@ -212,7 +210,9 @@ class ChangeDirective(EnvDirective, Directive):
 
             return []
 
-        body_paragraph = nodes.paragraph("", "", classes=changelog_directive.caption_classes)
+        body_paragraph = nodes.paragraph(
+            "", "", classes=changelog_directive.caption_classes
+        )
         self.state.nested_parse(content["text"], 0, body_paragraph)
 
         raw_text = _text_rawsource_from_node(body_paragraph)
@@ -335,7 +335,7 @@ def _text_rawsource_from_node(node):
     while stack:
         n = stack.pop(0)
         if isinstance(n, nodes.Text):
-            src.append(n.rawsource)
+            src.append(str(n))
         stack.extend(n.children)
     return "".join(src)
 
