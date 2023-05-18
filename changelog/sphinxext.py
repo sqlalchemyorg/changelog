@@ -1,7 +1,6 @@
 import os
 
 from sphinx.util import logging
-from sphinx.util import status_iterator
 from sphinx.util.console import bold
 from sphinx.util.osutil import copyfile
 
@@ -10,6 +9,11 @@ from .docutils import ChangeLogDirective
 from .docutils import ChangeLogImportDirective
 from .docutils import make_ticket_link
 from .environment import Environment
+
+try:
+    from sphinx.util.display import status_iterator
+except ImportError:
+    from sphinx.util import status_iterator
 
 
 LOG = logging.getLogger(__name__)
