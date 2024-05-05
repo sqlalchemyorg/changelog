@@ -36,6 +36,11 @@ setup(
     url="https://github.com/sqlalchemyorg/changelog",
     license="MIT",
     packages=["changelog"],
+    install_requires=[
+        "Sphinx>=4.0.0",
+        "docutils",
+        "packaging",
+    ],
     include_package_data=True,
     zip_safe=False,
     entry_points={"console_scripts": ["changelog = changelog.cmd:main"]},

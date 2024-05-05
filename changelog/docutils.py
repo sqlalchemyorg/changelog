@@ -1,5 +1,4 @@
 import collections
-from distutils.version import LooseVersion
 import hashlib as md5
 import os
 import re
@@ -10,6 +9,7 @@ from docutils import nodes
 from docutils.parsers.rst import Directive
 from docutils.parsers.rst import directives
 from docutils.parsers.rst import roles
+from packaging.version import Version
 
 from . import generate_rst
 from .environment import Environment
@@ -54,9 +54,7 @@ class EnvDirective(object):
 
 
 class ChangeLogDirective(EnvDirective, Directive):
-    """Implement the ``.. changelog::`` directive.
-
-    """
+    """Implement the ``.. changelog::`` directive."""
 
     has_content = True
 
@@ -180,9 +178,7 @@ class SeeAlsoDirective(EnvDirective, Directive):
 
 
 class ChangeDirective(EnvDirective, Directive):
-    """Implement the ``.. change::`` directive.
-
-    """
+    """Implement the ``.. change::`` directive."""
 
     has_content = True
 
@@ -347,7 +343,7 @@ def _str_version_as_tuple(ver):
     if ver in _VERSION_IDS:
         return _VERSION_IDS[ver]
 
-    result = LooseVersion(ver)
+    result = Version(ver)
     _VERSION_IDS[ver] = result
     return result
 
