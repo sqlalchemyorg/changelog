@@ -39,7 +39,7 @@ setup(
     install_requires=[
         "Sphinx>=4.0.0",
         "docutils",
-        "packaging",
+        "looseversion",
     ],
     include_package_data=True,
     zip_safe=False,

@@ -9,7 +9,7 @@ from docutils import nodes
 from docutils.parsers.rst import Directive
 from docutils.parsers.rst import directives
 from docutils.parsers.rst import roles
-from packaging.version import Version
+from looseversion import LooseVersion
 
 from . import generate_rst
 from .environment import Environment
@@ -343,7 +343,7 @@ def _str_version_as_tuple(ver):
     if ver in _VERSION_IDS:
         return _VERSION_IDS[ver]
 
-    result = Version(ver)
+    result = LooseVersion(ver)
     _VERSION_IDS[ver] = result
     return result
 
