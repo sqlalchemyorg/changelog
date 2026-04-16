@@ -54,6 +54,9 @@ class Environment(object):
     def changelog_render_changeset(self):
         raise NotImplementedError()
 
+    def note_dependency(self, fpath):
+        raise NotImplementedError()
+
     def status_iterator(self, elements, message):
         raise NotImplementedError()
 
@@ -107,6 +110,9 @@ class DefaultEnvironment(Environment):
     @property
     def changelog_render_changeset(self):
         return self.config.get("changelog_render_changeset", "changeset:%s")
+
+    def note_dependency(self, fpath):
+        pass
 
     def status_iterator(self, elements, message):
         for i, element in enumerate(elements, 1):

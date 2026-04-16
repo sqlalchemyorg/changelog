@@ -113,7 +113,7 @@ class ChangeLogDirective(EnvDirective, Directive):
                 files, "reading changelog note files (version %s)..." % version
             ):
                 fpath = os.path.join(path, fname)
-                self.env.sphinx_env.note_dependency(fpath)
+                self.env.note_dependency(fpath)
                 with open(fpath) as handle:
                     content.append("", path, 0)
                     for num, line in enumerate(handle):

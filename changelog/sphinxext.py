@@ -72,6 +72,9 @@ class SphinxEnvironment(Environment):
     def changelog_render_changeset(self):
         return self.sphinx_env.config.changelog_render_changeset
 
+    def note_dependency(self, fpath):
+        self.sphinx_env.note_dependency(fpath)
+
     def status_iterator(self, elements, message):
         return status_iterator(
             elements,
